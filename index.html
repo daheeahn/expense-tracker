@@ -33,6 +33,9 @@
       <div>
         <a href="/report">Go To Expense Report Page</a>
       </div>
+      <div>
+        <a href="/budget">Go To Buget Management Page</a>
+      </div>
     </section>
 
 
@@ -41,9 +44,11 @@
         <h2 class="text-2xl mb-4">Expenses Report</h2>
       </div>
       <div>
+        <div class="date-navigation flex items-center justify-between my-2 border-2 border-[#F1F1FA] px-2 py-1 rounded-full">
+        </div>
         <div class="date-category mb-2">
           <div class="flex max-w-28 px-2 py-1 border-2 border-[#F1F1FA] rounded-full">
-            <img src="./assets/img/Vector.svg" class="pr-2">
+            <img src="./assets/img/report-toggle-arrow.svg" class="pr-2">
             <span>Month</span>
           </div>
           <ul class="hidden">
@@ -60,6 +65,7 @@
       </div>
   </div>
   </section>
+
   </div>
       <section id="addSection" style="display: none" class="section">
         <div class="container">
@@ -100,7 +106,9 @@
         </div>
       </section>
     </div>
-
+    <section id="budgetSection" style="display:none" class="section">
+      
+    </section>
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>

@@ -12,6 +12,10 @@ const routes = [
     path: "/report",
     sectionId: "reportSection",
   },
+  {
+    path: "/budget",
+    sectionId: "budgetSection",
+  },
 ];
 
 // be global function by appending `window.`
@@ -60,10 +64,10 @@ const App = async () => {
         document.getElementById("date").value = null;
       }
     }
-  }
     if(match.route.sectionId === "reportSection") {
       renderExpensesReport();
     }
+  }
 };
 
 // Fired when the HTML is fully parsed and the DOM is completely built.
