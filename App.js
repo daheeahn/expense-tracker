@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
       navigate(url);
     }
   });
-
+  
   App();
 });
 
