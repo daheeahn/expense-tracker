@@ -17,35 +17,13 @@
 
     <section id="mainSection" class="section">
       <div class="total-expenses">
+        
         <h2>Total Expenses</h2>
-        <h1>$9400</h1>
+        <h1 id="total-expense">$9400</h1>
       </div>
 
       <div class="expenses-list">
-        <h3>Today</h3>
         <ul>
-          <!-- <li>
-            <div class="expense-item">
-              <div class="details">
-                <p class="category">Shopping</p>
-                <p class="description">Buy some grocery</p>
-              </div>
-              <div class="amount">- $120</div>
-            </div>
-          </li> -->
-        </ul>
-
-        <h3>Yesterday</h3>
-        <ul>
-          <li>
-            <div class="expense-item">
-              <div class="details">
-                <p class="category">Transportation</p>
-                <p class="description">Charging Tesla</p>
-              </div>
-              <div class="amount">- $18</div>
-            </div>
-          </li>
         </ul>
       </div>
 
@@ -57,9 +35,6 @@
       </div>
     </section>
 
-    <section id="addSection" style="display: none" class="section">
-      <div>Add Page - How much?</div>
-    </section>
 
     <section id="reportSection" style="display: none; max-width: 400px;" class="section">
       <div>
@@ -69,7 +44,7 @@
         <div class="date-category mb-2">
           <div class="flex max-w-28 px-2 py-1 border-2 border-[#F1F1FA] rounded-full">
             <img src="./assets/img/Vector.svg" class="pr-2">
-            <spna>Month</spna>
+            <span>Month</span>
           </div>
           <ul class="hidden">
             <li>Year</li>
@@ -86,9 +61,48 @@
   </div>
   </section>
   </div>
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <section id="addSection" style="display: none" class="section">
+        <div class="container">
+          <form id="expenseForm">
+            <label for="amount">How much?</label>
+            <input
+              type="number"
+              id="amount"
+              name="amount"
+              placeholder="$0"
+              required
+            />
 
-  <script src="script.js"></script>
-</body>
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+              <option value="" disabled selected>Select category</option>
+              <option value="food">Food</option>
+              <option value="transport">Transport</option>
+              <option value="shopping">Shopping</option>
+              <option value="entertainment">Entertainment</option>
+            </select>
+
+            <label for="description">Description</label>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              placeholder="Description"
+              required
+            />
+
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" required />
+
+            <button type="submit" class="btn">Save</button>
+            <button type="button" id="deleteButton" class="btn">Delete</button>
+          </form>
+        </div>
+      </section>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>
