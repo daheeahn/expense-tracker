@@ -43,28 +43,6 @@ function renderExpenses() {
   });
 }
 
-// const filePath = "expenses_data.json";
-// const expenses = [];
-
-// fetch(filePath)
-//   .then((response) => {
-//     if (!response.ok) {
-//       throw new Error("Network response was not ok");
-//     }
-//     return response.json(); // JSON Parsing
-//   })
-//   .then((data) => {
-//     expenses.push(...data);
-
-//     // 초기에 리스트 렌더링
-//     // renderExpenses();
-
-//     renderExpensesReport();
-//   })
-//   .catch((error) => {
-//     console.error("There was a problem with the fetch operation:", error);
-//   });
-
 function renderExpensesReport() {
   // order by date (current data -> get a date)
   const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
@@ -74,6 +52,7 @@ function renderExpensesReport() {
     const [year, month] = date.split("-").map(Number);
     return year === currentYear && month === currentMonth;
   });
+  const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
   //group by category
   const report_summary = Object.groupBy(
@@ -172,7 +151,12 @@ function renderExpensesReport() {
     summary_list.appendChild(div);
     idx++;
   }
-
+  
+  document.querySelector('.date-navigation').innerHTML = `
+    <a>◀️</a>
+    <h3 class="text-3xl">${month[currentMonth-1]}</h3>
+    <a>▶️</a>
+  `
   /* Date Category */
 }
 const dateSelector = document.querySelector(".date-category");
