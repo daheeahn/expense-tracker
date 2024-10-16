@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Expense Tracker</title>
-    <link rel="stylesheet" href="./style.css" />
-  </head>
-  <body>
-    <script type="module" src="App.js"></script>
 
-    <div class="container">
-      <header class="header"></header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./style.css" />
+</head>
 
-      <section id="mainSection" class="section">
-        <div class="total-expenses">
-          <h2>Total Expenses</h2>
-          <h1>$9400</h1>
-        </div>
+<body>
+  <script type="module" src="App.js"></script>
 
-        <div class="expenses-list">
-          <h3>Today</h3>
-          <ul>
-            <!-- <li>
+  <div class="container">
+    <header class="header"></header>
+
+    <section id="mainSection" class="section">
+      <div class="total-expenses">
+        <h2>Total Expenses</h2>
+        <h1>$9400</h1>
+      </div>
+
+      <div class="expenses-list">
+        <h3>Today</h3>
+        <ul>
+          <!-- <li>
             <div class="expense-item">
               <div class="details">
                 <p class="category">Shopping</p>
@@ -30,39 +33,62 @@
               <div class="amount">- $120</div>
             </div>
           </li> -->
-          </ul>
+        </ul>
 
-          <h3>Yesterday</h3>
-          <ul>
-            <li>
-              <div class="expense-item">
-                <div class="details">
-                  <p class="category">Transportation</p>
-                  <p class="description">Charging Tesla</p>
-                </div>
-                <div class="amount">- $18</div>
+        <h3>Yesterday</h3>
+        <ul>
+          <li>
+            <div class="expense-item">
+              <div class="details">
+                <p class="category">Transportation</p>
+                <p class="description">Charging Tesla</p>
               </div>
-            </li>
+              <div class="amount">- $18</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <a href="/add">Go To Add Item Page</a>
+      </div>
+      <div>
+        <a href="/report">Go To Expense Report Page</a>
+      </div>
+    </section>
+
+    <section id="addSection" style="display: none" class="section">
+      <div>Add Page - How much?</div>
+    </section>
+
+    <section id="reportSection" style="display: none; max-width: 400px;" class="section">
+      <div>
+        <h2 class="text-2xl mb-4">Expenses Report</h2>
+      </div>
+      <div>
+        <div class="date-category mb-2">
+          <div class="flex max-w-28 px-2 py-1 border-2 border-[#F1F1FA] rounded-full">
+            <img src="./assets/img/Vector.svg" class="pr-2">
+            <spna>Month</spna>
+          </div>
+          <ul class="hidden">
+            <li>Year</li>
+            <li>Month</li>
           </ul>
         </div>
-
-        <div>
-          <a href="/add">Go To Add Item Page</a>
+        <div class="container">
+          <div>
+            <canvas id="myChart"></canvas>
+          </div>
         </div>
-        <div>
-          <a href="/report">Go To Expense Report Page</a>
-        </div>
-      </section>
+        <div class="summary_list">
+      </div>
+  </div>
+  </section>
+  </div>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-      <section id="addSection" style="display: none" class="section">
-        <div>Add Page - How much?</div>
-      </section>
-
-      <section id="reportSection" style="display: none" class="section">
-        <div>Expenses Report</div>
-      </section>
-    </div>
-
-    <script src="script.js"></script>
-  </body>
+  <script src="script.js"></script>
+</body>
 </html>

@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     navigate(target.href);
   });
-
+  
   App();
 });
 
