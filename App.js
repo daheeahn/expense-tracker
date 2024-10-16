@@ -61,6 +61,9 @@ const App = async () => {
       }
     }
   }
+    if(match.route.sectionId === "reportSection") {
+      renderExpensesReport();
+    }
 };
 
 // Fired when the HTML is fully parsed and the DOM is completely built.

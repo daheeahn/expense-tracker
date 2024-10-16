@@ -43,8 +43,8 @@ function renderExpenses() {
   });
 }
 
-const filePath = "expenses_data.json";
-const expenses = [];
+// const filePath = "expenses_data.json";
+// const expenses = [];
 
 // fetch(filePath)
 //   .then((response) => {
@@ -67,6 +67,7 @@ const expenses = [];
 
 function renderExpensesReport() {
   // order by date (current data -> get a date)
+  const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth() + 1;
   const filteredExpensesByDate = expenses.filter(({ date }) => {
@@ -100,17 +101,17 @@ function renderExpensesReport() {
 
       if (i < 4) {
         // if over 4
-        result[key] = value.toFixed(2);
-        total_this_month_amount += value;
+        result[key] = Number(value).toFixed(2);
+        total_this_month_amount += Number(value);
       } else {
-        etcValue += value; // combine every value
+        etcValue += Number(value); // combine every value
       }
     }
 
     // combined value to 'ETC'
     if (etcValue > 0) {
       total_this_month_amount += etcValue;
-      result["Etc"] = etcValue.toFixed(2);
+      result["Etc"] = Number(etcValue).toFixed(2);
     }
 
     return result;
@@ -151,6 +152,7 @@ function renderExpensesReport() {
   for (let category in summary) {
     let div = document.createElement("div");
     div.classList.add("mt-5");
+    
     div.innerHTML = `
       <div class="flex justify-between content-center pb-2">
         <div class="badge flex items-center px-2 py-1 border-2 border-[#F1F1FA] rounded-full">
