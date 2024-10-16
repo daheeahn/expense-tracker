@@ -1,105 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Expense Tracker</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="./style.css" />
-</head>
+  <body>
+    <script type="module" src="App.js"></script>
 
-<body>
-  <script type="module" src="App.js"></script>
+    <div class="container">
+      <header class="header"></header>
 
-  <div class="container">
-    <header class="header"></header>
+      <section id="mainSection" class="section">
+        <div class="total-expenses">
+          <h2>Total Expenses</h2>
+          <h1 id="total-expense">$9400</h1>
+        </div>
 
-    <section id="mainSection" class="section">
-      <div class="total-expenses">
-        
-        <h2>Total Expenses</h2>
-        <h1 id="total-expense">$9400</h1>
-      </div>
-
-      <div class="expenses-list">
-        <ul>
-        </ul>
-      </div>
-
-      <div>
-        <a href="/add">Go To Add Item Page</a>
-      </div>
-      <div>
-        <a href="/report">Go To Expense Report Page</a>
-      </div>
-    </section>
-
-
-    <section id="reportSection" style="display: none; max-width: 400px;" class="section">
-      <div>
-        <h2 class="text-2xl mb-4">Expenses Report</h2>
-      </div>
-      <div>
-        <div class="date-category mb-2">
-          <div class="flex max-w-28 px-2 py-1 border-2 border-[#F1F1FA] rounded-full">
-            <img src="./assets/img/Vector.svg" class="pr-2">
-            <span>Month</span>
-          </div>
-          <ul class="hidden">
-            <li>Year</li>
-            <li>Month</li>
+        <div class="expenses-list">
+          <ul>
+            <!-- <div class="expense-item" data-index="${index}">
+              <div class="details">
+                <p class="category">Shopping</p>
+                <p class="description">Buy some grocery</p>
+              </div>
+              <div class="amount">- $120</div>
+            </div> -->
           </ul>
         </div>
-        <div class="container">
-          <div>
-            <canvas id="myChart"></canvas>
-          </div>
+
+        <div>
+          <a href="/add">Go To Add Item Page</a>
         </div>
-        <div class="summary_list">
-      </div>
-  </div>
-  </section>
-  </div>
-      <section id="addSection" style="display: none" class="section">
-        <div class="container">
-          <form id="expenseForm">
-            <label for="amount">How much?</label>
-            <input
-              type="number"
-              id="amount"
-              name="amount"
-              placeholder="$0"
-              required
-            />
+        <div>
+          <a href="/report">Go To Expense Report Page</a>
+        </div>
+      </section>
 
-            <label for="category">Category</label>
-            <select id="category" name="category" required>
-              <option value="" disabled selected>Select category</option>
-              <option value="food">Food</option>
-              <option value="transport">Transport</option>
-              <option value="shopping">Shopping</option>
-              <option value="entertainment">Entertainment</option>
-            </select>
-
-            <label for="description">Description</label>
-            <input
-              type="text"
-              id="description"
-              name="description"
-              placeholder="Description"
-              required
-            />
-
-            <label for="date">Date</label>
-            <input type="date" id="date" name="date" required />
-
-            <button type="submit" class="btn">Save</button>
-            <button type="button" id="deleteButton" class="btn">Delete</button>
-          </form>
+      <section
+        id="reportSection"
+        style="display: none; max-width: 400px"
+        class="section"
+      >
+        <div>
+          <h2 class="text-2xl mb-4">Expenses Report</h2>
+        </div>
+        <div>
+          <div class="date-category mb-2">
+            <div
+              class="flex max-w-28 px-2 py-1 border-2 border-[#F1F1FA] rounded-full"
+            >
+              <img src="./assets/img/Vector.svg" class="pr-2" />
+              <span>Month</span>
+            </div>
+            <ul class="hidden">
+              <li>Year</li>
+              <li>Month</li>
+            </ul>
+          </div>
+          <div class="container">
+            <div>
+              <canvas id="myChart"></canvas>
+            </div>
+          </div>
+          <div class="summary_list"></div>
         </div>
       </section>
     </div>
+    <section id="addSection" style="display: none" class="section">
+      <div class="container">
+        <form id="expenseForm">
+          <label for="amount">How much?</label>
+          <input
+            type="number"
+            id="amount"
+            name="amount"
+            placeholder="$0"
+            required
+          />
+
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="food">Food</option>
+            <option value="transport">Transport</option>
+            <option value="shopping">Shopping</option>
+            <option value="entertainment">Entertainment</option>
+          </select>
+
+          <label for="description">Description</label>
+          <input
+            type="text"
+            id="description"
+            name="description"
+            placeholder="Description"
+            required
+          />
+
+          <label for="date">Date</label>
+          <input type="date" id="date" name="date" required />
+
+          <button type="submit" class="btn">Save</button>
+          <button type="button" id="deleteButton" class="btn">Delete</button>
+        </form>
+      </div>
+    </section>
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
