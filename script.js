@@ -257,7 +257,7 @@ function renderBudgetManagement() {
   const budgets = JSON.parse(localStorage.getItem("budgets")) ?? [];
   const budget_list = document.querySelector('#budgetList');
   const thisMonth = selectedDate.getFullYear() +"-"+selectedDate.getMonth();
-  const currentExpense = report_summary[budget.category]? report_summary[budget.category]: 0;
+
 
   //initialize
   budget_list.innerHTML='';
@@ -269,6 +269,7 @@ function renderBudgetManagement() {
   }else{
     budgets[thisMonth].forEach((budget)=> {
       const div = document.createElement('div');
+      const currentExpense = report_summary[budget.category]? report_summary[budget.category]: 0;
       let remainAmount = Number(budget.amount - currentExpense.toFixed(2));
       let isRemain = remainAmount > 0 ? true:false;
 
