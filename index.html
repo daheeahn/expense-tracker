@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/output.css" />
+    <link rel="preconnect" href="https://rsms.me/" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
   </head>
 <body>
   <script type="module" src="App.js"></script>
@@ -23,6 +25,32 @@
 
       <div class="expenses-list">
         <ul>
+          <li>
+            <div class="flex row" data-index="2">
+              <img
+                src="./assets/icons/shopping.png"
+                alt="shopping icon"
+                class="category-icon"
+              />
+              <div class="flex-1">
+                <p
+                  class="font-inter font-medium text-base text-base-dark-dark-25"
+                >
+                  Shopping
+                </p>
+                <p
+                  class="font-inter font-medium text-sm text-base-light-light-20"
+                >
+                  Buy some grocery
+                </p>
+              </div>
+              <div
+                class="font-inter text-base font-semibold text-red-red-100"
+              >
+                - $120
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
 
@@ -34,6 +62,75 @@
       </div>
       <div>
         <a href="/budget">Go To Buget Management Page</a>
+      </div>
+      </section>
+
+      <section
+        id="reportSection"
+        style="display: none; max-width: 400px"
+        class="section"
+      >
+        <div>
+          <h2 class="text-2xl mb-4">Expenses Report</h2>
+        </div>
+        <div>
+          <div class="date-category mb-2">
+            <div
+              class="flex max-w-28 px-2 py-1 border-2 border-[#F1F1FA] rounded-full"
+            >
+              <img src="./assets/img/Vector.svg" class="pr-2" />
+              <span>Month</span>
+            </div>
+            <ul class="hidden">
+              <li>Year</li>
+              <li>Month</li>
+            </ul>
+          </div>
+          <div class="container">
+            <div>
+              <canvas id="myChart"></canvas>
+            </div>
+          </div>
+          <div class="summary_list"></div>
+        </div>
+      </section>
+    </div>
+    <section id="addSection" style="display: none" class="section">
+      <div class="container">
+        <form id="expenseForm">
+          <label for="amount">How much?</label>
+          <input
+            type="number"
+            id="amount"
+            name="amount"
+            placeholder="$0"
+            required
+          />
+
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="food">Food</option>
+            <option value="transport">Transport</option>
+            <option value="shopping">Shopping</option>
+            <option value="entertainment">Entertainment</option>
+          </select>
+
+          <label for="description">Description</label>
+          <input
+            type="text"
+            id="description"
+            name="description"
+            placeholder="Description"
+            required
+          />
+
+          <label for="date">Date</label>
+          <input type="date" id="date" name="date" required />
+
+          <button type="submit" class="btn">Save</button>
+          <button type="button" id="deleteButton" class="btn">Delete</button>
+        </form>
       </div>
     </section>
 
