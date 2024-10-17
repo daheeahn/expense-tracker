@@ -61,9 +61,9 @@ const App = async () => {
       }
     }
   }
-    if(match.route.sectionId === "reportSection") {
-      renderExpensesReport();
-    }
+  if (match.route.sectionId === "reportSection") {
+    renderExpensesReport();
+  }
 };
 
 // Fired when the HTML is fully parsed and the DOM is completely built.
@@ -94,19 +94,22 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("click", (e) => {
     const item = e.target.closest(".expense-item");
     if (item) {
-      const index = item.getAttribute("data-index");
+      const id = item.getAttribute("data-id");
       const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
-      const selectedExpense = expenses[index];
-      sessionStorage.setItem(
-        "selectedExpense",
-        JSON.stringify(selectedExpense)
-      );
-      const queryString = new URLSearchParams({ isEdit: true }).toString();
-      const url = `${window.location.origin}/add?${queryString}`;
-      navigate(url);
+      const selectedExpense = expenses.find((item) => item.id === Number(id));
+
+      if (selectedExpense) {
+        sessionStorage.setItem(
+          "selectedExpense",
+          JSON.stringify(selectedExpense)
+        );
+        const queryString = new URLSearchParams({ isEdit: true }).toString();
+        const url = `${window.location.origin}/add?${queryString}`;
+        navigate(url);
+      }
     }
   });
-  
+
   App();
 });
 
