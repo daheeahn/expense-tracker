@@ -50,56 +50,14 @@ function filterExpensesBySelectedDate(expenses, selectedDate) {
   });
 }
 
-
-function generateMonthSelect(selectedMenu, currentDate) {
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth();
-
-  // init
-  if (selectedMenu) selectedMenu.innerHTML = '';
-  document.querySelector('.month-label').innerHTML = MONTH_STR[currentMonth]; // 초기 월 업데이트
-
-  // create header
-  const Header = document.createElement('div');
-  Header.classList.add('py-2', 'px-4', 'font-bold', 'bg-base-purple', 'text-base-light-light-80', 'flex', 'justify-between');
-  Header.innerHTML = `
-    <span class="prev-year cursor-pointer">◀️</span>
-    <div>${currentYear}</div>
-    <span class="next-year cursor-pointer">▶️</span>
-  `;
-  selectedMenu.appendChild(Header);
-
-  // create month element
-  MONTH_STR.forEach((month, index) => {
-    const div = document.createElement('div');
-    div.classList.add('month', 'py-2', 'px-4', 'cursor-pointer');
-    div.innerHTML = month;
-    div.dataset.monthIndex = index; // 월 인덱스 저장
-    selectedMenu.appendChild(div);
-  });
-
-  // change to new month data
-  selectedMenu.querySelectorAll('.month').forEach((monthElement) => {
-    monthElement.addEventListener('click', (e) => {
-      const monthIndex = parseInt(e.target.dataset.monthIndex, 10);
-      currentDate.setMonth(monthIndex);
-      document.querySelector('.month-label').innerHTML = MONTH_STR[monthIndex]; // show updated month
-      renderExpensesReport();
-      selectedMenu.classList.add('hidden'); // close the menu
-
-    });
-  });
-
-  function prevYear(e) {
-    e.stopPropagation();
-    currentDate.setFullYear(currentDate.getFullYear() - 1);
-    generateMonthSelect(selectedMenu, currentDate);
+function handleBudgetColor(remainAmount){
+  if(remainAmount > 0){
+      return "bg-alert-remain";
+  }else {
+    return "bg-alert-exceed";
   }
-  function nextYear(e){
-    e.stopPropagation();
-    currentDate.setFullYear(currentDate.getFullYear() + 1);
-    generateMonthSelect(selectedMenu, currentDate);
-  }
-  document.querySelector('.prev-year').addEventListener('click', prevYear);
-  document.querySelector('.next-year').addEventListener('click', nextYear);
+}
+
+function showBudgetAlert(){
+
 }

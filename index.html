@@ -65,10 +65,9 @@
       </div>
       </section>
 
-      <section
-        id="reportSection"
-        style="display: none; max-width: 400px"
-        class="section"
+      <section id="reportSection"
+                style="display: none; max-width: 400px"
+                class="section"
       >
         <div>
           <h2 class="text-2xl mb-4">Expenses Report</h2>
@@ -133,31 +132,19 @@
       </div>
     </section>
 
-    <section id="budgetSection" style="display: none; max-width: 400px;" class="section">
+    <section id="budgetSection" style="display:none" class="section">
       <div>
         <h2 class="text-2xl mb-4">Budget Management</h2>
       </div>
-      <div class="budget-list">
-        <div class="flex justify-between content-center pb-2">
-          <div class="badge flex items-center px-2 py-1 border-2 border-[#F1F1FA] rounded-full">
-            <div class="label bg-orange-500"></div>
-            <p>Shopping</p>
-          </div>
-          <p class="bg-red-600 text-white w-[20px] h-[20px] rounded-full text-center">!</p>
-        </div>
-        <div>
-          <h3>Remaining $0</h3>
-        </div>
-        <div class="flex w-full h-3 bg-[#F1F1FA] rounded-full">
-          <div class="w-[80%] h-3 bg-orange-500 rounded-full">
-          </div>
-        </div>
-        <div>$1200 of $1000</div>
-        <div class="budget-alert text-red-600">You’ve exceed the limit!</div>
+      <div id="budgetList" class="p-4 mb-4">
+
       </div>
-      <form style="display:none" class="flex flex-col">
-        <label for="category">Category</label>
-        <select id="category" name="category" required>
+      <a href="/add-budget"><button class="w-full bg-base-purple py-4 text-base-light-light-80 rounded-2xl text-lg">Create a budget</button></a>
+    </section>
+    <section id="addBudgetSection" style="display:none;" class="section">
+      <form id="addBudgetForm" class="flex flex-col">
+        <label for="budget-category">Category</label>
+        <select id="budget-category" name="budget-category" required>
           <option value="" disabled selected>Select category</option>
           <option value="food">Food</option>
           <option value="transport">Transport</option>
@@ -171,9 +158,8 @@
           placeholder="budget"
           required
         />
-        <button>Save</button>
+        <button class="bg-base-purple">Save</button>
       </form>
-      <button class="w-full bg">Create a budget</button>
     </section>
   </div>
     <!-- Chart.js -->

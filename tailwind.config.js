@@ -8,6 +8,8 @@ module.exports = {
         "base-light-light-20": "#91919F",
         "base-purple":"#7F3DFF",
         "red-red-100": "#FD3C4A",
+        "alert-exceed": "#FCAC12",
+        "alert-remain":"#0077FF"
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],

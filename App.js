@@ -16,6 +16,10 @@ const routes = [
     path: "/budget",
     sectionId: "budgetSection",
   },
+  {
+    path: "/add-budget",
+    sectionId: "addBudgetSection",
+  },
 ];
 
 // be global function by appending `window.`
@@ -64,9 +68,32 @@ const App = async () => {
         document.getElementById("date").value = null;
       }
     }
+
     if(match.route.sectionId === "reportSection") {
       renderExpensesReport();
-      renderMonth()
+      renderMonth();// 광역에서 호출하도록 수정 필요
+    }
+
+    if(match.route.sectionId === "budgetSection") {
+        renderBudgetManagement();
+      }
+
+    if (match.route.sectionId === "addBudgetSection") {
+
+      const params = new URLSearchParams(window.location.search);
+      const isEdit = params.get("isEdit") === "true";
+      if (isEdit) {
+        const selectedBudgetFS = sessionStorage.getItem("selectedBudget");
+        if (selectedBudgetFS) {
+          const selectedBudget = JSON.parse(selectedBudgetFS);
+          document.getElementById("category").value = selectedBudget.category;
+          document.getElementById("budget").value = selectedBudget.budget;
+        }
+      } else {
+        sessionStorage.removeItem("selectedBudget");
+        document.getElementById("category").value = null;
+        document.getElementById("budget").value = null;
+      }
     }
   }
 };
@@ -74,7010 +101,7009 @@ const App = async () => {
 // Fired when the HTML is fully parsed and the DOM is completely built.
 document.addEventListener("DOMContentLoaded", () => {
   // localStorage.removeItem("expenses"); // 🚨 just for test
-    const mockData = `[
-    {
-        "id": 1,
-        "date": "2024-10-27",
-        "category": "Utilities",
-        "description": "Expense 1",
-        "amount": 23.31
-    },
-    {
-        "id": 2,
-        "date": "2024-03-31",
-        "category": "Transportation",
-        "description": "Expense 2",
-        "amount": 18.54
-    },
-    {
-        "id": 3,
-        "date": "2024-10-06",
-        "category": "Miscellaneous",
-        "description": "Expense 3",
-        "amount": 49.88
-    },
-    {
-        "id": 4,
-        "date": "2024-03-26",
-        "category": "Miscellaneous",
-        "description": "Expense 4",
-        "amount": 7.05
-    },
-    {
-        "id": 5,
-        "date": "2024-05-18",
-        "category": "Entertainment",
-        "description": "Expense 5",
-        "amount": 27.11
-    },
-    {
-        "id": 6,
-        "date": "2024-09-22",
-        "category": "Healthcare",
-        "description": "Expense 6",
-        "amount": 20.46
-    },
-    {
-        "id": 7,
-        "date": "2024-12-14",
-        "category": "Miscellaneous",
-        "description": "Expense 7",
-        "amount": 45.11
-    },
-    {
-        "id": 8,
-        "date": "2024-01-16",
-        "category": "Miscellaneous",
-        "description": "Expense 8",
-        "amount": 27.58
-    },
-    {
-        "id": 9,
-        "date": "2024-07-02",
-        "category": "Groceries",
-        "description": "Expense 9",
-        "amount": 27.7
-    },
-    {
-        "id": 10,
-        "date": "2024-01-31",
-        "category": "Utilities",
-        "description": "Expense 10",
-        "amount": 32.65
-    },
-    {
-        "id": 11,
-        "date": "2024-02-03",
-        "category": "Transportation",
-        "description": "Expense 11",
-        "amount": 15.37
-    },
-    {
-        "id": 12,
-        "date": "2024-03-01",
-        "category": "Entertainment",
-        "description": "Expense 12",
-        "amount": 32.47
-    },
-    {
-        "id": 13,
-        "date": "2024-02-23",
-        "category": "Miscellaneous",
-        "description": "Expense 13",
-        "amount": 29.11
-    },
-    {
-        "id": 14,
-        "date": "2024-04-19",
-        "category": "Utilities",
-        "description": "Expense 14",
-        "amount": 17.67
-    },
-    {
-        "id": 15,
-        "date": "2024-03-26",
-        "category": "Healthcare",
-        "description": "Expense 15",
-        "amount": 19.99
-    },
-    {
-        "id": 16,
-        "date": "2024-10-31",
-        "category": "Healthcare",
-        "description": "Expense 16",
-        "amount": 29.52
-    },
-    {
-        "id": 17,
-        "date": "2024-04-12",
-        "category": "Food",
-        "description": "Expense 17",
-        "amount": 396.61
-    },
-    {
-        "id": 18,
-        "date": "2024-05-12",
-        "category": "Groceries",
-        "description": "Expense 18",
-        "amount": 47.48
-    },
-    {
-        "id": 19,
-        "date": "2024-02-11",
-        "category": "Groceries",
-        "description": "Expense 19",
-        "amount": 8.55
-    },
-    {
-        "id": 20,
-        "date": "2024-09-26",
-        "category": "Education",
-        "description": "Expense 20",
-        "amount": 30.81
-    },
-    {
-        "id": 21,
-        "date": "2024-10-25",
-        "category": "Healthcare",
-        "description": "Expense 21",
-        "amount": 30.77
-    },
-    {
-        "id": 22,
-        "date": "2024-12-30",
-        "category": "Entertainment",
-        "description": "Expense 22",
-        "amount": 29.78
-    },
-    {
-        "id": 23,
-        "date": "2024-10-18",
-        "category": "Miscellaneous",
-        "description": "Expense 23",
-        "amount": 11.78
-    },
-    {
-        "id": 24,
-        "date": "2024-11-10",
-        "category": "Education",
-        "description": "Expense 24",
-        "amount": 33.35
-    },
-    {
-        "id": 25,
-        "date": "2024-08-08",
-        "category": "Housing",
-        "description": "Expense 25",
-        "amount": 1000
-    },
-    {
-        "id": 26,
-        "date": "2024-01-18",
-        "category": "Housing",
-        "description": "Expense 26",
-        "amount": 34.2
-    },
-    {
-        "id": 27,
-        "date": "2024-08-31",
-        "category": "Utilities",
-        "description": "Expense 27",
-        "amount": 18.28
-    },
-    {
-        "id": 28,
-        "date": "2024-05-16",
-        "category": "Education",
-        "description": "Expense 28",
-        "amount": 18.78
-    },
-    {
-        "id": 29,
-        "date": "2024-08-18",
-        "category": "Transportation",
-        "description": "Expense 29",
-        "amount": 9.19
-    },
-    {
-        "id": 30,
-        "date": "2024-04-17",
-        "category": "Housing",
-        "description": "Expense 30",
-        "amount": 41.72
-    },
-    {
-        "id": 31,
-        "date": "2024-04-10",
-        "category": "Entertainment",
-        "description": "Expense 31",
-        "amount": 11.19
-    },
-    {
-        "id": 32,
-        "date": "2024-11-06",
-        "category": "Entertainment",
-        "description": "Expense 32",
-        "amount": 42.44
-    },
-    {
-        "id": 33,
-        "date": "2024-12-06",
-        "category": "Housing",
-        "description": "Expense 33",
-        "amount": 36.38
-    },
-    {
-        "id": 34,
-        "date": "2024-04-27",
-        "category": "Utilities",
-        "description": "Expense 34",
-        "amount": 28.08
-    },
-    {
-        "id": 35,
-        "date": "2024-06-18",
-        "category": "Education",
-        "description": "Expense 35",
-        "amount": 42.28
-    },
-    {
-        "id": 36,
-        "date": "2024-05-21",
-        "category": "Education",
-        "description": "Expense 36",
-        "amount": 31.7
-    },
-    {
-        "id": 37,
-        "date": "2024-08-18",
-        "category": "Housing",
-        "description": "Expense 37",
-        "amount": 34.41
-    },
-    {
-        "id": 38,
-        "date": "2024-07-27",
-        "category": "Entertainment",
-        "description": "Expense 38",
-        "amount": 42.1
-    },
-    {
-        "id": 39,
-        "date": "2024-03-25",
-        "category": "Entertainment",
-        "description": "Expense 39",
-        "amount": 43.79
-    },
-    {
-        "id": 40,
-        "date": "2024-04-18",
-        "category": "Food",
-        "description": "Expense 40",
-        "amount": 341.22
-    },
-    {
-        "id": 41,
-        "date": "2024-02-25",
-        "category": "Entertainment",
-        "description": "Expense 41",
-        "amount": 19.25
-    },
-    {
-        "id": 42,
-        "date": "2024-12-31",
-        "category": "Food",
-        "description": "Expense 42",
-        "amount": 267.58
-    },
-    {
-        "id": 43,
-        "date": "2024-04-24",
-        "category": "Housing",
-        "description": "Expense 43",
-        "amount": 31.43
-    },
-    {
-        "id": 44,
-        "date": "2024-04-28",
-        "category": "Food",
-        "description": "Expense 44",
-        "amount": 302.61
-    },
-    {
-        "id": 45,
-        "date": "2024-07-07",
-        "category": "Housing",
-        "description": "Expense 45",
-        "amount": 41.76
-    },
-    {
-        "id": 46,
-        "date": "2024-10-26",
-        "category": "Food",
-        "description": "Expense 46",
-        "amount": 221.18
-    },
-    {
-        "id": 47,
-        "date": "2024-10-05",
-        "category": "Housing",
-        "description": "Expense 47",
-        "amount": 29.0
-    },
-    {
-        "id": 48,
-        "date": "2024-12-04",
-        "category": "Education",
-        "description": "Expense 48",
-        "amount": 28.88
-    },
-    {
-        "id": 49,
-        "date": "2024-06-09",
-        "category": "Food",
-        "description": "Expense 49",
-        "amount": 312.34
-    },
-    {
-        "id": 50,
-        "date": "2024-01-07",
-        "category": "Healthcare",
-        "description": "Expense 50",
-        "amount": 19.82
-    },
-    {
-        "id": 51,
-        "date": "2024-01-23",
-        "category": "Education",
-        "description": "Expense 51",
-        "amount": 38.9
-    },
-    {
-        "id": 52,
-        "date": "2024-02-22",
-        "category": "Utilities",
-        "description": "Expense 52",
-        "amount": 17.99
-    },
-    {
-        "id": 53,
-        "date": "2024-05-12",
-        "category": "Healthcare",
-        "description": "Expense 53",
-        "amount": 41.38
-    },
-    {
-        "id": 54,
-        "date": "2024-07-31",
-        "category": "Housing",
-        "description": "Expense 54",
-        "amount": 14.05
-    },
-    {
-        "id": 55,
-        "date": "2024-04-16",
-        "category": "Food",
-        "description": "Expense 55",
-        "amount": 319.57
-    },
-    {
-        "id": 56,
-        "date": "2024-12-30",
-        "category": "Entertainment",
-        "description": "Expense 56",
-        "amount": 39.76
-    },
-    {
-        "id": 57,
-        "date": "2024-11-15",
-        "category": "Utilities",
-        "description": "Expense 57",
-        "amount": 30.15
-    },
-    {
-        "id": 58,
-        "date": "2024-09-08",
-        "category": "Groceries",
-        "description": "Expense 58",
-        "amount": 20.85
-    },
-    {
-        "id": 59,
-        "date": "2024-01-10",
-        "category": "Housing",
-        "description": "Expense 59",
-        "amount": 39.07
-    },
-    {
-        "id": 60,
-        "date": "2024-01-23",
-        "category": "Education",
-        "description": "Expense 60",
-        "amount": 6.07
-    },
-    {
-        "id": 61,
-        "date": "2024-03-17",
-        "category": "Healthcare",
-        "description": "Expense 61",
-        "amount": 34.2
-    },
-    {
-        "id": 62,
-        "date": "2024-12-13",
-        "category": "Utilities",
-        "description": "Expense 62",
-        "amount": 49.01
-    },
-    {
-        "id": 63,
-        "date": "2024-11-11",
-        "category": "Food",
-        "description": "Expense 63",
-        "amount": 203.61
-    },
-    {
-        "id": 64,
-        "date": "2024-11-27",
-        "category": "Education",
-        "description": "Expense 64",
-        "amount": 17.93
-    },
-    {
-        "id": 65,
-        "date": "2024-11-18",
-        "category": "Utilities",
-        "description": "Expense 65",
-        "amount": 24.94
-    },
-    {
-        "id": 66,
-        "date": "2024-09-29",
-        "category": "Utilities",
-        "description": "Expense 66",
-        "amount": 37.83
-    },
-    {
-        "id": 67,
-        "date": "2024-12-23",
-        "category": "Utilities",
-        "description": "Expense 67",
-        "amount": 33.39
-    },
-    {
-        "id": 68,
-        "date": "2024-09-21",
-        "category": "Transportation",
-        "description": "Expense 68",
-        "amount": 40.28
-    },
-    {
-        "id": 69,
-        "date": "2024-09-02",
-        "category": "Utilities",
-        "description": "Expense 69",
-        "amount": 48.86
-    },
-    {
-        "id": 70,
-        "date": "2024-03-05",
-        "category": "Groceries",
-        "description": "Expense 70",
-        "amount": 24.4
-    },
-    {
-        "id": 71,
-        "date": "2024-04-02",
-        "category": "Education",
-        "description": "Expense 71",
-        "amount": 28.94
-    },
-    {
-        "id": 72,
-        "date": "2024-09-11",
-        "category": "Groceries",
-        "description": "Expense 72",
-        "amount": 34.41
-    },
-    {
-        "id": 73,
-        "date": "2024-11-29",
-        "category": "Food",
-        "description": "Expense 73",
-        "amount": 342.09
-    },
-    {
-        "id": 74,
-        "date": "2024-03-01",
-        "category": "Healthcare",
-        "description": "Expense 74",
-        "amount": 39.57
-    },
-    {
-        "id": 75,
-        "date": "2024-04-01",
-        "category": "Transportation",
-        "description": "Expense 75",
-        "amount": 15.46
-    },
-    {
-        "id": 76,
-        "date": "2024-04-01",
-        "category": "Utilities",
-        "description": "Expense 76",
-        "amount": 19.82
-    },
-    {
-        "id": 77,
-        "date": "2024-07-02",
-        "category": "Food",
-        "description": "Expense 77",
-        "amount": 395.62
-    },
-    {
-        "id": 78,
-        "date": "2024-11-01",
-        "category": "Miscellaneous",
-        "description": "Expense 78",
-        "amount": 7.45
-    },
-    {
-        "id": 79,
-        "date": "2024-11-29",
-        "category": "Education",
-        "description": "Expense 79",
-        "amount": 37.28
-    },
-    {
-        "id": 80,
-        "date": "2024-07-31",
-        "category": "Transportation",
-        "description": "Expense 80",
-        "amount": 14.35
-    },
-    {
-        "id": 81,
-        "date": "2024-03-08",
-        "category": "Food",
-        "description": "Expense 81",
-        "amount": 391.49
-    },
-    {
-        "id": 82,
-        "date": "2024-11-28",
-        "category": "Entertainment",
-        "description": "Expense 82",
-        "amount": 12.39
-    },
-    {
-        "id": 83,
-        "date": "2024-01-19",
-        "category": "Housing",
-        "description": "Expense 83",
-        "amount": 30.96
-    },
-    {
-        "id": 84,
-        "date": "2024-12-11",
-        "category": "Entertainment",
-        "description": "Expense 84",
-        "amount": 13.07
-    },
-    {
-        "id": 85,
-        "date": "2024-10-23",
-        "category": "Transportation",
-        "description": "Expense 85",
-        "amount": 5.1
-    },
-    {
-        "id": 86,
-        "date": "2024-01-07",
-        "category": "Miscellaneous",
-        "description": "Expense 86",
-        "amount": 23.32
-    },
-    {
-        "id": 87,
-        "date": "2024-12-08",
-        "category": "Food",
-        "description": "Expense 87",
-        "amount": 261.2
-    },
-    {
-        "id": 88,
-        "date": "2024-10-31",
-        "category": "Education",
-        "description": "Expense 88",
-        "amount": 21.19
-    },
-    {
-        "id": 89,
-        "date": "2024-04-05",
-        "category": "Healthcare",
-        "description": "Expense 89",
-        "amount": 7.22
-    },
-    {
-        "id": 90,
-        "date": "2024-02-26",
-        "category": "Entertainment",
-        "description": "Expense 90",
-        "amount": 21.72
-    },
-    {
-        "id": 91,
-        "date": "2024-07-29",
-        "category": "Food",
-        "description": "Expense 91",
-        "amount": 352.49
-    },
-    {
-        "id": 92,
-        "date": "2024-07-30",
-        "category": "Groceries",
-        "description": "Expense 92",
-        "amount": 27.01
-    },
-    {
-        "id": 93,
-        "date": "2024-03-27",
-        "category": "Groceries",
-        "description": "Expense 93",
-        "amount": 39.29
-    },
-    {
-        "id": 94,
-        "date": "2024-05-08",
-        "category": "Housing",
-        "description": "Expense 94",
-        "amount": 19.83
-    },
-    {
-        "id": 95,
-        "date": "2024-06-11",
-        "category": "Groceries",
-        "description": "Expense 95",
-        "amount": 11.23
-    },
-    {
-        "id": 96,
-        "date": "2024-04-20",
-        "category": "Housing",
-        "description": "Expense 96",
-        "amount": 27.86
-    },
-    {
-        "id": 97,
-        "date": "2024-09-23",
-        "category": "Housing",
-        "description": "Expense 97",
-        "amount": 44.12
-    },
-    {
-        "id": 98,
-        "date": "2024-05-20",
-        "category": "Miscellaneous",
-        "description": "Expense 98",
-        "amount": 34.0
-    },
-    {
-        "id": 99,
-        "date": "2024-03-15",
-        "category": "Entertainment",
-        "description": "Expense 99",
-        "amount": 45.01
-    },
-    {
-        "id": 100,
-        "date": "2024-01-11",
-        "category": "Housing",
-        "description": "Expense 100",
-        "amount": 9.69
-    },
-    {
-        "id": 101,
-        "date": "2024-08-03",
-        "category": "Food",
-        "description": "Expense 101",
-        "amount": 258.96
-    },
-    {
-        "id": 102,
-        "date": "2024-12-30",
-        "category": "Miscellaneous",
-        "description": "Expense 102",
-        "amount": 18.03
-    },
-    {
-        "id": 103,
-        "date": "2024-05-27",
-        "category": "Healthcare",
-        "description": "Expense 103",
-        "amount": 17.75
-    },
-    {
-        "id": 104,
-        "date": "2024-12-25",
-        "category": "Groceries",
-        "description": "Expense 104",
-        "amount": 7.98
-    },
-    {
-        "id": 105,
-        "date": "2024-07-20",
-        "category": "Groceries",
-        "description": "Expense 105",
-        "amount": 46.33
-    },
-    {
-        "id": 106,
-        "date": "2024-02-16",
-        "category": "Utilities",
-        "description": "Expense 106",
-        "amount": 26.53
-    },
-    {
-        "id": 107,
-        "date": "2024-03-23",
-        "category": "Housing",
-        "description": "Expense 107",
-        "amount": 49.25
-    },
-    {
-        "id": 108,
-        "date": "2024-01-30",
-        "category": "Housing",
-        "description": "Expense 108",
-        "amount": 13.66
-    },
-    {
-        "id": 109,
-        "date": "2024-08-02",
-        "category": "Healthcare",
-        "description": "Expense 109",
-        "amount": 9.23
-    },
-    {
-        "id": 110,
-        "date": "2024-03-08",
-        "category": "Healthcare",
-        "description": "Expense 110",
-        "amount": 24.64
-    },
-    {
-        "id": 111,
-        "date": "2024-01-14",
-        "category": "Education",
-        "description": "Expense 111",
-        "amount": 30.33
-    },
-    {
-        "id": 112,
-        "date": "2024-10-30",
-        "category": "Healthcare",
-        "description": "Expense 112",
-        "amount": 23.72
-    },
-    {
-        "id": 113,
-        "date": "2024-11-11",
-        "category": "Groceries",
-        "description": "Expense 113",
-        "amount": 38.3
-    },
-    {
-        "id": 114,
-        "date": "2024-11-20",
-        "category": "Housing",
-        "description": "Expense 114",
-        "amount": 39.84
-    },
-    {
-        "id": 115,
-        "date": "2024-07-26",
-        "category": "Miscellaneous",
-        "description": "Expense 115",
-        "amount": 48.94
-    },
-    {
-        "id": 116,
-        "date": "2024-12-31",
-        "category": "Education",
-        "description": "Expense 116",
-        "amount": 47.3
-    },
-    {
-        "id": 117,
-        "date": "2024-01-09",
-        "category": "Healthcare",
-        "description": "Expense 117",
-        "amount": 30.63
-    },
-    {
-        "id": 118,
-        "date": "2024-10-15",
-        "category": "Education",
-        "description": "Expense 118",
-        "amount": 24.3
-    },
-    {
-        "id": 119,
-        "date": "2024-02-11",
-        "category": "Utilities",
-        "description": "Expense 119",
-        "amount": 45.05
-    },
-    {
-        "id": 120,
-        "date": "2024-01-08",
-        "category": "Groceries",
-        "description": "Expense 120",
-        "amount": 20.21
-    },
-    {
-        "id": 121,
-        "date": "2024-10-24",
-        "category": "Miscellaneous",
-        "description": "Expense 121",
-        "amount": 45.56
-    },
-    {
-        "id": 122,
-        "date": "2024-10-09",
-        "category": "Utilities",
-        "description": "Expense 122",
-        "amount": 32.85
-    },
-    {
-        "id": 123,
-        "date": "2024-09-30",
-        "category": "Utilities",
-        "description": "Expense 123",
-        "amount": 31.3
-    },
-    {
-        "id": 124,
-        "date": "2024-10-08",
-        "category": "Utilities",
-        "description": "Expense 124",
-        "amount": 6.97
-    },
-    {
-        "id": 125,
-        "date": "2024-03-24",
-        "category": "Entertainment",
-        "description": "Expense 125",
-        "amount": 8.71
-    },
-    {
-        "id": 126,
-        "date": "2024-03-29",
-        "category": "Miscellaneous",
-        "description": "Expense 126",
-        "amount": 27.27
-    },
-    {
-        "id": 127,
-        "date": "2024-11-04",
-        "category": "Transportation",
-        "description": "Expense 127",
-        "amount": 43.17
-    },
-    {
-        "id": 128,
-        "date": "2024-09-29",
-        "category": "Utilities",
-        "description": "Expense 128",
-        "amount": 14.51
-    },
-    {
-        "id": 129,
-        "date": "2024-11-09",
-        "category": "Transportation",
-        "description": "Expense 129",
-        "amount": 32.44
-    },
-    {
-        "id": 130,
-        "date": "2024-06-01",
-        "category": "Groceries",
-        "description": "Expense 130",
-        "amount": 41.69
-    },
-    {
-        "id": 131,
-        "date": "2024-03-16",
-        "category": "Transportation",
-        "description": "Expense 131",
-        "amount": 29.47
-    },
-    {
-        "id": 132,
-        "date": "2024-09-22",
-        "category": "Housing",
-        "description": "Expense 132",
-        "amount": 27.51
-    },
-    {
-        "id": 133,
-        "date": "2024-03-30",
-        "category": "Transportation",
-        "description": "Expense 133",
-        "amount": 11.41
-    },
-    {
-        "id": 134,
-        "date": "2024-05-27",
-        "category": "Healthcare",
-        "description": "Expense 134",
-        "amount": 31.67
-    },
-    {
-        "id": 135,
-        "date": "2024-03-12",
-        "category": "Food",
-        "description": "Expense 135",
-        "amount": 235.44
-    },
-    {
-        "id": 136,
-        "date": "2024-05-08",
-        "category": "Food",
-        "description": "Expense 136",
-        "amount": 235.93
-    },
-    {
-        "id": 137,
-        "date": "2024-03-22",
-        "category": "Entertainment",
-        "description": "Expense 137",
-        "amount": 40.55
-    },
-    {
-        "id": 138,
-        "date": "2024-11-16",
-        "category": "Education",
-        "description": "Expense 138",
-        "amount": 14.6
-    },
-    {
-        "id": 139,
-        "date": "2024-10-10",
-        "category": "Housing",
-        "description": "Expense 139",
-        "amount": 21.67
-    },
-    {
-        "id": 140,
-        "date": "2024-12-09",
-        "category": "Groceries",
-        "description": "Expense 140",
-        "amount": 25.6
-    },
-    {
-        "id": 141,
-        "date": "2024-03-01",
-        "category": "Food",
-        "description": "Expense 141",
-        "amount": 378.5
-    },
-    {
-        "id": 142,
-        "date": "2024-03-01",
-        "category": "Miscellaneous",
-        "description": "Expense 142",
-        "amount": 48.63
-    },
-    {
-        "id": 143,
-        "date": "2024-04-22",
-        "category": "Utilities",
-        "description": "Expense 143",
-        "amount": 7.1
-    },
-    {
-        "id": 144,
-        "date": "2024-04-23",
-        "category": "Miscellaneous",
-        "description": "Expense 144",
-        "amount": 47.96
-    },
-    {
-        "id": 145,
-        "date": "2024-12-09",
-        "category": "Utilities",
-        "description": "Expense 145",
-        "amount": 25.47
-    },
-    {
-        "id": 146,
-        "date": "2024-03-09",
-        "category": "Food",
-        "description": "Expense 146",
-        "amount": 328.28
-    },
-    {
-        "id": 147,
-        "date": "2024-08-27",
-        "category": "Education",
-        "description": "Expense 147",
-        "amount": 39.53
-    },
-    {
-        "id": 148,
-        "date": "2024-07-03",
-        "category": "Utilities",
-        "description": "Expense 148",
-        "amount": 21.42
-    },
-    {
-        "id": 149,
-        "date": "2024-04-04",
-        "category": "Groceries",
-        "description": "Expense 149",
-        "amount": 39.99
-    },
-    {
-        "id": 150,
-        "date": "2024-05-09",
-        "category": "Miscellaneous",
-        "description": "Expense 150",
-        "amount": 7.0
-    },
-    {
-        "id": 151,
-        "date": "2024-07-19",
-        "category": "Food",
-        "description": "Expense 151",
-        "amount": 337.94
-    },
-    {
-        "id": 152,
-        "date": "2024-11-29",
-        "category": "Healthcare",
-        "description": "Expense 152",
-        "amount": 18.22
-    },
-    {
-        "id": 153,
-        "date": "2024-10-01",
-        "category": "Education",
-        "description": "Expense 153",
-        "amount": 12.46
-    },
-    {
-        "id": 154,
-        "date": "2024-03-16",
-        "category": "Entertainment",
-        "description": "Expense 154",
-        "amount": 43.28
-    },
-    {
-        "id": 155,
-        "date": "2024-12-12",
-        "category": "Healthcare",
-        "description": "Expense 155",
-        "amount": 29.87
-    },
-    {
-        "id": 156,
-        "date": "2024-06-08",
-        "category": "Education",
-        "description": "Expense 156",
-        "amount": 14.01
-    },
-    {
-        "id": 157,
-        "date": "2024-07-30",
-        "category": "Entertainment",
-        "description": "Expense 157",
-        "amount": 30.12
-    },
-    {
-        "id": 158,
-        "date": "2024-05-30",
-        "category": "Utilities",
-        "description": "Expense 158",
-        "amount": 15.99
-    },
-    {
-        "id": 159,
-        "date": "2024-08-06",
-        "category": "Healthcare",
-        "description": "Expense 159",
-        "amount": 7.9
-    },
-    {
-        "id": 160,
-        "date": "2024-01-09",
-        "category": "Housing",
-        "description": "Expense 160",
-        "amount": 49.44
-    },
-    {
-        "id": 161,
-        "date": "2024-10-04",
-        "category": "Food",
-        "description": "Expense 161",
-        "amount": 336.77
-    },
-    {
-        "id": 162,
-        "date": "2024-06-04",
-        "category": "Housing",
-        "description": "Expense 162",
-        "amount": 17.99
-    },
-    {
-        "id": 163,
-        "date": "2024-11-11",
-        "category": "Miscellaneous",
-        "description": "Expense 163",
-        "amount": 7.31
-    },
-    {
-        "id": 164,
-        "date": "2024-08-09",
-        "category": "Healthcare",
-        "description": "Expense 164",
-        "amount": 21.21
-    },
-    {
-        "id": 165,
-        "date": "2024-05-25",
-        "category": "Housing",
-        "description": "Expense 165",
-        "amount": 10.32
-    },
-    {
-        "id": 166,
-        "date": "2024-01-04",
-        "category": "Transportation",
-        "description": "Expense 166",
-        "amount": 19.6
-    },
-    {
-        "id": 167,
-        "date": "2024-01-03",
-        "category": "Healthcare",
-        "description": "Expense 167",
-        "amount": 9.43
-    },
-    {
-        "id": 168,
-        "date": "2024-12-12",
-        "category": "Education",
-        "description": "Expense 168",
-        "amount": 19.75
-    },
-    {
-        "id": 169,
-        "date": "2024-07-22",
-        "category": "Healthcare",
-        "description": "Expense 169",
-        "amount": 11.11
-    },
-    {
-        "id": 170,
-        "date": "2024-03-23",
-        "category": "Housing",
-        "description": "Expense 170",
-        "amount": 33.68
-    },
-    {
-        "id": 171,
-        "date": "2024-12-31",
-        "category": "Housing",
-        "description": "Expense 171",
-        "amount": 28.05
-    },
-    {
-        "id": 172,
-        "date": "2024-01-12",
-        "category": "Utilities",
-        "description": "Expense 172",
-        "amount": 26.36
-    },
-    {
-        "id": 173,
-        "date": "2024-05-15",
-        "category": "Education",
-        "description": "Expense 173",
-        "amount": 26.98
-    },
-    {
-        "id": 174,
-        "date": "2024-02-24",
-        "category": "Utilities",
-        "description": "Expense 174",
-        "amount": 24.86
-    },
-    {
-        "id": 175,
-        "date": "2024-10-31",
-        "category": "Transportation",
-        "description": "Expense 175",
-        "amount": 17.95
-    },
-    {
-        "id": 176,
-        "date": "2024-08-17",
-        "category": "Education",
-        "description": "Expense 176",
-        "amount": 23.69
-    },
-    {
-        "id": 177,
-        "date": "2024-02-02",
-        "category": "Housing",
-        "description": "Expense 177",
-        "amount": 17.99
-    },
-    {
-        "id": 178,
-        "date": "2024-12-01",
-        "category": "Housing",
-        "description": "Expense 178",
-        "amount": 46.21
-    },
-    {
-        "id": 179,
-        "date": "2024-08-22",
-        "category": "Food",
-        "description": "Expense 179",
-        "amount": 236.9
-    },
-    {
-        "id": 180,
-        "date": "2024-10-25",
-        "category": "Utilities",
-        "description": "Expense 180",
-        "amount": 12.89
-    },
-    {
-        "id": 181,
-        "date": "2024-08-25",
-        "category": "Housing",
-        "description": "Expense 181",
-        "amount": 19.62
-    },
-    {
-        "id": 182,
-        "date": "2024-10-24",
-        "category": "Food",
-        "description": "Expense 182",
-        "amount": 322.35
-    },
-    {
-        "id": 183,
-        "date": "2024-02-05",
-        "category": "Housing",
-        "description": "Expense 183",
-        "amount": 29.78
-    },
-    {
-        "id": 184,
-        "date": "2024-01-12",
-        "category": "Entertainment",
-        "description": "Expense 184",
-        "amount": 48.57
-    },
-    {
-        "id": 185,
-        "date": "2024-01-06",
-        "category": "Food",
-        "description": "Expense 185",
-        "amount": 298.43
-    },
-    {
-        "id": 186,
-        "date": "2024-03-01",
-        "category": "Transportation",
-        "description": "Expense 186",
-        "amount": 26.51
-    },
-    {
-        "id": 187,
-        "date": "2024-09-29",
-        "category": "Miscellaneous",
-        "description": "Expense 187",
-        "amount": 23.03
-    },
-    {
-        "id": 188,
-        "date": "2024-03-26",
-        "category": "Transportation",
-        "description": "Expense 188",
-        "amount": 5.34
-    },
-    {
-        "id": 189,
-        "date": "2024-11-29",
-        "category": "Education",
-        "description": "Expense 189",
-        "amount": 16.06
-    },
-    {
-        "id": 190,
-        "date": "2024-11-18",
-        "category": "Miscellaneous",
-        "description": "Expense 190",
-        "amount": 16.37
-    },
-    {
-        "id": 191,
-        "date": "2024-03-10",
-        "category": "Miscellaneous",
-        "description": "Expense 191",
-        "amount": 45.02
-    },
-    {
-        "id": 192,
-        "date": "2024-05-04",
-        "category": "Healthcare",
-        "description": "Expense 192",
-        "amount": 46.02
-    },
-    {
-        "id": 193,
-        "date": "2024-05-01",
-        "category": "Groceries",
-        "description": "Expense 193",
-        "amount": 13.6
-    },
-    {
-        "id": 194,
-        "date": "2024-01-13",
-        "category": "Education",
-        "description": "Expense 194",
-        "amount": 45.45
-    },
-    {
-        "id": 195,
-        "date": "2024-10-28",
-        "category": "Transportation",
-        "description": "Expense 195",
-        "amount": 34.91
-    },
-    {
-        "id": 196,
-        "date": "2024-12-11",
-        "category": "Food",
-        "description": "Expense 196",
-        "amount": 211.19
-    },
-    {
-        "id": 197,
-        "date": "2024-09-20",
-        "category": "Transportation",
-        "description": "Expense 197",
-        "amount": 42.37
-    },
-    {
-        "id": 198,
-        "date": "2024-01-29",
-        "category": "Miscellaneous",
-        "description": "Expense 198",
-        "amount": 7.36
-    },
-    {
-        "id": 199,
-        "date": "2024-05-15",
-        "category": "Entertainment",
-        "description": "Expense 199",
-        "amount": 19.98
-    },
-    {
-        "id": 200,
-        "date": "2024-07-31",
-        "category": "Miscellaneous",
-        "description": "Expense 200",
-        "amount": 42.46
-    },
-    {
-        "id": 201,
-        "date": "2024-03-03",
-        "category": "Healthcare",
-        "description": "Expense 201",
-        "amount": 36.87
-    },
-    {
-        "id": 202,
-        "date": "2024-07-09",
-        "category": "Entertainment",
-        "description": "Expense 202",
-        "amount": 37.89
-    },
-    {
-        "id": 203,
-        "date": "2024-02-20",
-        "category": "Food",
-        "description": "Expense 203",
-        "amount": 358.13
-    },
-    {
-        "id": 204,
-        "date": "2024-02-13",
-        "category": "Transportation",
-        "description": "Expense 204",
-        "amount": 19.99
-    },
-    {
-        "id": 205,
-        "date": "2024-09-06",
-        "category": "Utilities",
-        "description": "Expense 205",
-        "amount": 36.15
-    },
-    {
-        "id": 206,
-        "date": "2024-02-12",
-        "category": "Healthcare",
-        "description": "Expense 206",
-        "amount": 26.01
-    },
-    {
-        "id": 207,
-        "date": "2024-10-04",
-        "category": "Housing",
-        "description": "Expense 207",
-        "amount": 48.68
-    },
-    {
-        "id": 208,
-        "date": "2024-10-12",
-        "category": "Utilities",
-        "description": "Expense 208",
-        "amount": 14.52
-    },
-    {
-        "id": 209,
-        "date": "2024-08-16",
-        "category": "Healthcare",
-        "description": "Expense 209",
-        "amount": 8.24
-    },
-    {
-        "id": 210,
-        "date": "2024-12-28",
-        "category": "Housing",
-        "description": "Expense 210",
-        "amount": 39.96
-    },
-    {
-        "id": 211,
-        "date": "2024-10-15",
-        "category": "Entertainment",
-        "description": "Expense 211",
-        "amount": 38.66
-    },
-    {
-        "id": 212,
-        "date": "2024-03-16",
-        "category": "Food",
-        "description": "Expense 212",
-        "amount": 247.0
-    },
-    {
-        "id": 213,
-        "date": "2024-12-24",
-        "category": "Housing",
-        "description": "Expense 213",
-        "amount": 24.9
-    },
-    {
-        "id": 214,
-        "date": "2024-10-01",
-        "category": "Groceries",
-        "description": "Expense 214",
-        "amount": 37.19
-    },
-    {
-        "id": 215,
-        "date": "2024-02-27",
-        "category": "Healthcare",
-        "description": "Expense 215",
-        "amount": 30.48
-    },
-    {
-        "id": 216,
-        "date": "2024-04-04",
-        "category": "Groceries",
-        "description": "Expense 216",
-        "amount": 22.7
-    },
-    {
-        "id": 217,
-        "date": "2024-04-26",
-        "category": "Utilities",
-        "description": "Expense 217",
-        "amount": 20.79
-    },
-    {
-        "id": 218,
-        "date": "2024-06-10",
-        "category": "Utilities",
-        "description": "Expense 218",
-        "amount": 25.56
-    },
-    {
-        "id": 219,
-        "date": "2024-07-23",
-        "category": "Education",
-        "description": "Expense 219",
-        "amount": 9.9
-    },
-    {
-        "id": 220,
-        "date": "2024-03-29",
-        "category": "Food",
-        "description": "Expense 220",
-        "amount": 375.84
-    },
-    {
-        "id": 221,
-        "date": "2024-02-29",
-        "category": "Groceries",
-        "description": "Expense 221",
-        "amount": 32.15
-    },
-    {
-        "id": 222,
-        "date": "2024-05-19",
-        "category": "Transportation",
-        "description": "Expense 222",
-        "amount": 7.74
-    },
-    {
-        "id": 223,
-        "date": "2024-04-15",
-        "category": "Food",
-        "description": "Expense 223",
-        "amount": 391.57
-    },
-    {
-        "id": 224,
-        "date": "2024-10-23",
-        "category": "Entertainment",
-        "description": "Expense 224",
-        "amount": 31.77
-    },
-    {
-        "id": 225,
-        "date": "2024-04-01",
-        "category": "Miscellaneous",
-        "description": "Expense 225",
-        "amount": 32.83
-    },
-    {
-        "id": 226,
-        "date": "2024-08-28",
-        "category": "Entertainment",
-        "description": "Expense 226",
-        "amount": 11.71
-    },
-    {
-        "id": 227,
-        "date": "2024-09-20",
-        "category": "Miscellaneous",
-        "description": "Expense 227",
-        "amount": 26.26
-    },
-    {
-        "id": 228,
-        "date": "2024-04-01",
-        "category": "Education",
-        "description": "Expense 228",
-        "amount": 33.36
-    },
-    {
-        "id": 229,
-        "date": "2024-12-11",
-        "category": "Food",
-        "description": "Expense 229",
-        "amount": 237.85
-    },
-    {
-        "id": 230,
-        "date": "2024-02-26",
-        "category": "Groceries",
-        "description": "Expense 230",
-        "amount": 25.01
-    },
-    {
-        "id": 231,
-        "date": "2024-03-19",
-        "category": "Food",
-        "description": "Expense 231",
-        "amount": 255.31
-    },
-    {
-        "id": 232,
-        "date": "2024-02-25",
-        "category": "Education",
-        "description": "Expense 232",
-        "amount": 40.51
-    },
-    {
-        "id": 233,
-        "date": "2024-09-29",
-        "category": "Miscellaneous",
-        "description": "Expense 233",
-        "amount": 26.45
-    },
-    {
-        "id": 234,
-        "date": "2024-07-28",
-        "category": "Utilities",
-        "description": "Expense 234",
-        "amount": 21.86
-    },
-    {
-        "id": 235,
-        "date": "2024-08-26",
-        "category": "Groceries",
-        "description": "Expense 235",
-        "amount": 20.24
-    },
-    {
-        "id": 236,
-        "date": "2024-10-04",
-        "category": "Utilities",
-        "description": "Expense 236",
-        "amount": 7.64
-    },
-    {
-        "id": 237,
-        "date": "2024-06-26",
-        "category": "Miscellaneous",
-        "description": "Expense 237",
-        "amount": 36.58
-    },
-    {
-        "id": 238,
-        "date": "2024-07-21",
-        "category": "Healthcare",
-        "description": "Expense 238",
-        "amount": 22.22
-    },
-    {
-        "id": 239,
-        "date": "2024-12-13",
-        "category": "Education",
-        "description": "Expense 239",
-        "amount": 43.7
-    },
-    {
-        "id": 240,
-        "date": "2024-03-22",
-        "category": "Miscellaneous",
-        "description": "Expense 240",
-        "amount": 20.21
-    },
-    {
-        "id": 241,
-        "date": "2024-10-07",
-        "category": "Education",
-        "description": "Expense 241",
-        "amount": 38.94
-    },
-    {
-        "id": 242,
-        "date": "2024-11-13",
-        "category": "Food",
-        "description": "Expense 242",
-        "amount": 291.94
-    },
-    {
-        "id": 243,
-        "date": "2024-04-12",
-        "category": "Groceries",
-        "description": "Expense 243",
-        "amount": 6.67
-    },
-    {
-        "id": 244,
-        "date": "2024-08-15",
-        "category": "Education",
-        "description": "Expense 244",
-        "amount": 34.39
-    },
-    {
-        "id": 245,
-        "date": "2024-01-05",
-        "category": "Miscellaneous",
-        "description": "Expense 245",
-        "amount": 35.69
-    },
-    {
-        "id": 246,
-        "date": "2024-12-29",
-        "category": "Healthcare",
-        "description": "Expense 246",
-        "amount": 22.23
-    },
-    {
-        "id": 247,
-        "date": "2024-06-21",
-        "category": "Transportation",
-        "description": "Expense 247",
-        "amount": 49.87
-    },
-    {
-        "id": 248,
-        "date": "2024-01-23",
-        "category": "Education",
-        "description": "Expense 248",
-        "amount": 33.36
-    },
-    {
-        "id": 249,
-        "date": "2024-11-12",
-        "category": "Utilities",
-        "description": "Expense 249",
-        "amount": 42.37
-    },
-    {
-        "id": 250,
-        "date": "2024-11-20",
-        "category": "Transportation",
-        "description": "Expense 250",
-        "amount": 49.68
-    },
-    {
-        "id": 251,
-        "date": "2024-07-06",
-        "category": "Entertainment",
-        "description": "Expense 251",
-        "amount": 31.32
-    },
-    {
-        "id": 252,
-        "date": "2024-06-15",
-        "category": "Food",
-        "description": "Expense 252",
-        "amount": 396.43
-    },
-    {
-        "id": 253,
-        "date": "2024-03-28",
-        "category": "Transportation",
-        "description": "Expense 253",
-        "amount": 31.72
-    },
-    {
-        "id": 254,
-        "date": "2024-07-03",
-        "category": "Transportation",
-        "description": "Expense 254",
-        "amount": 31.57
-    },
-    {
-        "id": 255,
-        "date": "2024-04-17",
-        "category": "Food",
-        "description": "Expense 255",
-        "amount": 295.58
-    },
-    {
-        "id": 256,
-        "date": "2024-03-24",
-        "category": "Entertainment",
-        "description": "Expense 256",
-        "amount": 37.48
-    },
-    {
-        "id": 257,
-        "date": "2024-02-08",
-        "category": "Utilities",
-        "description": "Expense 257",
-        "amount": 48.62
-    },
-    {
-        "id": 258,
-        "date": "2024-10-03",
-        "category": "Utilities",
-        "description": "Expense 258",
-        "amount": 20.51
-    },
-    {
-        "id": 259,
-        "date": "2024-07-20",
-        "category": "Housing",
-        "description": "Expense 259",
-        "amount": 47.88
-    },
-    {
-        "id": 260,
-        "date": "2024-04-02",
-        "category": "Food",
-        "description": "Expense 260",
-        "amount": 345.32
-    },
-    {
-        "id": 261,
-        "date": "2024-03-01",
-        "category": "Utilities",
-        "description": "Expense 261",
-        "amount": 18.38
-    },
-    {
-        "id": 262,
-        "date": "2024-05-25",
-        "category": "Miscellaneous",
-        "description": "Expense 262",
-        "amount": 46.97
-    },
-    {
-        "id": 263,
-        "date": "2024-02-09",
-        "category": "Utilities",
-        "description": "Expense 263",
-        "amount": 11.88
-    },
-    {
-        "id": 264,
-        "date": "2024-04-07",
-        "category": "Transportation",
-        "description": "Expense 264",
-        "amount": 18.66
-    },
-    {
-        "id": 265,
-        "date": "2024-02-24",
-        "category": "Utilities",
-        "description": "Expense 265",
-        "amount": 15.68
-    },
-    {
-        "id": 266,
-        "date": "2024-03-04",
-        "category": "Transportation",
-        "description": "Expense 266",
-        "amount": 6.25
-    },
-    {
-        "id": 267,
-        "date": "2024-12-03",
-        "category": "Transportation",
-        "description": "Expense 267",
-        "amount": 27.55
-    },
-    {
-        "id": 268,
-        "date": "2024-04-01",
-        "category": "Groceries",
-        "description": "Expense 268",
-        "amount": 30.41
-    },
-    {
-        "id": 269,
-        "date": "2024-12-23",
-        "category": "Healthcare",
-        "description": "Expense 269",
-        "amount": 23.6
-    },
-    {
-        "id": 270,
-        "date": "2024-11-20",
-        "category": "Miscellaneous",
-        "description": "Expense 270",
-        "amount": 33.33
-    },
-    {
-        "id": 271,
-        "date": "2024-12-16",
-        "category": "Healthcare",
-        "description": "Expense 271",
-        "amount": 26.07
-    },
-    {
-        "id": 272,
-        "date": "2024-06-07",
-        "category": "Transportation",
-        "description": "Expense 272",
-        "amount": 33.52
-    },
-    {
-        "id": 273,
-        "date": "2024-05-20",
-        "category": "Miscellaneous",
-        "description": "Expense 273",
-        "amount": 47.67
-    },
-    {
-        "id": 274,
-        "date": "2024-03-05",
-        "category": "Groceries",
-        "description": "Expense 274",
-        "amount": 43.02
-    },
-    {
-        "id": 275,
-        "date": "2024-05-17",
-        "category": "Healthcare",
-        "description": "Expense 275",
-        "amount": 7.69
-    },
-    {
-        "id": 276,
-        "date": "2024-02-07",
-        "category": "Utilities",
-        "description": "Expense 276",
-        "amount": 32.18
-    },
-    {
-        "id": 277,
-        "date": "2024-12-17",
-        "category": "Groceries",
-        "description": "Expense 277",
-        "amount": 15.19
-    },
-    {
-        "id": 278,
-        "date": "2024-05-18",
-        "category": "Healthcare",
-        "description": "Expense 278",
-        "amount": 17.95
-    },
-    {
-        "id": 279,
-        "date": "2024-04-16",
-        "category": "Entertainment",
-        "description": "Expense 279",
-        "amount": 11.09
-    },
-    {
-        "id": 280,
-        "date": "2024-08-01",
-        "category": "Housing",
-        "description": "Expense 280",
-        "amount": 44.67
-    },
-    {
-        "id": 281,
-        "date": "2024-11-30",
-        "category": "Healthcare",
-        "description": "Expense 281",
-        "amount": 27.01
-    },
-    {
-        "id": 282,
-        "date": "2024-07-10",
-        "category": "Transportation",
-        "description": "Expense 282",
-        "amount": 39.78
-    },
-    {
-        "id": 283,
-        "date": "2024-08-12",
-        "category": "Utilities",
-        "description": "Expense 283",
-        "amount": 7.95
-    },
-    {
-        "id": 284,
-        "date": "2024-03-04",
-        "category": "Transportation",
-        "description": "Expense 284",
-        "amount": 37.19
-    },
-    {
-        "id": 285,
-        "date": "2024-08-24",
-        "category": "Food",
-        "description": "Expense 285",
-        "amount": 327.93
-    },
-    {
-        "id": 286,
-        "date": "2024-09-03",
-        "category": "Education",
-        "description": "Expense 286",
-        "amount": 41.26
-    },
-    {
-        "id": 287,
-        "date": "2024-02-03",
-        "category": "Food",
-        "description": "Expense 287",
-        "amount": 341.48
-    },
-    {
-        "id": 288,
-        "date": "2024-09-27",
-        "category": "Transportation",
-        "description": "Expense 288",
-        "amount": 33.19
-    },
-    {
-        "id": 289,
-        "date": "2024-11-06",
-        "category": "Food",
-        "description": "Expense 289",
-        "amount": 333.79
-    },
-    {
-        "id": 290,
-        "date": "2024-05-15",
-        "category": "Groceries",
-        "description": "Expense 290",
-        "amount": 49.39
-    },
-    {
-        "id": 291,
-        "date": "2024-04-16",
-        "category": "Housing",
-        "description": "Expense 291",
-        "amount": 22.3
-    },
-    {
-        "id": 292,
-        "date": "2024-01-24",
-        "category": "Entertainment",
-        "description": "Expense 292",
-        "amount": 12.37
-    },
-    {
-        "id": 293,
-        "date": "2024-01-22",
-        "category": "Housing",
-        "description": "Expense 293",
-        "amount": 28.46
-    },
-    {
-        "id": 294,
-        "date": "2024-01-29",
-        "category": "Healthcare",
-        "description": "Expense 294",
-        "amount": 18.05
-    },
-    {
-        "id": 295,
-        "date": "2024-04-17",
-        "category": "Housing",
-        "description": "Expense 295",
-        "amount": 9.93
-    },
-    {
-        "id": 296,
-        "date": "2024-02-11",
-        "category": "Transportation",
-        "description": "Expense 296",
-        "amount": 44.09
-    },
-    {
-        "id": 297,
-        "date": "2024-06-01",
-        "category": "Utilities",
-        "description": "Expense 297",
-        "amount": 31.8
-    },
-    {
-        "id": 298,
-        "date": "2024-12-29",
-        "category": "Food",
-        "description": "Expense 298",
-        "amount": 259.23
-    },
-    {
-        "id": 299,
-        "date": "2024-12-09",
-        "category": "Food",
-        "description": "Expense 299",
-        "amount": 210.77
-    },
-    {
-        "id": 300,
-        "date": "2024-11-21",
-        "category": "Healthcare",
-        "description": "Expense 300",
-        "amount": 22.9
-    },
-    {
-        "id": 301,
-        "date": "2024-02-20",
-        "category": "Transportation",
-        "description": "Expense 301",
-        "amount": 15.21
-    },
-    {
-        "id": 302,
-        "date": "2024-09-30",
-        "category": "Housing",
-        "description": "Expense 302",
-        "amount": 45.98
-    },
-    {
-        "id": 303,
-        "date": "2024-02-24",
-        "category": "Education",
-        "description": "Expense 303",
-        "amount": 9.77
-    },
-    {
-        "id": 304,
-        "date": "2024-11-14",
-        "category": "Utilities",
-        "description": "Expense 304",
-        "amount": 17.67
-    },
-    {
-        "id": 305,
-        "date": "2024-05-31",
-        "category": "Healthcare",
-        "description": "Expense 305",
-        "amount": 28.87
-    },
-    {
-        "id": 306,
-        "date": "2024-01-03",
-        "category": "Food",
-        "description": "Expense 306",
-        "amount": 357.79
-    },
-    {
-        "id": 307,
-        "date": "2024-04-02",
-        "category": "Housing",
-        "description": "Expense 307",
-        "amount": 10.36
-    },
-    {
-        "id": 308,
-        "date": "2024-01-21",
-        "category": "Housing",
-        "description": "Expense 308",
-        "amount": 45.75
-    },
-    {
-        "id": 309,
-        "date": "2024-03-02",
-        "category": "Groceries",
-        "description": "Expense 309",
-        "amount": 18.59
-    },
-    {
-        "id": 310,
-        "date": "2024-04-26",
-        "category": "Housing",
-        "description": "Expense 310",
-        "amount": 11.03
-    },
-    {
-        "id": 311,
-        "date": "2024-03-04",
-        "category": "Healthcare",
-        "description": "Expense 311",
-        "amount": 36.76
-    },
-    {
-        "id": 312,
-        "date": "2024-02-12",
-        "category": "Entertainment",
-        "description": "Expense 312",
-        "amount": 16.38
-    },
-    {
-        "id": 313,
-        "date": "2024-01-09",
-        "category": "Housing",
-        "description": "Expense 313",
-        "amount": 36.77
-    },
-    {
-        "id": 314,
-        "date": "2024-03-28",
-        "category": "Transportation",
-        "description": "Expense 314",
-        "amount": 42.1
-    },
-    {
-        "id": 315,
-        "date": "2024-06-17",
-        "category": "Food",
-        "description": "Expense 315",
-        "amount": 266.8
-    },
-    {
-        "id": 316,
-        "date": "2024-10-09",
-        "category": "Education",
-        "description": "Expense 316",
-        "amount": 34.07
-    },
-    {
-        "id": 317,
-        "date": "2024-05-14",
-        "category": "Miscellaneous",
-        "description": "Expense 317",
-        "amount": 20.77
-    },
-    {
-        "id": 318,
-        "date": "2024-08-06",
-        "category": "Housing",
-        "description": "Expense 318",
-        "amount": 30.69
-    },
-    {
-        "id": 319,
-        "date": "2024-03-01",
-        "category": "Entertainment",
-        "description": "Expense 319",
-        "amount": 39.82
-    },
-    {
-        "id": 320,
-        "date": "2024-02-15",
-        "category": "Transportation",
-        "description": "Expense 320",
-        "amount": 45.99
-    },
-    {
-        "id": 321,
-        "date": "2024-11-24",
-        "category": "Groceries",
-        "description": "Expense 321",
-        "amount": 8.34
-    },
-    {
-        "id": 322,
-        "date": "2024-02-13",
-        "category": "Education",
-        "description": "Expense 322",
-        "amount": 36.81
-    },
-    {
-        "id": 323,
-        "date": "2024-08-11",
-        "category": "Miscellaneous",
-        "description": "Expense 323",
-        "amount": 22.12
-    },
-    {
-        "id": 324,
-        "date": "2024-06-23",
-        "category": "Education",
-        "description": "Expense 324",
-        "amount": 41.09
-    },
-    {
-        "id": 325,
-        "date": "2024-11-15",
-        "category": "Entertainment",
-        "description": "Expense 325",
-        "amount": 23.22
-    },
-    {
-        "id": 326,
-        "date": "2024-02-05",
-        "category": "Groceries",
-        "description": "Expense 326",
-        "amount": 35.45
-    },
-    {
-        "id": 327,
-        "date": "2024-05-16",
-        "category": "Utilities",
-        "description": "Expense 327",
-        "amount": 12.98
-    },
-    {
-        "id": 328,
-        "date": "2024-03-26",
-        "category": "Transportation",
-        "description": "Expense 328",
-        "amount": 42.86
-    },
-    {
-        "id": 329,
-        "date": "2024-06-14",
-        "category": "Entertainment",
-        "description": "Expense 329",
-        "amount": 16.01
-    },
-    {
-        "id": 330,
-        "date": "2024-01-12",
-        "category": "Utilities",
-        "description": "Expense 330",
-        "amount": 7.66
-    },
-    {
-        "id": 331,
-        "date": "2024-03-22",
-        "category": "Housing",
-        "description": "Expense 331",
-        "amount": 44.37
-    },
-    {
-        "id": 332,
-        "date": "2024-04-25",
-        "category": "Utilities",
-        "description": "Expense 332",
-        "amount": 18.9
-    },
-    {
-        "id": 333,
-        "date": "2024-05-27",
-        "category": "Transportation",
-        "description": "Expense 333",
-        "amount": 35.18
-    },
-    {
-        "id": 334,
-        "date": "2024-04-23",
-        "category": "Housing",
-        "description": "Expense 334",
-        "amount": 22.02
-    },
-    {
-        "id": 335,
-        "date": "2024-08-04",
-        "category": "Groceries",
-        "description": "Expense 335",
-        "amount": 15.81
-    },
-    {
-        "id": 336,
-        "date": "2024-05-28",
-        "category": "Utilities",
-        "description": "Expense 336",
-        "amount": 46.18
-    },
-    {
-        "id": 337,
-        "date": "2024-06-24",
-        "category": "Miscellaneous",
-        "description": "Expense 337",
-        "amount": 43.87
-    },
-    {
-        "id": 338,
-        "date": "2024-04-02",
-        "category": "Education",
-        "description": "Expense 338",
-        "amount": 11.3
-    },
-    {
-        "id": 339,
-        "date": "2024-08-19",
-        "category": "Entertainment",
-        "description": "Expense 339",
-        "amount": 9.36
-    },
-    {
-        "id": 340,
-        "date": "2024-12-27",
-        "category": "Utilities",
-        "description": "Expense 340",
-        "amount": 49.99
-    },
-    {
-        "id": 341,
-        "date": "2024-12-24",
-        "category": "Miscellaneous",
-        "description": "Expense 341",
-        "amount": 45.41
-    },
-    {
-        "id": 342,
-        "date": "2024-07-01",
-        "category": "Housing",
-        "description": "Expense 342",
-        "amount": 19.68
-    },
-    {
-        "id": 343,
-        "date": "2024-05-23",
-        "category": "Utilities",
-        "description": "Expense 343",
-        "amount": 39.86
-    },
-    {
-        "id": 344,
-        "date": "2024-06-03",
-        "category": "Food",
-        "description": "Expense 344",
-        "amount": 268.89
-    },
-    {
-        "id": 345,
-        "date": "2024-05-25",
-        "category": "Housing",
-        "description": "Expense 345",
-        "amount": 28.43
-    },
-    {
-        "id": 346,
-        "date": "2024-03-21",
-        "category": "Housing",
-        "description": "Expense 346",
-        "amount": 14.74
-    },
-    {
-        "id": 347,
-        "date": "2024-05-26",
-        "category": "Food",
-        "description": "Expense 347",
-        "amount": 255.81
-    },
-    {
-        "id": 348,
-        "date": "2024-10-17",
-        "category": "Utilities",
-        "description": "Expense 348",
-        "amount": 5.22
-    },
-    {
-        "id": 349,
-        "date": "2024-10-23",
-        "category": "Groceries",
-        "description": "Expense 349",
-        "amount": 36.04
-    },
-    {
-        "id": 350,
-        "date": "2024-07-08",
-        "category": "Transportation",
-        "description": "Expense 350",
-        "amount": 26.46
-    },
-    {
-        "id": 351,
-        "date": "2024-07-22",
-        "category": "Entertainment",
-        "description": "Expense 351",
-        "amount": 15.74
-    },
-    {
-        "id": 352,
-        "date": "2024-01-27",
-        "category": "Healthcare",
-        "description": "Expense 352",
-        "amount": 18.21
-    },
-    {
-        "id": 353,
-        "date": "2024-06-22",
-        "category": "Groceries",
-        "description": "Expense 353",
-        "amount": 19.01
-    },
-    {
-        "id": 354,
-        "date": "2024-01-04",
-        "category": "Education",
-        "description": "Expense 354",
-        "amount": 31.25
-    },
-    {
-        "id": 355,
-        "date": "2024-10-29",
-        "category": "Transportation",
-        "description": "Expense 355",
-        "amount": 45.9
-    },
-    {
-        "id": 356,
-        "date": "2024-03-18",
-        "category": "Housing",
-        "description": "Expense 356",
-        "amount": 44.17
-    },
-    {
-        "id": 357,
-        "date": "2024-08-26",
-        "category": "Healthcare",
-        "description": "Expense 357",
-        "amount": 37.84
-    },
-    {
-        "id": 358,
-        "date": "2024-11-07",
-        "category": "Utilities",
-        "description": "Expense 358",
-        "amount": 19.6
-    },
-    {
-        "id": 359,
-        "date": "2024-11-14",
-        "category": "Food",
-        "description": "Expense 359",
-        "amount": 397.61
-    },
-    {
-        "id": 360,
-        "date": "2024-02-23",
-        "category": "Entertainment",
-        "description": "Expense 360",
-        "amount": 22.56
-    },
-    {
-        "id": 361,
-        "date": "2024-03-24",
-        "category": "Education",
-        "description": "Expense 361",
-        "amount": 6.32
-    },
-    {
-        "id": 362,
-        "date": "2024-09-04",
-        "category": "Utilities",
-        "description": "Expense 362",
-        "amount": 10.3
-    },
-    {
-        "id": 363,
-        "date": "2024-05-24",
-        "category": "Groceries",
-        "description": "Expense 363",
-        "amount": 23.33
-    },
-    {
-        "id": 364,
-        "date": "2024-01-29",
-        "category": "Transportation",
-        "description": "Expense 364",
-        "amount": 31.66
-    },
-    {
-        "id": 365,
-        "date": "2024-06-29",
-        "category": "Healthcare",
-        "description": "Expense 365",
-        "amount": 21.07
-    },
-    {
-        "id": 366,
-        "date": "2024-12-08",
-        "category": "Groceries",
-        "description": "Expense 366",
-        "amount": 36.55
-    },
-    {
-        "id": 367,
-        "date": "2024-09-29",
-        "category": "Housing",
-        "description": "Expense 367",
-        "amount": 24.89
-    },
-    {
-        "id": 368,
-        "date": "2024-03-10",
-        "category": "Groceries",
-        "description": "Expense 368",
-        "amount": 24.6
-    },
-    {
-        "id": 369,
-        "date": "2024-12-16",
-        "category": "Food",
-        "description": "Expense 369",
-        "amount": 301.32
-    },
-    {
-        "id": 370,
-        "date": "2024-03-24",
-        "category": "Utilities",
-        "description": "Expense 370",
-        "amount": 22.92
-    },
-    {
-        "id": 371,
-        "date": "2024-05-18",
-        "category": "Education",
-        "description": "Expense 371",
-        "amount": 40.81
-    },
-    {
-        "id": 372,
-        "date": "2024-10-25",
-        "category": "Miscellaneous",
-        "description": "Expense 372",
-        "amount": 12.42
-    },
-    {
-        "id": 373,
-        "date": "2024-04-24",
-        "category": "Transportation",
-        "description": "Expense 373",
-        "amount": 41.88
-    },
-    {
-        "id": 374,
-        "date": "2024-05-12",
-        "category": "Housing",
-        "description": "Expense 374",
-        "amount": 13.73
-    },
-    {
-        "id": 375,
-        "date": "2024-04-13",
-        "category": "Utilities",
-        "description": "Expense 375",
-        "amount": 48.57
-    },
-    {
-        "id": 376,
-        "date": "2024-05-24",
-        "category": "Transportation",
-        "description": "Expense 376",
-        "amount": 39.13
-    },
-    {
-        "id": 377,
-        "date": "2024-12-21",
-        "category": "Groceries",
-        "description": "Expense 377",
-        "amount": 39.45
-    },
-    {
-        "id": 378,
-        "date": "2024-06-30",
-        "category": "Food",
-        "description": "Expense 378",
-        "amount": 356.51
-    },
-    {
-        "id": 379,
-        "date": "2024-03-28",
-        "category": "Healthcare",
-        "description": "Expense 379",
-        "amount": 9.26
-    },
-    {
-        "id": 380,
-        "date": "2024-08-30",
-        "category": "Healthcare",
-        "description": "Expense 380",
-        "amount": 31.99
-    },
-    {
-        "id": 381,
-        "date": "2024-02-20",
-        "category": "Education",
-        "description": "Expense 381",
-        "amount": 19.46
-    },
-    {
-        "id": 382,
-        "date": "2024-01-02",
-        "category": "Utilities",
-        "description": "Expense 382",
-        "amount": 19.74
-    },
-    {
-        "id": 383,
-        "date": "2024-09-18",
-        "category": "Utilities",
-        "description": "Expense 383",
-        "amount": 39.89
-    },
-    {
-        "id": 384,
-        "date": "2024-06-15",
-        "category": "Groceries",
-        "description": "Expense 384",
-        "amount": 49.04
-    },
-    {
-        "id": 385,
-        "date": "2024-02-19",
-        "category": "Utilities",
-        "description": "Expense 385",
-        "amount": 40.69
-    },
-    {
-        "id": 386,
-        "date": "2024-05-16",
-        "category": "Healthcare",
-        "description": "Expense 386",
-        "amount": 20.89
-    },
-    {
-        "id": 387,
-        "date": "2024-06-04",
-        "category": "Entertainment",
-        "description": "Expense 387",
-        "amount": 46.42
-    },
-    {
-        "id": 388,
-        "date": "2024-07-26",
-        "category": "Healthcare",
-        "description": "Expense 388",
-        "amount": 33.62
-    },
-    {
-        "id": 389,
-        "date": "2024-05-06",
-        "category": "Utilities",
-        "description": "Expense 389",
-        "amount": 41.03
-    },
-    {
-        "id": 390,
-        "date": "2024-09-12",
-        "category": "Entertainment",
-        "description": "Expense 390",
-        "amount": 19.33
-    },
-    {
-        "id": 391,
-        "date": "2024-06-30",
-        "category": "Healthcare",
-        "description": "Expense 391",
-        "amount": 15.66
-    },
-    {
-        "id": 392,
-        "date": "2024-04-23",
-        "category": "Food",
-        "description": "Expense 392",
-        "amount": 354.65
-    },
-    {
-        "id": 393,
-        "date": "2024-03-20",
-        "category": "Utilities",
-        "description": "Expense 393",
-        "amount": 17.76
-    },
-    {
-        "id": 394,
-        "date": "2024-09-11",
-        "category": "Healthcare",
-        "description": "Expense 394",
-        "amount": 30.2
-    },
-    {
-        "id": 395,
-        "date": "2024-08-30",
-        "category": "Healthcare",
-        "description": "Expense 395",
-        "amount": 42.42
-    },
-    {
-        "id": 396,
-        "date": "2024-07-12",
-        "category": "Housing",
-        "description": "Expense 396",
-        "amount": 42.81
-    },
-    {
-        "id": 397,
-        "date": "2024-10-15",
-        "category": "Healthcare",
-        "description": "Expense 397",
-        "amount": 31.2
-    },
-    {
-        "id": 398,
-        "date": "2024-09-10",
-        "category": "Education",
-        "description": "Expense 398",
-        "amount": 28.99
-    },
-    {
-        "id": 399,
-        "date": "2024-06-21",
-        "category": "Housing",
-        "description": "Expense 399",
-        "amount": 48.6
-    },
-    {
-        "id": 400,
-        "date": "2024-01-18",
-        "category": "Utilities",
-        "description": "Expense 400",
-        "amount": 16.31
-    },
-    {
-        "id": 401,
-        "date": "2024-07-11",
-        "category": "Miscellaneous",
-        "description": "Expense 401",
-        "amount": 43.2
-    },
-    {
-        "id": 402,
-        "date": "2024-12-14",
-        "category": "Housing",
-        "description": "Expense 402",
-        "amount": 24.61
-    },
-    {
-        "id": 403,
-        "date": "2024-01-13",
-        "category": "Groceries",
-        "description": "Expense 403",
-        "amount": 8.11
-    },
-    {
-        "id": 404,
-        "date": "2024-02-25",
-        "category": "Utilities",
-        "description": "Expense 404",
-        "amount": 42.92
-    },
-    {
-        "id": 405,
-        "date": "2024-04-12",
-        "category": "Utilities",
-        "description": "Expense 405",
-        "amount": 19.54
-    },
-    {
-        "id": 406,
-        "date": "2024-10-23",
-        "category": "Food",
-        "description": "Expense 406",
-        "amount": 332.64
-    },
-    {
-        "id": 407,
-        "date": "2024-03-31",
-        "category": "Food",
-        "description": "Expense 407",
-        "amount": 270.57
-    },
-    {
-        "id": 408,
-        "date": "2024-12-15",
-        "category": "Miscellaneous",
-        "description": "Expense 408",
-        "amount": 49.37
-    },
-    {
-        "id": 409,
-        "date": "2024-06-05",
-        "category": "Transportation",
-        "description": "Expense 409",
-        "amount": 24.75
-    },
-    {
-        "id": 410,
-        "date": "2024-10-07",
-        "category": "Entertainment",
-        "description": "Expense 410",
-        "amount": 9.76
-    },
-    {
-        "id": 411,
-        "date": "2024-07-13",
-        "category": "Utilities",
-        "description": "Expense 411",
-        "amount": 42.73
-    },
-    {
-        "id": 412,
-        "date": "2024-12-24",
-        "category": "Utilities",
-        "description": "Expense 412",
-        "amount": 41.29
-    },
-    {
-        "id": 413,
-        "date": "2024-07-19",
-        "category": "Utilities",
-        "description": "Expense 413",
-        "amount": 19.15
-    },
-    {
-        "id": 414,
-        "date": "2024-10-15",
-        "category": "Food",
-        "description": "Expense 414",
-        "amount": 295.82
-    },
-    {
-        "id": 415,
-        "date": "2024-02-19",
-        "category": "Entertainment",
-        "description": "Expense 415",
-        "amount": 23.53
-    },
-    {
-        "id": 416,
-        "date": "2024-10-18",
-        "category": "Food",
-        "description": "Expense 416",
-        "amount": 276.45
-    },
-    {
-        "id": 417,
-        "date": "2024-12-11",
-        "category": "Education",
-        "description": "Expense 417",
-        "amount": 19.27
-    },
-    {
-        "id": 418,
-        "date": "2024-08-08",
-        "category": "Miscellaneous",
-        "description": "Expense 418",
-        "amount": 11.24
-    },
-    {
-        "id": 419,
-        "date": "2024-02-16",
-        "category": "Transportation",
-        "description": "Expense 419",
-        "amount": 22.64
-    },
-    {
-        "id": 420,
-        "date": "2024-05-20",
-        "category": "Housing",
-        "description": "Expense 420",
-        "amount": 29.91
-    },
-    {
-        "id": 421,
-        "date": "2024-09-09",
-        "category": "Entertainment",
-        "description": "Expense 421",
-        "amount": 48.44
-    },
-    {
-        "id": 422,
-        "date": "2024-09-20",
-        "category": "Food",
-        "description": "Expense 422",
-        "amount": 251.05
-    },
-    {
-        "id": 423,
-        "date": "2024-06-18",
-        "category": "Utilities",
-        "description": "Expense 423",
-        "amount": 46.21
-    },
-    {
-        "id": 424,
-        "date": "2024-06-06",
-        "category": "Food",
-        "description": "Expense 424",
-        "amount": 388.48
-    },
-    {
-        "id": 425,
-        "date": "2024-11-22",
-        "category": "Transportation",
-        "description": "Expense 425",
-        "amount": 7.13
-    },
-    {
-        "id": 426,
-        "date": "2024-11-22",
-        "category": "Food",
-        "description": "Expense 426",
-        "amount": 313.84
-    },
-    {
-        "id": 427,
-        "date": "2024-12-15",
-        "category": "Miscellaneous",
-        "description": "Expense 427",
-        "amount": 8.97
-    },
-    {
-        "id": 428,
-        "date": "2024-12-09",
-        "category": "Housing",
-        "description": "Expense 428",
-        "amount": 30.38
-    },
-    {
-        "id": 429,
-        "date": "2024-02-05",
-        "category": "Utilities",
-        "description": "Expense 429",
-        "amount": 24.65
-    },
-    {
-        "id": 430,
-        "date": "2024-12-17",
-        "category": "Transportation",
-        "description": "Expense 430",
-        "amount": 26.36
-    },
-    {
-        "id": 431,
-        "date": "2024-09-30",
-        "category": "Education",
-        "description": "Expense 431",
-        "amount": 42.74
-    },
-    {
-        "id": 432,
-        "date": "2024-11-27",
-        "category": "Education",
-        "description": "Expense 432",
-        "amount": 41.26
-    },
-    {
-        "id": 433,
-        "date": "2024-10-05",
-        "category": "Utilities",
-        "description": "Expense 433",
-        "amount": 24.63
-    },
-    {
-        "id": 434,
-        "date": "2024-06-16",
-        "category": "Utilities",
-        "description": "Expense 434",
-        "amount": 26.21
-    },
-    {
-        "id": 435,
-        "date": "2024-05-30",
-        "category": "Education",
-        "description": "Expense 435",
-        "amount": 47.81
-    },
-    {
-        "id": 436,
-        "date": "2024-07-19",
-        "category": "Food",
-        "description": "Expense 436",
-        "amount": 271.07
-    },
-    {
-        "id": 437,
-        "date": "2024-11-01",
-        "category": "Housing",
-        "description": "Expense 437",
-        "amount": 6.13
-    },
-    {
-        "id": 438,
-        "date": "2024-08-08",
-        "category": "Entertainment",
-        "description": "Expense 438",
-        "amount": 8.53
-    },
-    {
-        "id": 439,
-        "date": "2024-04-19",
-        "category": "Education",
-        "description": "Expense 439",
-        "amount": 47.02
-    },
-    {
-        "id": 440,
-        "date": "2024-04-24",
-        "category": "Food",
-        "description": "Expense 440",
-        "amount": 309.93
-    },
-    {
-        "id": 441,
-        "date": "2024-10-18",
-        "category": "Education",
-        "description": "Expense 441",
-        "amount": 30.56
-    },
-    {
-        "id": 442,
-        "date": "2024-05-06",
-        "category": "Food",
-        "description": "Expense 442",
-        "amount": 354.81
-    },
-    {
-        "id": 443,
-        "date": "2024-05-29",
-        "category": "Food",
-        "description": "Expense 443",
-        "amount": 258.02
-    },
-    {
-        "id": 444,
-        "date": "2024-09-16",
-        "category": "Food",
-        "description": "Expense 444",
-        "amount": 283.76
-    },
-    {
-        "id": 445,
-        "date": "2024-07-09",
-        "category": "Education",
-        "description": "Expense 445",
-        "amount": 48.51
-    },
-    {
-        "id": 446,
-        "date": "2024-01-03",
-        "category": "Food",
-        "description": "Expense 446",
-        "amount": 265.42
-    },
-    {
-        "id": 447,
-        "date": "2024-10-10",
-        "category": "Entertainment",
-        "description": "Expense 447",
-        "amount": 24.71
-    },
-    {
-        "id": 448,
-        "date": "2024-06-16",
-        "category": "Entertainment",
-        "description": "Expense 448",
-        "amount": 46.36
-    },
-    {
-        "id": 449,
-        "date": "2024-01-26",
-        "category": "Groceries",
-        "description": "Expense 449",
-        "amount": 23.08
-    },
-    {
-        "id": 450,
-        "date": "2024-11-06",
-        "category": "Housing",
-        "description": "Expense 450",
-        "amount": 39.72
-    },
-    {
-        "id": 451,
-        "date": "2024-07-13",
-        "category": "Education",
-        "description": "Expense 451",
-        "amount": 38.51
-    },
-    {
-        "id": 452,
-        "date": "2024-04-02",
-        "category": "Entertainment",
-        "description": "Expense 452",
-        "amount": 19.22
-    },
-    {
-        "id": 453,
-        "date": "2024-06-02",
-        "category": "Groceries",
-        "description": "Expense 453",
-        "amount": 20.01
-    },
-    {
-        "id": 454,
-        "date": "2024-12-06",
-        "category": "Miscellaneous",
-        "description": "Expense 454",
-        "amount": 13.05
-    },
-    {
-        "id": 455,
-        "date": "2024-03-03",
-        "category": "Healthcare",
-        "description": "Expense 455",
-        "amount": 12.31
-    },
-    {
-        "id": 456,
-        "date": "2024-02-01",
-        "category": "Education",
-        "description": "Expense 456",
-        "amount": 43.93
-    },
-    {
-        "id": 457,
-        "date": "2024-03-29",
-        "category": "Healthcare",
-        "description": "Expense 457",
-        "amount": 20.09
-    },
-    {
-        "id": 458,
-        "date": "2024-09-29",
-        "category": "Groceries",
-        "description": "Expense 458",
-        "amount": 27.1
-    },
-    {
-        "id": 459,
-        "date": "2024-11-21",
-        "category": "Housing",
-        "description": "Expense 459",
-        "amount": 41.56
-    },
-    {
-        "id": 460,
-        "date": "2024-11-05",
-        "category": "Education",
-        "description": "Expense 460",
-        "amount": 36.7
-    },
-    {
-        "id": 461,
-        "date": "2024-12-13",
-        "category": "Food",
-        "description": "Expense 461",
-        "amount": 365.02
-    },
-    {
-        "id": 462,
-        "date": "2024-12-08",
-        "category": "Utilities",
-        "description": "Expense 462",
-        "amount": 10.31
-    },
-    {
-        "id": 463,
-        "date": "2024-03-26",
-        "category": "Utilities",
-        "description": "Expense 463",
-        "amount": 27.62
-    },
-    {
-        "id": 464,
-        "date": "2024-06-11",
-        "category": "Entertainment",
-        "description": "Expense 464",
-        "amount": 38.1
-    },
-    {
-        "id": 465,
-        "date": "2024-10-24",
-        "category": "Transportation",
-        "description": "Expense 465",
-        "amount": 27.53
-    },
-    {
-        "id": 466,
-        "date": "2024-03-18",
-        "category": "Miscellaneous",
-        "description": "Expense 466",
-        "amount": 22.98
-    },
-    {
-        "id": 467,
-        "date": "2024-06-22",
-        "category": "Housing",
-        "description": "Expense 467",
-        "amount": 9.29
-    },
-    {
-        "id": 468,
-        "date": "2024-12-22",
-        "category": "Entertainment",
-        "description": "Expense 468",
-        "amount": 6.37
-    },
-    {
-        "id": 469,
-        "date": "2024-11-17",
-        "category": "Food",
-        "description": "Expense 469",
-        "amount": 383.72
-    },
-    {
-        "id": 470,
-        "date": "2024-06-23",
-        "category": "Utilities",
-        "description": "Expense 470",
-        "amount": 40.74
-    },
-    {
-        "id": 471,
-        "date": "2024-04-19",
-        "category": "Housing",
-        "description": "Expense 471",
-        "amount": 39.14
-    },
-    {
-        "id": 472,
-        "date": "2024-07-11",
-        "category": "Food",
-        "description": "Expense 472",
-        "amount": 233.45
-    },
-    {
-        "id": 473,
-        "date": "2024-08-22",
-        "category": "Education",
-        "description": "Expense 473",
-        "amount": 47.02
-    },
-    {
-        "id": 474,
-        "date": "2024-08-30",
-        "category": "Utilities",
-        "description": "Expense 474",
-        "amount": 16.64
-    },
-    {
-        "id": 475,
-        "date": "2024-06-11",
-        "category": "Entertainment",
-        "description": "Expense 475",
-        "amount": 33.2
-    },
-    {
-        "id": 476,
-        "date": "2024-01-22",
-        "category": "Groceries",
-        "description": "Expense 476",
-        "amount": 17.87
-    },
-    {
-        "id": 477,
-        "date": "2024-09-21",
-        "category": "Groceries",
-        "description": "Expense 477",
-        "amount": 10.15
-    },
-    {
-        "id": 478,
-        "date": "2024-05-03",
-        "category": "Healthcare",
-        "description": "Expense 478",
-        "amount": 18.52
-    },
-    {
-        "id": 479,
-        "date": "2024-07-23",
-        "category": "Healthcare",
-        "description": "Expense 479",
-        "amount": 49.26
-    },
-    {
-        "id": 480,
-        "date": "2024-07-07",
-        "category": "Miscellaneous",
-        "description": "Expense 480",
-        "amount": 9.81
-    },
-    {
-        "id": 481,
-        "date": "2024-12-11",
-        "category": "Groceries",
-        "description": "Expense 481",
-        "amount": 43.93
-    },
-    {
-        "id": 482,
-        "date": "2024-04-26",
-        "category": "Education",
-        "description": "Expense 482",
-        "amount": 17.4
-    },
-    {
-        "id": 483,
-        "date": "2024-07-01",
-        "category": "Transportation",
-        "description": "Expense 483",
-        "amount": 34.95
-    },
-    {
-        "id": 484,
-        "date": "2024-06-28",
-        "category": "Entertainment",
-        "description": "Expense 484",
-        "amount": 11.58
-    },
-    {
-        "id": 485,
-        "date": "2024-03-18",
-        "category": "Healthcare",
-        "description": "Expense 485",
-        "amount": 26.18
-    },
-    {
-        "id": 486,
-        "date": "2024-11-12",
-        "category": "Healthcare",
-        "description": "Expense 486",
-        "amount": 12.55
-    },
-    {
-        "id": 487,
-        "date": "2024-12-12",
-        "category": "Groceries",
-        "description": "Expense 487",
-        "amount": 43.46
-    },
-    {
-        "id": 488,
-        "date": "2024-01-11",
-        "category": "Food",
-        "description": "Expense 488",
-        "amount": 329.87
-    },
-    {
-        "id": 489,
-        "date": "2024-06-21",
-        "category": "Utilities",
-        "description": "Expense 489",
-        "amount": 39.28
-    },
-    {
-        "id": 490,
-        "date": "2024-05-22",
-        "category": "Entertainment",
-        "description": "Expense 490",
-        "amount": 28.53
-    },
-    {
-        "id": 491,
-        "date": "2024-10-16",
-        "category": "Housing",
-        "description": "Expense 491",
-        "amount": 8.81
-    },
-    {
-        "id": 492,
-        "date": "2024-06-12",
-        "category": "Utilities",
-        "description": "Expense 492",
-        "amount": 16.44
-    },
-    {
-        "id": 493,
-        "date": "2024-11-10",
-        "category": "Groceries",
-        "description": "Expense 493",
-        "amount": 19.79
-    },
-    {
-        "id": 494,
-        "date": "2024-01-23",
-        "category": "Entertainment",
-        "description": "Expense 494",
-        "amount": 10.97
-    },
-    {
-        "id": 495,
-        "date": "2024-08-31",
-        "category": "Education",
-        "description": "Expense 495",
-        "amount": 17.92
-    },
-    {
-        "id": 496,
-        "date": "2024-06-21",
-        "category": "Housing",
-        "description": "Expense 496",
-        "amount": 42.29
-    },
-    {
-        "id": 497,
-        "date": "2024-12-16",
-        "category": "Transportation",
-        "description": "Expense 497",
-        "amount": 40.9
-    },
-    {
-        "id": 498,
-        "date": "2024-05-22",
-        "category": "Utilities",
-        "description": "Expense 498",
-        "amount": 19.69
-    },
-    {
-        "id": 499,
-        "date": "2024-07-21",
-        "category": "Transportation",
-        "description": "Expense 499",
-        "amount": 21.97
-    },
-    {
-        "id": 500,
-        "date": "2024-09-22",
-        "category": "Transportation",
-        "description": "Expense 500",
-        "amount": 30.28
-    },
-    {
-        "id": 501,
-        "date": "2024-05-31",
-        "category": "Housing",
-        "description": "Expense 501",
-        "amount": 6.73
-    },
-    {
-        "id": 502,
-        "date": "2024-05-31",
-        "category": "Groceries",
-        "description": "Expense 502",
-        "amount": 49.45
-    },
-    {
-        "id": 503,
-        "date": "2024-02-21",
-        "category": "Housing",
-        "description": "Expense 503",
-        "amount": 9.81
-    },
-    {
-        "id": 504,
-        "date": "2024-03-30",
-        "category": "Utilities",
-        "description": "Expense 504",
-        "amount": 21.48
-    },
-    {
-        "id": 505,
-        "date": "2024-11-08",
-        "category": "Healthcare",
-        "description": "Expense 505",
-        "amount": 13.38
-    },
-    {
-        "id": 506,
-        "date": "2024-04-26",
-        "category": "Transportation",
-        "description": "Expense 506",
-        "amount": 39.29
-    },
-    {
-        "id": 507,
-        "date": "2024-05-16",
-        "category": "Housing",
-        "description": "Expense 507",
-        "amount": 41.36
-    },
-    {
-        "id": 508,
-        "date": "2024-11-27",
-        "category": "Entertainment",
-        "description": "Expense 508",
-        "amount": 48.96
-    },
-    {
-        "id": 509,
-        "date": "2024-06-20",
-        "category": "Healthcare",
-        "description": "Expense 509",
-        "amount": 21.73
-    },
-    {
-        "id": 510,
-        "date": "2024-03-27",
-        "category": "Healthcare",
-        "description": "Expense 510",
-        "amount": 18.87
-    },
-    {
-        "id": 511,
-        "date": "2024-10-21",
-        "category": "Food",
-        "description": "Expense 511",
-        "amount": 303.39
-    },
-    {
-        "id": 512,
-        "date": "2024-11-13",
-        "category": "Housing",
-        "description": "Expense 512",
-        "amount": 22.38
-    },
-    {
-        "id": 513,
-        "date": "2024-07-18",
-        "category": "Healthcare",
-        "description": "Expense 513",
-        "amount": 46.2
-    },
-    {
-        "id": 514,
-        "date": "2024-12-14",
-        "category": "Entertainment",
-        "description": "Expense 514",
-        "amount": 13.67
-    },
-    {
-        "id": 515,
-        "date": "2024-02-09",
-        "category": "Housing",
-        "description": "Expense 515",
-        "amount": 13.04
-    },
-    {
-        "id": 516,
-        "date": "2024-02-05",
-        "category": "Entertainment",
-        "description": "Expense 516",
-        "amount": 44.98
-    },
-    {
-        "id": 517,
-        "date": "2024-11-04",
-        "category": "Food",
-        "description": "Expense 517",
-        "amount": 367.87
-    },
-    {
-        "id": 518,
-        "date": "2024-04-28",
-        "category": "Food",
-        "description": "Expense 518",
-        "amount": 372.86
-    },
-    {
-        "id": 519,
-        "date": "2024-04-21",
-        "category": "Utilities",
-        "description": "Expense 519",
-        "amount": 14.37
-    },
-    {
-        "id": 520,
-        "date": "2024-12-09",
-        "category": "Entertainment",
-        "description": "Expense 520",
-        "amount": 15.41
-    },
-    {
-        "id": 521,
-        "date": "2024-06-13",
-        "category": "Utilities",
-        "description": "Expense 521",
-        "amount": 30.23
-    },
-    {
-        "id": 522,
-        "date": "2024-05-23",
-        "category": "Healthcare",
-        "description": "Expense 522",
-        "amount": 35.82
-    },
-    {
-        "id": 523,
-        "date": "2024-11-20",
-        "category": "Housing",
-        "description": "Expense 523",
-        "amount": 43.06
-    },
-    {
-        "id": 524,
-        "date": "2024-09-16",
-        "category": "Healthcare",
-        "description": "Expense 524",
-        "amount": 22.16
-    },
-    {
-        "id": 525,
-        "date": "2024-11-08",
-        "category": "Transportation",
-        "description": "Expense 525",
-        "amount": 34.62
-    },
-    {
-        "id": 526,
-        "date": "2024-02-13",
-        "category": "Healthcare",
-        "description": "Expense 526",
-        "amount": 16.39
-    },
-    {
-        "id": 527,
-        "date": "2024-09-06",
-        "category": "Entertainment",
-        "description": "Expense 527",
-        "amount": 27.27
-    },
-    {
-        "id": 528,
-        "date": "2024-07-17",
-        "category": "Education",
-        "description": "Expense 528",
-        "amount": 7.99
-    },
-    {
-        "id": 529,
-        "date": "2024-04-08",
-        "category": "Utilities",
-        "description": "Expense 529",
-        "amount": 18.07
-    },
-    {
-        "id": 530,
-        "date": "2024-05-09",
-        "category": "Entertainment",
-        "description": "Expense 530",
-        "amount": 5.6
-    },
-    {
-        "id": 531,
-        "date": "2024-06-13",
-        "category": "Healthcare",
-        "description": "Expense 531",
-        "amount": 22.58
-    },
-    {
-        "id": 532,
-        "date": "2024-04-30",
-        "category": "Education",
-        "description": "Expense 532",
-        "amount": 41.68
-    },
-    {
-        "id": 533,
-        "date": "2024-03-01",
-        "category": "Utilities",
-        "description": "Expense 533",
-        "amount": 13.99
-    },
-    {
-        "id": 534,
-        "date": "2024-08-30",
-        "category": "Groceries",
-        "description": "Expense 534",
-        "amount": 40.58
-    },
-    {
-        "id": 535,
-        "date": "2024-07-22",
-        "category": "Utilities",
-        "description": "Expense 535",
-        "amount": 32.1
-    },
-    {
-        "id": 536,
-        "date": "2024-01-18",
-        "category": "Miscellaneous",
-        "description": "Expense 536",
-        "amount": 22.06
-    },
-    {
-        "id": 537,
-        "date": "2024-11-29",
-        "category": "Miscellaneous",
-        "description": "Expense 537",
-        "amount": 29.72
-    },
-    {
-        "id": 538,
-        "date": "2024-12-28",
-        "category": "Housing",
-        "description": "Expense 538",
-        "amount": 42.86
-    },
-    {
-        "id": 539,
-        "date": "2024-08-27",
-        "category": "Entertainment",
-        "description": "Expense 539",
-        "amount": 36.88
-    },
-    {
-        "id": 540,
-        "date": "2024-01-04",
-        "category": "Utilities",
-        "description": "Expense 540",
-        "amount": 42.35
-    },
-    {
-        "id": 541,
-        "date": "2024-03-21",
-        "category": "Healthcare",
-        "description": "Expense 541",
-        "amount": 36.66
-    },
-    {
-        "id": 542,
-        "date": "2024-11-10",
-        "category": "Healthcare",
-        "description": "Expense 542",
-        "amount": 15.41
-    },
-    {
-        "id": 543,
-        "date": "2024-03-11",
-        "category": "Entertainment",
-        "description": "Expense 543",
-        "amount": 28.9
-    },
-    {
-        "id": 544,
-        "date": "2024-07-30",
-        "category": "Housing",
-        "description": "Expense 544",
-        "amount": 34.35
-    },
-    {
-        "id": 545,
-        "date": "2024-11-23",
-        "category": "Miscellaneous",
-        "description": "Expense 545",
-        "amount": 22.49
-    },
-    {
-        "id": 546,
-        "date": "2024-01-26",
-        "category": "Housing",
-        "description": "Expense 546",
-        "amount": 16.73
-    },
-    {
-        "id": 547,
-        "date": "2024-10-28",
-        "category": "Transportation",
-        "description": "Expense 547",
-        "amount": 41.22
-    },
-    {
-        "id": 548,
-        "date": "2024-02-23",
-        "category": "Education",
-        "description": "Expense 548",
-        "amount": 44.26
-    },
-    {
-        "id": 549,
-        "date": "2024-06-04",
-        "category": "Education",
-        "description": "Expense 549",
-        "amount": 45.83
-    },
-    {
-        "id": 550,
-        "date": "2024-05-24",
-        "category": "Healthcare",
-        "description": "Expense 550",
-        "amount": 36.09
-    },
-    {
-        "id": 551,
-        "date": "2024-01-23",
-        "category": "Education",
-        "description": "Expense 551",
-        "amount": 14.52
-    },
-    {
-        "id": 552,
-        "date": "2024-12-27",
-        "category": "Housing",
-        "description": "Expense 552",
-        "amount": 34.39
-    },
-    {
-        "id": 553,
-        "date": "2024-01-27",
-        "category": "Utilities",
-        "description": "Expense 553",
-        "amount": 16.86
-    },
-    {
-        "id": 554,
-        "date": "2024-10-16",
-        "category": "Utilities",
-        "description": "Expense 554",
-        "amount": 14.21
-    },
-    {
-        "id": 555,
-        "date": "2024-02-12",
-        "category": "Miscellaneous",
-        "description": "Expense 555",
-        "amount": 9.58
-    },
-    {
-        "id": 556,
-        "date": "2024-05-01",
-        "category": "Healthcare",
-        "description": "Expense 556",
-        "amount": 33.73
-    },
-    {
-        "id": 557,
-        "date": "2024-08-20",
-        "category": "Food",
-        "description": "Expense 557",
-        "amount": 256.71
-    },
-    {
-        "id": 558,
-        "date": "2024-09-11",
-        "category": "Healthcare",
-        "description": "Expense 558",
-        "amount": 23.88
-    },
-    {
-        "id": 559,
-        "date": "2024-11-10",
-        "category": "Food",
-        "description": "Expense 559",
-        "amount": 312.54
-    },
-    {
-        "id": 560,
-        "date": "2024-05-22",
-        "category": "Groceries",
-        "description": "Expense 560",
-        "amount": 16.36
-    },
-    {
-        "id": 561,
-        "date": "2024-06-29",
-        "category": "Housing",
-        "description": "Expense 561",
-        "amount": 5.6
-    },
-    {
-        "id": 562,
-        "date": "2024-02-18",
-        "category": "Entertainment",
-        "description": "Expense 562",
-        "amount": 33.91
-    },
-    {
-        "id": 563,
-        "date": "2024-05-27",
-        "category": "Entertainment",
-        "description": "Expense 563",
-        "amount": 25.35
-    },
-    {
-        "id": 564,
-        "date": "2024-08-06",
-        "category": "Transportation",
-        "description": "Expense 564",
-        "amount": 10.68
-    },
-    {
-        "id": 565,
-        "date": "2024-08-29",
-        "category": "Education",
-        "description": "Expense 565",
-        "amount": 49.56
-    },
-    {
-        "id": 566,
-        "date": "2024-06-06",
-        "category": "Housing",
-        "description": "Expense 566",
-        "amount": 35.69
-    },
-    {
-        "id": 567,
-        "date": "2024-08-25",
-        "category": "Education",
-        "description": "Expense 567",
-        "amount": 48.73
-    },
-    {
-        "id": 568,
-        "date": "2024-04-30",
-        "category": "Food",
-        "description": "Expense 568",
-        "amount": 201.74
-    },
-    {
-        "id": 569,
-        "date": "2024-12-17",
-        "category": "Education",
-        "description": "Expense 569",
-        "amount": 46.78
-    },
-    {
-        "id": 570,
-        "date": "2024-07-19",
-        "category": "Education",
-        "description": "Expense 570",
-        "amount": 20.72
-    },
-    {
-        "id": 571,
-        "date": "2024-01-13",
-        "category": "Utilities",
-        "description": "Expense 571",
-        "amount": 17.48
-    },
-    {
-        "id": 572,
-        "date": "2024-03-08",
-        "category": "Miscellaneous",
-        "description": "Expense 572",
-        "amount": 38.5
-    },
-    {
-        "id": 573,
-        "date": "2024-11-07",
-        "category": "Education",
-        "description": "Expense 573",
-        "amount": 36.74
-    },
-    {
-        "id": 574,
-        "date": "2024-03-05",
-        "category": "Housing",
-        "description": "Expense 574",
-        "amount": 35.31
-    },
-    {
-        "id": 575,
-        "date": "2024-01-22",
-        "category": "Housing",
-        "description": "Expense 575",
-        "amount": 29.67
-    },
-    {
-        "id": 576,
-        "date": "2024-06-26",
-        "category": "Miscellaneous",
-        "description": "Expense 576",
-        "amount": 40.27
-    },
-    {
-        "id": 577,
-        "date": "2024-06-10",
-        "category": "Housing",
-        "description": "Expense 577",
-        "amount": 33.96
-    },
-    {
-        "id": 578,
-        "date": "2024-06-06",
-        "category": "Transportation",
-        "description": "Expense 578",
-        "amount": 46.99
-    },
-    {
-        "id": 579,
-        "date": "2024-08-15",
-        "category": "Healthcare",
-        "description": "Expense 579",
-        "amount": 43.4
-    },
-    {
-        "id": 580,
-        "date": "2024-11-05",
-        "category": "Miscellaneous",
-        "description": "Expense 580",
-        "amount": 44.84
-    },
-    {
-        "id": 581,
-        "date": "2024-09-27",
-        "category": "Miscellaneous",
-        "description": "Expense 581",
-        "amount": 9.43
-    },
-    {
-        "id": 582,
-        "date": "2024-06-25",
-        "category": "Miscellaneous",
-        "description": "Expense 582",
-        "amount": 27.99
-    },
-    {
-        "id": 583,
-        "date": "2024-11-29",
-        "category": "Transportation",
-        "description": "Expense 583",
-        "amount": 26.88
-    },
-    {
-        "id": 584,
-        "date": "2024-03-25",
-        "category": "Groceries",
-        "description": "Expense 584",
-        "amount": 24.38
-    },
-    {
-        "id": 585,
-        "date": "2024-02-24",
-        "category": "Miscellaneous",
-        "description": "Expense 585",
-        "amount": 24.35
-    },
-    {
-        "id": 586,
-        "date": "2024-08-07",
-        "category": "Education",
-        "description": "Expense 586",
-        "amount": 28.36
-    },
-    {
-        "id": 587,
-        "date": "2024-01-29",
-        "category": "Housing",
-        "description": "Expense 587",
-        "amount": 41.45
-    },
-    {
-        "id": 588,
-        "date": "2024-12-06",
-        "category": "Entertainment",
-        "description": "Expense 588",
-        "amount": 33.5
-    },
-    {
-        "id": 589,
-        "date": "2024-05-04",
-        "category": "Entertainment",
-        "description": "Expense 589",
-        "amount": 29.83
-    },
-    {
-        "id": 590,
-        "date": "2024-06-30",
-        "category": "Transportation",
-        "description": "Expense 590",
-        "amount": 25.42
-    },
-    {
-        "id": 591,
-        "date": "2024-02-07",
-        "category": "Groceries",
-        "description": "Expense 591",
-        "amount": 35.51
-    },
-    {
-        "id": 592,
-        "date": "2024-06-07",
-        "category": "Groceries",
-        "description": "Expense 592",
-        "amount": 39.33
-    },
-    {
-        "id": 593,
-        "date": "2024-07-04",
-        "category": "Groceries",
-        "description": "Expense 593",
-        "amount": 38.23
-    },
-    {
-        "id": 594,
-        "date": "2024-07-27",
-        "category": "Miscellaneous",
-        "description": "Expense 594",
-        "amount": 38.19
-    },
-    {
-        "id": 595,
-        "date": "2024-04-28",
-        "category": "Entertainment",
-        "description": "Expense 595",
-        "amount": 46.06
-    },
-    {
-        "id": 596,
-        "date": "2024-07-01",
-        "category": "Education",
-        "description": "Expense 596",
-        "amount": 47.39
-    },
-    {
-        "id": 597,
-        "date": "2024-02-02",
-        "category": "Entertainment",
-        "description": "Expense 597",
-        "amount": 49.47
-    },
-    {
-        "id": 598,
-        "date": "2024-03-06",
-        "category": "Housing",
-        "description": "Expense 598",
-        "amount": 49.39
-    },
-    {
-        "id": 599,
-        "date": "2024-09-14",
-        "category": "Housing",
-        "description": "Expense 599",
-        "amount": 31.55
-    },
-    {
-        "id": 600,
-        "date": "2024-09-13",
-        "category": "Housing",
-        "description": "Expense 600",
-        "amount": 48.73
-    },
-    {
-        "id": 601,
-        "date": "2024-08-14",
-        "category": "Utilities",
-        "description": "Expense 601",
-        "amount": 46.07
-    },
-    {
-        "id": 602,
-        "date": "2024-05-23",
-        "category": "Food",
-        "description": "Expense 602",
-        "amount": 275.55
-    },
-    {
-        "id": 603,
-        "date": "2024-06-08",
-        "category": "Education",
-        "description": "Expense 603",
-        "amount": 35.38
-    },
-    {
-        "id": 604,
-        "date": "2024-01-08",
-        "category": "Groceries",
-        "description": "Expense 604",
-        "amount": 33.03
-    },
-    {
-        "id": 605,
-        "date": "2024-01-25",
-        "category": "Miscellaneous",
-        "description": "Expense 605",
-        "amount": 25.01
-    },
-    {
-        "id": 606,
-        "date": "2024-03-07",
-        "category": "Entertainment",
-        "description": "Expense 606",
-        "amount": 22.11
-    },
-    {
-        "id": 607,
-        "date": "2024-06-12",
-        "category": "Utilities",
-        "description": "Expense 607",
-        "amount": 43.03
-    },
-    {
-        "id": 608,
-        "date": "2024-03-15",
-        "category": "Food",
-        "description": "Expense 608",
-        "amount": 355.2
-    },
-    {
-        "id": 609,
-        "date": "2024-09-23",
-        "category": "Miscellaneous",
-        "description": "Expense 609",
-        "amount": 23.81
-    },
-    {
-        "id": 610,
-        "date": "2024-03-20",
-        "category": "Food",
-        "description": "Expense 610",
-        "amount": 268.56
-    },
-    {
-        "id": 611,
-        "date": "2024-07-10",
-        "category": "Housing",
-        "description": "Expense 611",
-        "amount": 37.03
-    },
-    {
-        "id": 612,
-        "date": "2024-06-29",
-        "category": "Healthcare",
-        "description": "Expense 612",
-        "amount": 40.29
-    },
-    {
-        "id": 613,
-        "date": "2024-03-03",
-        "category": "Miscellaneous",
-        "description": "Expense 613",
-        "amount": 41.67
-    },
-    {
-        "id": 614,
-        "date": "2024-04-05",
-        "category": "Miscellaneous",
-        "description": "Expense 614",
-        "amount": 28.95
-    },
-    {
-        "id": 615,
-        "date": "2024-02-14",
-        "category": "Food",
-        "description": "Expense 615",
-        "amount": 234.7
-    },
-    {
-        "id": 616,
-        "date": "2024-10-18",
-        "category": "Healthcare",
-        "description": "Expense 616",
-        "amount": 35.59
-    },
-    {
-        "id": 617,
-        "date": "2024-03-13",
-        "category": "Healthcare",
-        "description": "Expense 617",
-        "amount": 44.88
-    },
-    {
-        "id": 618,
-        "date": "2024-06-19",
-        "category": "Transportation",
-        "description": "Expense 618",
-        "amount": 5.7
-    },
-    {
-        "id": 619,
-        "date": "2024-01-20",
-        "category": "Entertainment",
-        "description": "Expense 619",
-        "amount": 29.19
-    },
-    {
-        "id": 620,
-        "date": "2024-06-21",
-        "category": "Groceries",
-        "description": "Expense 620",
-        "amount": 41.58
-    },
-    {
-        "id": 621,
-        "date": "2024-09-17",
-        "category": "Groceries",
-        "description": "Expense 621",
-        "amount": 35.21
-    },
-    {
-        "id": 622,
-        "date": "2024-05-26",
-        "category": "Healthcare",
-        "description": "Expense 622",
-        "amount": 40.71
-    },
-    {
-        "id": 623,
-        "date": "2024-10-09",
-        "category": "Transportation",
-        "description": "Expense 623",
-        "amount": 46.87
-    },
-    {
-        "id": 624,
-        "date": "2024-01-19",
-        "category": "Transportation",
-        "description": "Expense 624",
-        "amount": 23.13
-    },
-    {
-        "id": 625,
-        "date": "2024-11-19",
-        "category": "Utilities",
-        "description": "Expense 625",
-        "amount": 17.7
-    },
-    {
-        "id": 626,
-        "date": "2024-03-06",
-        "category": "Transportation",
-        "description": "Expense 626",
-        "amount": 25.97
-    },
-    {
-        "id": 627,
-        "date": "2024-10-08",
-        "category": "Utilities",
-        "description": "Expense 627",
-        "amount": 46.54
-    },
-    {
-        "id": 628,
-        "date": "2024-11-05",
-        "category": "Transportation",
-        "description": "Expense 628",
-        "amount": 33.01
-    },
-    {
-        "id": 629,
-        "date": "2024-08-07",
-        "category": "Transportation",
-        "description": "Expense 629",
-        "amount": 49.63
-    },
-    {
-        "id": 630,
-        "date": "2024-01-16",
-        "category": "Education",
-        "description": "Expense 630",
-        "amount": 9.03
-    },
-    {
-        "id": 631,
-        "date": "2024-01-09",
-        "category": "Miscellaneous",
-        "description": "Expense 631",
-        "amount": 26.18
-    },
-    {
-        "id": 632,
-        "date": "2024-07-28",
-        "category": "Miscellaneous",
-        "description": "Expense 632",
-        "amount": 40.73
-    },
-    {
-        "id": 633,
-        "date": "2024-10-24",
-        "category": "Food",
-        "description": "Expense 633",
-        "amount": 399.01
-    },
-    {
-        "id": 634,
-        "date": "2024-09-25",
-        "category": "Groceries",
-        "description": "Expense 634",
-        "amount": 8.98
-    },
-    {
-        "id": 635,
-        "date": "2024-05-13",
-        "category": "Housing",
-        "description": "Expense 635",
-        "amount": 5.9
-    },
-    {
-        "id": 636,
-        "date": "2024-03-10",
-        "category": "Entertainment",
-        "description": "Expense 636",
-        "amount": 32.5
-    },
-    {
-        "id": 637,
-        "date": "2024-09-08",
-        "category": "Food",
-        "description": "Expense 637",
-        "amount": 372.12
-    },
-    {
-        "id": 638,
-        "date": "2024-03-24",
-        "category": "Entertainment",
-        "description": "Expense 638",
-        "amount": 22.51
-    },
-    {
-        "id": 639,
-        "date": "2024-08-28",
-        "category": "Transportation",
-        "description": "Expense 639",
-        "amount": 21.55
-    },
-    {
-        "id": 640,
-        "date": "2024-02-16",
-        "category": "Housing",
-        "description": "Expense 640",
-        "amount": 18.93
-    },
-    {
-        "id": 641,
-        "date": "2024-06-01",
-        "category": "Education",
-        "description": "Expense 641",
-        "amount": 19.7
-    },
-    {
-        "id": 642,
-        "date": "2024-03-23",
-        "category": "Education",
-        "description": "Expense 642",
-        "amount": 46.49
-    },
-    {
-        "id": 643,
-        "date": "2024-11-27",
-        "category": "Transportation",
-        "description": "Expense 643",
-        "amount": 36.91
-    },
-    {
-        "id": 644,
-        "date": "2024-09-18",
-        "category": "Miscellaneous",
-        "description": "Expense 644",
-        "amount": 28.37
-    },
-    {
-        "id": 645,
-        "date": "2024-08-25",
-        "category": "Food",
-        "description": "Expense 645",
-        "amount": 261.72
-    },
-    {
-        "id": 646,
-        "date": "2024-10-26",
-        "category": "Education",
-        "description": "Expense 646",
-        "amount": 12.37
-    },
-    {
-        "id": 647,
-        "date": "2024-03-04",
-        "category": "Housing",
-        "description": "Expense 647",
-        "amount": 17.9
-    },
-    {
-        "id": 648,
-        "date": "2024-08-29",
-        "category": "Groceries",
-        "description": "Expense 648",
-        "amount": 32.35
-    },
-    {
-        "id": 649,
-        "date": "2024-09-15",
-        "category": "Food",
-        "description": "Expense 649",
-        "amount": 280.62
-    },
-    {
-        "id": 650,
-        "date": "2024-01-11",
-        "category": "Healthcare",
-        "description": "Expense 650",
-        "amount": 15.56
-    },
-    {
-        "id": 651,
-        "date": "2024-08-25",
-        "category": "Transportation",
-        "description": "Expense 651",
-        "amount": 9.49
-    },
-    {
-        "id": 652,
-        "date": "2024-07-26",
-        "category": "Healthcare",
-        "description": "Expense 652",
-        "amount": 15.73
-    },
-    {
-        "id": 653,
-        "date": "2024-05-12",
-        "category": "Housing",
-        "description": "Expense 653",
-        "amount": 23.08
-    },
-    {
-        "id": 654,
-        "date": "2024-09-04",
-        "category": "Food",
-        "description": "Expense 654",
-        "amount": 346.46
-    },
-    {
-        "id": 655,
-        "date": "2024-12-16",
-        "category": "Entertainment",
-        "description": "Expense 655",
-        "amount": 41.43
-    },
-    {
-        "id": 656,
-        "date": "2024-01-19",
-        "category": "Housing",
-        "description": "Expense 656",
-        "amount": 25.09
-    },
-    {
-        "id": 657,
-        "date": "2024-01-23",
-        "category": "Miscellaneous",
-        "description": "Expense 657",
-        "amount": 30.19
-    },
-    {
-        "id": 658,
-        "date": "2024-02-07",
-        "category": "Miscellaneous",
-        "description": "Expense 658",
-        "amount": 23.72
-    },
-    {
-        "id": 659,
-        "date": "2024-11-15",
-        "category": "Miscellaneous",
-        "description": "Expense 659",
-        "amount": 26.45
-    },
-    {
-        "id": 660,
-        "date": "2024-09-20",
-        "category": "Miscellaneous",
-        "description": "Expense 660",
-        "amount": 7.24
-    },
-    {
-        "id": 661,
-        "date": "2024-05-08",
-        "category": "Food",
-        "description": "Expense 661",
-        "amount": 318.07
-    },
-    {
-        "id": 662,
-        "date": "2024-10-29",
-        "category": "Education",
-        "description": "Expense 662",
-        "amount": 30.73
-    },
-    {
-        "id": 663,
-        "date": "2024-01-14",
-        "category": "Miscellaneous",
-        "description": "Expense 663",
-        "amount": 25.84
-    },
-    {
-        "id": 664,
-        "date": "2024-11-13",
-        "category": "Groceries",
-        "description": "Expense 664",
-        "amount": 27.12
-    },
-    {
-        "id": 665,
-        "date": "2024-07-30",
-        "category": "Transportation",
-        "description": "Expense 665",
-        "amount": 31.99
-    },
-    {
-        "id": 666,
-        "date": "2024-08-01",
-        "category": "Housing",
-        "description": "Expense 666",
-        "amount": 12.7
-    },
-    {
-        "id": 667,
-        "date": "2024-10-20",
-        "category": "Transportation",
-        "description": "Expense 667",
-        "amount": 49.99
-    },
-    {
-        "id": 668,
-        "date": "2024-02-09",
-        "category": "Transportation",
-        "description": "Expense 668",
-        "amount": 19.85
-    },
-    {
-        "id": 669,
-        "date": "2024-09-05",
-        "category": "Housing",
-        "description": "Expense 669",
-        "amount": 25.15
-    },
-    {
-        "id": 670,
-        "date": "2024-12-29",
-        "category": "Healthcare",
-        "description": "Expense 670",
-        "amount": 41.43
-    },
-    {
-        "id": 671,
-        "date": "2024-07-01",
-        "category": "Utilities",
-        "description": "Expense 671",
-        "amount": 23.31
-    },
-    {
-        "id": 672,
-        "date": "2024-05-08",
-        "category": "Education",
-        "description": "Expense 672",
-        "amount": 37.65
-    },
-    {
-        "id": 673,
-        "date": "2024-07-05",
-        "category": "Miscellaneous",
-        "description": "Expense 673",
-        "amount": 44.03
-    },
-    {
-        "id": 674,
-        "date": "2024-12-17",
-        "category": "Entertainment",
-        "description": "Expense 674",
-        "amount": 11.3
-    },
-    {
-        "id": 675,
-        "date": "2024-02-15",
-        "category": "Education",
-        "description": "Expense 675",
-        "amount": 32.33
-    },
-    {
-        "id": 676,
-        "date": "2024-08-02",
-        "category": "Housing",
-        "description": "Expense 676",
-        "amount": 13.08
-    },
-    {
-        "id": 677,
-        "date": "2024-04-21",
-        "category": "Entertainment",
-        "description": "Expense 677",
-        "amount": 22.27
-    },
-    {
-        "id": 678,
-        "date": "2024-12-09",
-        "category": "Food",
-        "description": "Expense 678",
-        "amount": 248.66
-    },
-    {
-        "id": 679,
-        "date": "2024-04-10",
-        "category": "Entertainment",
-        "description": "Expense 679",
-        "amount": 49.03
-    },
-    {
-        "id": 680,
-        "date": "2024-05-23",
-        "category": "Miscellaneous",
-        "description": "Expense 680",
-        "amount": 45.79
-    },
-    {
-        "id": 681,
-        "date": "2024-01-31",
-        "category": "Food",
-        "description": "Expense 681",
-        "amount": 260.48
-    },
-    {
-        "id": 682,
-        "date": "2024-10-10",
-        "category": "Utilities",
-        "description": "Expense 682",
-        "amount": 29.04
-    },
-    {
-        "id": 683,
-        "date": "2024-03-12",
-        "category": "Food",
-        "description": "Expense 683",
-        "amount": 372.2
-    },
-    {
-        "id": 684,
-        "date": "2024-12-01",
-        "category": "Education",
-        "description": "Expense 684",
-        "amount": 24.88
-    },
-    {
-        "id": 685,
-        "date": "2024-04-16",
-        "category": "Entertainment",
-        "description": "Expense 685",
-        "amount": 12.13
-    },
-    {
-        "id": 686,
-        "date": "2024-09-01",
-        "category": "Groceries",
-        "description": "Expense 686",
-        "amount": 18.08
-    },
-    {
-        "id": 687,
-        "date": "2024-07-16",
-        "category": "Utilities",
-        "description": "Expense 687",
-        "amount": 5.83
-    },
-    {
-        "id": 688,
-        "date": "2024-12-03",
-        "category": "Education",
-        "description": "Expense 688",
-        "amount": 46.35
-    },
-    {
-        "id": 689,
-        "date": "2024-04-30",
-        "category": "Healthcare",
-        "description": "Expense 689",
-        "amount": 26.85
-    },
-    {
-        "id": 690,
-        "date": "2024-05-08",
-        "category": "Education",
-        "description": "Expense 690",
-        "amount": 15.28
-    },
-    {
-        "id": 691,
-        "date": "2024-07-08",
-        "category": "Education",
-        "description": "Expense 691",
-        "amount": 31.42
-    },
-    {
-        "id": 692,
-        "date": "2024-01-18",
-        "category": "Food",
-        "description": "Expense 692",
-        "amount": 349.54
-    },
-    {
-        "id": 693,
-        "date": "2024-01-27",
-        "category": "Food",
-        "description": "Expense 693",
-        "amount": 291.88
-    },
-    {
-        "id": 694,
-        "date": "2024-07-16",
-        "category": "Food",
-        "description": "Expense 694",
-        "amount": 382.83
-    },
-    {
-        "id": 695,
-        "date": "2024-02-26",
-        "category": "Healthcare",
-        "description": "Expense 695",
-        "amount": 21.09
-    },
-    {
-        "id": 696,
-        "date": "2024-07-23",
-        "category": "Groceries",
-        "description": "Expense 696",
-        "amount": 9.61
-    },
-    {
-        "id": 697,
-        "date": "2024-06-08",
-        "category": "Food",
-        "description": "Expense 697",
-        "amount": 359.21
-    },
-    {
-        "id": 698,
-        "date": "2024-01-30",
-        "category": "Miscellaneous",
-        "description": "Expense 698",
-        "amount": 17.66
-    },
-    {
-        "id": 699,
-        "date": "2024-05-14",
-        "category": "Miscellaneous",
-        "description": "Expense 699",
-        "amount": 25.68
-    },
-    {
-        "id": 700,
-        "date": "2024-05-12",
-        "category": "Education",
-        "description": "Expense 700",
-        "amount": 38.16
-    },
-    {
-        "id": 701,
-        "date": "2024-03-29",
-        "category": "Entertainment",
-        "description": "Expense 701",
-        "amount": 19.69
-    },
-    {
-        "id": 702,
-        "date": "2024-10-09",
-        "category": "Housing",
-        "description": "Expense 702",
-        "amount": 38.44
-    },
-    {
-        "id": 703,
-        "date": "2024-08-10",
-        "category": "Entertainment",
-        "description": "Expense 703",
-        "amount": 17.93
-    },
-    {
-        "id": 704,
-        "date": "2024-03-04",
-        "category": "Education",
-        "description": "Expense 704",
-        "amount": 40.41
-    },
-    {
-        "id": 705,
-        "date": "2024-01-24",
-        "category": "Food",
-        "description": "Expense 705",
-        "amount": 240.15
-    },
-    {
-        "id": 706,
-        "date": "2024-04-10",
-        "category": "Education",
-        "description": "Expense 706",
-        "amount": 23.85
-    },
-    {
-        "id": 707,
-        "date": "2024-06-07",
-        "category": "Food",
-        "description": "Expense 707",
-        "amount": 307.48
-    },
-    {
-        "id": 708,
-        "date": "2024-12-11",
-        "category": "Transportation",
-        "description": "Expense 708",
-        "amount": 37.77
-    },
-    {
-        "id": 709,
-        "date": "2024-11-20",
-        "category": "Housing",
-        "description": "Expense 709",
-        "amount": 24.64
-    },
-    {
-        "id": 710,
-        "date": "2024-05-27",
-        "category": "Housing",
-        "description": "Expense 710",
-        "amount": 35.1
-    },
-    {
-        "id": 711,
-        "date": "2024-09-20",
-        "category": "Healthcare",
-        "description": "Expense 711",
-        "amount": 6.03
-    },
-    {
-        "id": 712,
-        "date": "2024-04-14",
-        "category": "Groceries",
-        "description": "Expense 712",
-        "amount": 39.54
-    },
-    {
-        "id": 713,
-        "date": "2024-03-26",
-        "category": "Healthcare",
-        "description": "Expense 713",
-        "amount": 13.59
-    },
-    {
-        "id": 714,
-        "date": "2024-10-01",
-        "category": "Utilities",
-        "description": "Expense 714",
-        "amount": 38.7
-    },
-    {
-        "id": 715,
-        "date": "2024-02-17",
-        "category": "Miscellaneous",
-        "description": "Expense 715",
-        "amount": 32.31
-    },
-    {
-        "id": 716,
-        "date": "2024-01-01",
-        "category": "Groceries",
-        "description": "Expense 716",
-        "amount": 48.59
-    },
-    {
-        "id": 717,
-        "date": "2024-12-18",
-        "category": "Entertainment",
-        "description": "Expense 717",
-        "amount": 19.52
-    },
-    {
-        "id": 718,
-        "date": "2024-10-09",
-        "category": "Transportation",
-        "description": "Expense 718",
-        "amount": 25.01
-    },
-    {
-        "id": 719,
-        "date": "2024-11-12",
-        "category": "Utilities",
-        "description": "Expense 719",
-        "amount": 49.1
-    },
-    {
-        "id": 720,
-        "date": "2024-10-07",
-        "category": "Entertainment",
-        "description": "Expense 720",
-        "amount": 48.72
-    },
-    {
-        "id": 721,
-        "date": "2024-12-12",
-        "category": "Miscellaneous",
-        "description": "Expense 721",
-        "amount": 12.46
-    },
-    {
-        "id": 722,
-        "date": "2024-07-02",
-        "category": "Food",
-        "description": "Expense 722",
-        "amount": 216.39
-    },
-    {
-        "id": 723,
-        "date": "2024-04-02",
-        "category": "Transportation",
-        "description": "Expense 723",
-        "amount": 34.26
-    },
-    {
-        "id": 724,
-        "date": "2024-03-08",
-        "category": "Miscellaneous",
-        "description": "Expense 724",
-        "amount": 43.72
-    },
-    {
-        "id": 725,
-        "date": "2024-12-07",
-        "category": "Utilities",
-        "description": "Expense 725",
-        "amount": 28.38
-    },
-    {
-        "id": 726,
-        "date": "2024-11-16",
-        "category": "Miscellaneous",
-        "description": "Expense 726",
-        "amount": 11.01
-    },
-    {
-        "id": 727,
-        "date": "2024-09-30",
-        "category": "Food",
-        "description": "Expense 727",
-        "amount": 331.39
-    },
-    {
-        "id": 728,
-        "date": "2024-05-29",
-        "category": "Housing",
-        "description": "Expense 728",
-        "amount": 49.3
-    },
-    {
-        "id": 729,
-        "date": "2024-10-17",
-        "category": "Transportation",
-        "description": "Expense 729",
-        "amount": 19.97
-    },
-    {
-        "id": 730,
-        "date": "2024-05-22",
-        "category": "Transportation",
-        "description": "Expense 730",
-        "amount": 36.67
-    },
-    {
-        "id": 731,
-        "date": "2024-05-17",
-        "category": "Healthcare",
-        "description": "Expense 731",
-        "amount": 28.27
-    },
-    {
-        "id": 732,
-        "date": "2024-01-07",
-        "category": "Transportation",
-        "description": "Expense 732",
-        "amount": 25.95
-    },
-    {
-        "id": 733,
-        "date": "2024-10-29",
-        "category": "Miscellaneous",
-        "description": "Expense 733",
-        "amount": 19.47
-    },
-    {
-        "id": 734,
-        "date": "2024-10-10",
-        "category": "Education",
-        "description": "Expense 734",
-        "amount": 21.25
-    },
-    {
-        "id": 735,
-        "date": "2024-02-11",
-        "category": "Education",
-        "description": "Expense 735",
-        "amount": 26.08
-    },
-    {
-        "id": 736,
-        "date": "2024-06-11",
-        "category": "Housing",
-        "description": "Expense 736",
-        "amount": 10.55
-    },
-    {
-        "id": 737,
-        "date": "2024-06-05",
-        "category": "Utilities",
-        "description": "Expense 737",
-        "amount": 22.09
-    },
-    {
-        "id": 738,
-        "date": "2024-04-08",
-        "category": "Education",
-        "description": "Expense 738",
-        "amount": 23.17
-    },
-    {
-        "id": 739,
-        "date": "2024-10-12",
-        "category": "Utilities",
-        "description": "Expense 739",
-        "amount": 18.62
-    },
-    {
-        "id": 740,
-        "date": "2024-11-30",
-        "category": "Groceries",
-        "description": "Expense 740",
-        "amount": 6.68
-    },
-    {
-        "id": 741,
-        "date": "2024-02-25",
-        "category": "Healthcare",
-        "description": "Expense 741",
-        "amount": 47.53
-    },
-    {
-        "id": 742,
-        "date": "2024-12-27",
-        "category": "Education",
-        "description": "Expense 742",
-        "amount": 45.76
-    },
-    {
-        "id": 743,
-        "date": "2024-03-20",
-        "category": "Healthcare",
-        "description": "Expense 743",
-        "amount": 19.44
-    },
-    {
-        "id": 744,
-        "date": "2024-10-19",
-        "category": "Miscellaneous",
-        "description": "Expense 744",
-        "amount": 25.85
-    },
-    {
-        "id": 745,
-        "date": "2024-01-05",
-        "category": "Housing",
-        "description": "Expense 745",
-        "amount": 31.34
-    },
-    {
-        "id": 746,
-        "date": "2024-04-22",
-        "category": "Education",
-        "description": "Expense 746",
-        "amount": 24.12
-    },
-    {
-        "id": 747,
-        "date": "2024-04-15",
-        "category": "Housing",
-        "description": "Expense 747",
-        "amount": 36.04
-    },
-    {
-        "id": 748,
-        "date": "2024-08-14",
-        "category": "Transportation",
-        "description": "Expense 748",
-        "amount": 33.69
-    },
-    {
-        "id": 749,
-        "date": "2024-04-10",
-        "category": "Entertainment",
-        "description": "Expense 749",
-        "amount": 30.61
-    },
-    {
-        "id": 750,
-        "date": "2024-11-02",
-        "category": "Food",
-        "description": "Expense 750",
-        "amount": 380.92
-    },
-    {
-        "id": 751,
-        "date": "2024-12-18",
-        "category": "Housing",
-        "description": "Expense 751",
-        "amount": 38.21
-    },
-    {
-        "id": 752,
-        "date": "2024-07-24",
-        "category": "Utilities",
-        "description": "Expense 752",
-        "amount": 29.23
-    },
-    {
-        "id": 753,
-        "date": "2024-09-12",
-        "category": "Food",
-        "description": "Expense 753",
-        "amount": 308.17
-    },
-    {
-        "id": 754,
-        "date": "2024-09-05",
-        "category": "Food",
-        "description": "Expense 754",
-        "amount": 329.58
-    },
-    {
-        "id": 755,
-        "date": "2024-08-29",
-        "category": "Groceries",
-        "description": "Expense 755",
-        "amount": 30.5
-    },
-    {
-        "id": 756,
-        "date": "2024-03-20",
-        "category": "Groceries",
-        "description": "Expense 756",
-        "amount": 43.32
-    },
-    {
-        "id": 757,
-        "date": "2024-09-11",
-        "category": "Utilities",
-        "description": "Expense 757",
-        "amount": 36.67
-    },
-    {
-        "id": 758,
-        "date": "2024-02-12",
-        "category": "Housing",
-        "description": "Expense 758",
-        "amount": 26.24
-    },
-    {
-        "id": 759,
-        "date": "2024-07-29",
-        "category": "Groceries",
-        "description": "Expense 759",
-        "amount": 20.58
-    },
-    {
-        "id": 760,
-        "date": "2024-07-15",
-        "category": "Housing",
-        "description": "Expense 760",
-        "amount": 40.54
-    },
-    {
-        "id": 761,
-        "date": "2024-11-21",
-        "category": "Housing",
-        "description": "Expense 761",
-        "amount": 36.62
-    },
-    {
-        "id": 762,
-        "date": "2024-11-09",
-        "category": "Housing",
-        "description": "Expense 762",
-        "amount": 18.24
-    },
-    {
-        "id": 763,
-        "date": "2024-05-18",
-        "category": "Utilities",
-        "description": "Expense 763",
-        "amount": 38.82
-    },
-    {
-        "id": 764,
-        "date": "2024-11-22",
-        "category": "Miscellaneous",
-        "description": "Expense 764",
-        "amount": 48.67
-    },
-    {
-        "id": 765,
-        "date": "2024-12-01",
-        "category": "Groceries",
-        "description": "Expense 765",
-        "amount": 6.42
-    },
-    {
-        "id": 766,
-        "date": "2024-03-18",
-        "category": "Groceries",
-        "description": "Expense 766",
-        "amount": 19.52
-    },
-    {
-        "id": 767,
-        "date": "2024-04-09",
-        "category": "Entertainment",
-        "description": "Expense 767",
-        "amount": 31.82
-    },
-    {
-        "id": 768,
-        "date": "2024-04-07",
-        "category": "Education",
-        "description": "Expense 768",
-        "amount": 35.46
-    },
-    {
-        "id": 769,
-        "date": "2024-12-27",
-        "category": "Entertainment",
-        "description": "Expense 769",
-        "amount": 46.0
-    },
-    {
-        "id": 770,
-        "date": "2024-07-03",
-        "category": "Healthcare",
-        "description": "Expense 770",
-        "amount": 42.34
-    },
-    {
-        "id": 771,
-        "date": "2024-02-08",
-        "category": "Education",
-        "description": "Expense 771",
-        "amount": 44.02
-    },
-    {
-        "id": 772,
-        "date": "2024-02-27",
-        "category": "Food",
-        "description": "Expense 772",
-        "amount": 290.54
-    },
-    {
-        "id": 773,
-        "date": "2024-08-20",
-        "category": "Healthcare",
-        "description": "Expense 773",
-        "amount": 37.3
-    },
-    {
-        "id": 774,
-        "date": "2024-01-23",
-        "category": "Transportation",
-        "description": "Expense 774",
-        "amount": 21.64
-    },
-    {
-        "id": 775,
-        "date": "2024-05-13",
-        "category": "Miscellaneous",
-        "description": "Expense 775",
-        "amount": 14.5
-    },
-    {
-        "id": 776,
-        "date": "2024-06-27",
-        "category": "Transportation",
-        "description": "Expense 776",
-        "amount": 6.96
-    },
-    {
-        "id": 777,
-        "date": "2024-09-30",
-        "category": "Groceries",
-        "description": "Expense 777",
-        "amount": 32.38
-    },
-    {
-        "id": 778,
-        "date": "2024-08-25",
-        "category": "Groceries",
-        "description": "Expense 778",
-        "amount": 29.64
-    },
-    {
-        "id": 779,
-        "date": "2024-03-25",
-        "category": "Transportation",
-        "description": "Expense 779",
-        "amount": 11.57
-    },
-    {
-        "id": 780,
-        "date": "2024-12-28",
-        "category": "Entertainment",
-        "description": "Expense 780",
-        "amount": 37.17
-    },
-    {
-        "id": 781,
-        "date": "2024-11-24",
-        "category": "Education",
-        "description": "Expense 781",
-        "amount": 15.53
-    },
-    {
-        "id": 782,
-        "date": "2024-03-25",
-        "category": "Education",
-        "description": "Expense 782",
-        "amount": 19.18
-    },
-    {
-        "id": 783,
-        "date": "2024-11-29",
-        "category": "Utilities",
-        "description": "Expense 783",
-        "amount": 31.87
-    },
-    {
-        "id": 784,
-        "date": "2024-10-04",
-        "category": "Utilities",
-        "description": "Expense 784",
-        "amount": 25.5
-    },
-    {
-        "id": 785,
-        "date": "2024-06-21",
-        "category": "Transportation",
-        "description": "Expense 785",
-        "amount": 7.83
-    },
-    {
-        "id": 786,
-        "date": "2024-02-26",
-        "category": "Healthcare",
-        "description": "Expense 786",
-        "amount": 46.43
-    },
-    {
-        "id": 787,
-        "date": "2024-04-09",
-        "category": "Groceries",
-        "description": "Expense 787",
-        "amount": 26.73
-    },
-    {
-        "id": 788,
-        "date": "2024-09-20",
-        "category": "Education",
-        "description": "Expense 788",
-        "amount": 48.41
-    },
-    {
-        "id": 789,
-        "date": "2024-10-29",
-        "category": "Food",
-        "description": "Expense 789",
-        "amount": 327.89
-    },
-    {
-        "id": 790,
-        "date": "2024-06-27",
-        "category": "Food",
-        "description": "Expense 790",
-        "amount": 207.99
-    },
-    {
-        "id": 791,
-        "date": "2024-05-10",
-        "category": "Groceries",
-        "description": "Expense 791",
-        "amount": 45.66
-    },
-    {
-        "id": 792,
-        "date": "2024-01-24",
-        "category": "Utilities",
-        "description": "Expense 792",
-        "amount": 21.43
-    },
-    {
-        "id": 793,
-        "date": "2024-03-28",
-        "category": "Utilities",
-        "description": "Expense 793",
-        "amount": 7.9
-    },
-    {
-        "id": 794,
-        "date": "2024-12-20",
-        "category": "Housing",
-        "description": "Expense 794",
-        "amount": 36.57
-    },
-    {
-        "id": 795,
-        "date": "2024-07-28",
-        "category": "Miscellaneous",
-        "description": "Expense 795",
-        "amount": 34.28
-    },
-    {
-        "id": 796,
-        "date": "2024-04-29",
-        "category": "Transportation",
-        "description": "Expense 796",
-        "amount": 11.48
-    },
-    {
-        "id": 797,
-        "date": "2024-12-20",
-        "category": "Food",
-        "description": "Expense 797",
-        "amount": 360.18
-    },
-    {
-        "id": 798,
-        "date": "2024-07-06",
-        "category": "Entertainment",
-        "description": "Expense 798",
-        "amount": 29.82
-    },
-    {
-        "id": 799,
-        "date": "2024-03-09",
-        "category": "Healthcare",
-        "description": "Expense 799",
-        "amount": 37.03
-    },
-    {
-        "id": 800,
-        "date": "2024-09-20",
-        "category": "Transportation",
-        "description": "Expense 800",
-        "amount": 6.44
-    },
-    {
-        "id": 801,
-        "date": "2024-04-16",
-        "category": "Groceries",
-        "description": "Expense 801",
-        "amount": 16.78
-    },
-    {
-        "id": 802,
-        "date": "2024-08-15",
-        "category": "Groceries",
-        "description": "Expense 802",
-        "amount": 43.63
-    },
-    {
-        "id": 803,
-        "date": "2024-05-03",
-        "category": "Food",
-        "description": "Expense 803",
-        "amount": 305.43
-    },
-    {
-        "id": 804,
-        "date": "2024-10-30",
-        "category": "Miscellaneous",
-        "description": "Expense 804",
-        "amount": 19.82
-    },
-    {
-        "id": 805,
-        "date": "2024-03-20",
-        "category": "Transportation",
-        "description": "Expense 805",
-        "amount": 27.62
-    },
-    {
-        "id": 806,
-        "date": "2024-11-25",
-        "category": "Education",
-        "description": "Expense 806",
-        "amount": 17.1
-    },
-    {
-        "id": 807,
-        "date": "2024-05-02",
-        "category": "Food",
-        "description": "Expense 807",
-        "amount": 375.71
-    },
-    {
-        "id": 808,
-        "date": "2024-02-15",
-        "category": "Utilities",
-        "description": "Expense 808",
-        "amount": 9.87
-    },
-    {
-        "id": 809,
-        "date": "2024-08-02",
-        "category": "Education",
-        "description": "Expense 809",
-        "amount": 10.17
-    },
-    {
-        "id": 810,
-        "date": "2024-02-19",
-        "category": "Healthcare",
-        "description": "Expense 810",
-        "amount": 44.11
-    },
-    {
-        "id": 811,
-        "date": "2024-07-07",
-        "category": "Groceries",
-        "description": "Expense 811",
-        "amount": 8.04
-    },
-    {
-        "id": 812,
-        "date": "2024-09-28",
-        "category": "Entertainment",
-        "description": "Expense 812",
-        "amount": 17.88
-    },
-    {
-        "id": 813,
-        "date": "2024-01-20",
-        "category": "Groceries",
-        "description": "Expense 813",
-        "amount": 11.7
-    },
-    {
-        "id": 814,
-        "date": "2024-10-31",
-        "category": "Groceries",
-        "description": "Expense 814",
-        "amount": 41.01
-    },
-    {
-        "id": 815,
-        "date": "2024-08-15",
-        "category": "Groceries",
-        "description": "Expense 815",
-        "amount": 31.1
-    },
-    {
-        "id": 816,
-        "date": "2024-08-12",
-        "category": "Entertainment",
-        "description": "Expense 816",
-        "amount": 27.73
-    },
-    {
-        "id": 817,
-        "date": "2024-07-08",
-        "category": "Food",
-        "description": "Expense 817",
-        "amount": 236.88
-    },
-    {
-        "id": 818,
-        "date": "2024-07-26",
-        "category": "Utilities",
-        "description": "Expense 818",
-        "amount": 43.4
-    },
-    {
-        "id": 819,
-        "date": "2024-03-01",
-        "category": "Miscellaneous",
-        "description": "Expense 819",
-        "amount": 9.56
-    },
-    {
-        "id": 820,
-        "date": "2024-05-09",
-        "category": "Utilities",
-        "description": "Expense 820",
-        "amount": 47.9
-    },
-    {
-        "id": 821,
-        "date": "2024-07-18",
-        "category": "Groceries",
-        "description": "Expense 821",
-        "amount": 33.15
-    },
-    {
-        "id": 822,
-        "date": "2024-11-02",
-        "category": "Miscellaneous",
-        "description": "Expense 822",
-        "amount": 37.55
-    },
-    {
-        "id": 823,
-        "date": "2024-05-05",
-        "category": "Utilities",
-        "description": "Expense 823",
-        "amount": 24.63
-    },
-    {
-        "id": 824,
-        "date": "2024-07-23",
-        "category": "Healthcare",
-        "description": "Expense 824",
-        "amount": 34.08
-    },
-    {
-        "id": 825,
-        "date": "2024-10-09",
-        "category": "Groceries",
-        "description": "Expense 825",
-        "amount": 29.47
-    },
-    {
-        "id": 826,
-        "date": "2024-04-15",
-        "category": "Groceries",
-        "description": "Expense 826",
-        "amount": 41.67
-    },
-    {
-        "id": 827,
-        "date": "2024-01-27",
-        "category": "Education",
-        "description": "Expense 827",
-        "amount": 35.21
-    },
-    {
-        "id": 828,
-        "date": "2024-10-27",
-        "category": "Transportation",
-        "description": "Expense 828",
-        "amount": 44.14
-    },
-    {
-        "id": 829,
-        "date": "2024-11-13",
-        "category": "Miscellaneous",
-        "description": "Expense 829",
-        "amount": 21.14
-    },
-    {
-        "id": 830,
-        "date": "2024-11-01",
-        "category": "Entertainment",
-        "description": "Expense 830",
-        "amount": 35.95
-    },
-    {
-        "id": 831,
-        "date": "2024-01-28",
-        "category": "Groceries",
-        "description": "Expense 831",
-        "amount": 16.75
-    },
-    {
-        "id": 832,
-        "date": "2024-06-08",
-        "category": "Entertainment",
-        "description": "Expense 832",
-        "amount": 30.05
-    },
-    {
-        "id": 833,
-        "date": "2024-07-30",
-        "category": "Housing",
-        "description": "Expense 833",
-        "amount": 17.51
-    },
-    {
-        "id": 834,
-        "date": "2024-02-15",
-        "category": "Housing",
-        "description": "Expense 834",
-        "amount": 41.15
-    },
-    {
-        "id": 835,
-        "date": "2024-08-23",
-        "category": "Food",
-        "description": "Expense 835",
-        "amount": 360.41
-    },
-    {
-        "id": 836,
-        "date": "2024-04-29",
-        "category": "Housing",
-        "description": "Expense 836",
-        "amount": 22.2
-    },
-    {
-        "id": 837,
-        "date": "2024-07-04",
-        "category": "Utilities",
-        "description": "Expense 837",
-        "amount": 8.83
-    },
-    {
-        "id": 838,
-        "date": "2024-11-26",
-        "category": "Utilities",
-        "description": "Expense 838",
-        "amount": 6.51
-    },
-    {
-        "id": 839,
-        "date": "2024-01-20",
-        "category": "Transportation",
-        "description": "Expense 839",
-        "amount": 33.03
-    },
-    {
-        "id": 840,
-        "date": "2024-08-11",
-        "category": "Food",
-        "description": "Expense 840",
-        "amount": 245.56
-    },
-    {
-        "id": 841,
-        "date": "2024-07-08",
-        "category": "Groceries",
-        "description": "Expense 841",
-        "amount": 25.57
-    },
-    {
-        "id": 842,
-        "date": "2024-06-29",
-        "category": "Groceries",
-        "description": "Expense 842",
-        "amount": 5.18
-    },
-    {
-        "id": 843,
-        "date": "2024-12-23",
-        "category": "Food",
-        "description": "Expense 843",
-        "amount": 376.62
-    },
-    {
-        "id": 844,
-        "date": "2024-08-11",
-        "category": "Food",
-        "description": "Expense 844",
-        "amount": 308.96
-    },
-    {
-        "id": 845,
-        "date": "2024-11-02",
-        "category": "Utilities",
-        "description": "Expense 845",
-        "amount": 18.45
-    },
-    {
-        "id": 846,
-        "date": "2024-04-03",
-        "category": "Transportation",
-        "description": "Expense 846",
-        "amount": 28.29
-    },
-    {
-        "id": 847,
-        "date": "2024-03-16",
-        "category": "Food",
-        "description": "Expense 847",
-        "amount": 268.69
-    },
-    {
-        "id": 848,
-        "date": "2024-02-21",
-        "category": "Food",
-        "description": "Expense 848",
-        "amount": 206.52
-    },
-    {
-        "id": 849,
-        "date": "2024-01-12",
-        "category": "Groceries",
-        "description": "Expense 849",
-        "amount": 40.48
-    },
-    {
-        "id": 850,
-        "date": "2024-07-05",
-        "category": "Utilities",
-        "description": "Expense 850",
-        "amount": 44.18
-    },
-    {
-        "id": 851,
-        "date": "2024-12-23",
-        "category": "Education",
-        "description": "Expense 851",
-        "amount": 43.64
-    },
-    {
-        "id": 852,
-        "date": "2024-03-22",
-        "category": "Transportation",
-        "description": "Expense 852",
-        "amount": 33.27
-    },
-    {
-        "id": 853,
-        "date": "2024-11-23",
-        "category": "Food",
-        "description": "Expense 853",
-        "amount": 309.65
-    },
-    {
-        "id": 854,
-        "date": "2024-08-02",
-        "category": "Utilities",
-        "description": "Expense 854",
-        "amount": 44.94
-    },
-    {
-        "id": 855,
-        "date": "2024-11-01",
-        "category": "Healthcare",
-        "description": "Expense 855",
-        "amount": 35.06
-    },
-    {
-        "id": 856,
-        "date": "2024-01-15",
-        "category": "Transportation",
-        "description": "Expense 856",
-        "amount": 39.82
-    },
-    {
-        "id": 857,
-        "date": "2024-11-27",
-        "category": "Healthcare",
-        "description": "Expense 857",
-        "amount": 6.78
-    },
-    {
-        "id": 858,
-        "date": "2024-03-16",
-        "category": "Housing",
-        "description": "Expense 858",
-        "amount": 17.23
-    },
-    {
-        "id": 859,
-        "date": "2024-04-29",
-        "category": "Miscellaneous",
-        "description": "Expense 859",
-        "amount": 43.3
-    },
-    {
-        "id": 860,
-        "date": "2024-12-08",
-        "category": "Miscellaneous",
-        "description": "Expense 860",
-        "amount": 34.17
-    },
-    {
-        "id": 861,
-        "date": "2024-06-30",
-        "category": "Housing",
-        "description": "Expense 861",
-        "amount": 15.5
-    },
-    {
-        "id": 862,
-        "date": "2024-12-20",
-        "category": "Groceries",
-        "description": "Expense 862",
-        "amount": 35.62
-    },
-    {
-        "id": 863,
-        "date": "2024-10-09",
-        "category": "Education",
-        "description": "Expense 863",
-        "amount": 12.69
-    },
-    {
-        "id": 864,
-        "date": "2024-09-19",
-        "category": "Housing",
-        "description": "Expense 864",
-        "amount": 10.88
-    },
-    {
-        "id": 865,
-        "date": "2024-03-25",
-        "category": "Utilities",
-        "description": "Expense 865",
-        "amount": 12.09
-    },
-    {
-        "id": 866,
-        "date": "2024-09-24",
-        "category": "Utilities",
-        "description": "Expense 866",
-        "amount": 5.79
-    },
-    {
-        "id": 867,
-        "date": "2024-07-14",
-        "category": "Transportation",
-        "description": "Expense 867",
-        "amount": 15.29
-    },
-    {
-        "id": 868,
-        "date": "2024-03-06",
-        "category": "Housing",
-        "description": "Expense 868",
-        "amount": 13.1
-    },
-    {
-        "id": 869,
-        "date": "2024-12-02",
-        "category": "Miscellaneous",
-        "description": "Expense 869",
-        "amount": 47.79
-    },
-    {
-        "id": 870,
-        "date": "2024-09-05",
-        "category": "Utilities",
-        "description": "Expense 870",
-        "amount": 20.4
-    },
-    {
-        "id": 871,
-        "date": "2024-10-31",
-        "category": "Utilities",
-        "description": "Expense 871",
-        "amount": 8.81
-    },
-    {
-        "id": 872,
-        "date": "2024-12-12",
-        "category": "Housing",
-        "description": "Expense 872",
-        "amount": 25.73
-    },
-    {
-        "id": 873,
-        "date": "2024-04-15",
-        "category": "Groceries",
-        "description": "Expense 873",
-        "amount": 16.16
-    },
-    {
-        "id": 874,
-        "date": "2024-05-14",
-        "category": "Transportation",
-        "description": "Expense 874",
-        "amount": 23.02
-    },
-    {
-        "id": 875,
-        "date": "2024-03-30",
-        "category": "Healthcare",
-        "description": "Expense 875",
-        "amount": 30.65
-    },
-    {
-        "id": 876,
-        "date": "2024-11-23",
-        "category": "Housing",
-        "description": "Expense 876",
-        "amount": 21.33
-    },
-    {
-        "id": 877,
-        "date": "2024-10-15",
-        "category": "Food",
-        "description": "Expense 877",
-        "amount": 336.84
-    },
-    {
-        "id": 878,
-        "date": "2024-03-09",
-        "category": "Food",
-        "description": "Expense 878",
-        "amount": 270.18
-    },
-    {
-        "id": 879,
-        "date": "2024-06-14",
-        "category": "Housing",
-        "description": "Expense 879",
-        "amount": 31.32
-    },
-    {
-        "id": 880,
-        "date": "2024-06-01",
-        "category": "Food",
-        "description": "Expense 880",
-        "amount": 316.0
-    },
-    {
-        "id": 881,
-        "date": "2024-04-20",
-        "category": "Healthcare",
-        "description": "Expense 881",
-        "amount": 12.99
-    },
-    {
-        "id": 882,
-        "date": "2024-04-10",
-        "category": "Healthcare",
-        "description": "Expense 882",
-        "amount": 23.84
-    },
-    {
-        "id": 883,
-        "date": "2024-04-27",
-        "category": "Groceries",
-        "description": "Expense 883",
-        "amount": 11.15
-    },
-    {
-        "id": 884,
-        "date": "2024-09-18",
-        "category": "Transportation",
-        "description": "Expense 884",
-        "amount": 6.72
-    },
-    {
-        "id": 885,
-        "date": "2024-12-29",
-        "category": "Entertainment",
-        "description": "Expense 885",
-        "amount": 11.27
-    },
-    {
-        "id": 886,
-        "date": "2024-05-16",
-        "category": "Housing",
-        "description": "Expense 886",
-        "amount": 40.27
-    },
-    {
-        "id": 887,
-        "date": "2024-01-28",
-        "category": "Transportation",
-        "description": "Expense 887",
-        "amount": 11.37
-    },
-    {
-        "id": 888,
-        "date": "2024-04-18",
-        "category": "Entertainment",
-        "description": "Expense 888",
-        "amount": 12.78
-    },
-    {
-        "id": 889,
-        "date": "2024-09-02",
-        "category": "Transportation",
-        "description": "Expense 889",
-        "amount": 10.45
-    },
-    {
-        "id": 890,
-        "date": "2024-10-01",
-        "category": "Transportation",
-        "description": "Expense 890",
-        "amount": 25.39
-    },
-    {
-        "id": 891,
-        "date": "2024-06-17",
-        "category": "Miscellaneous",
-        "description": "Expense 891",
-        "amount": 10.7
-    },
-    {
-        "id": 892,
-        "date": "2024-02-24",
-        "category": "Groceries",
-        "description": "Expense 892",
-        "amount": 19.74
-    },
-    {
-        "id": 893,
-        "date": "2024-06-19",
-        "category": "Housing",
-        "description": "Expense 893",
-        "amount": 26.5
-    },
-    {
-        "id": 894,
-        "date": "2024-06-19",
-        "category": "Housing",
-        "description": "Expense 894",
-        "amount": 18.22
-    },
-    {
-        "id": 895,
-        "date": "2024-08-03",
-        "category": "Entertainment",
-        "description": "Expense 895",
-        "amount": 38.14
-    },
-    {
-        "id": 896,
-        "date": "2024-06-11",
-        "category": "Entertainment",
-        "description": "Expense 896",
-        "amount": 43.99
-    },
-    {
-        "id": 897,
-        "date": "2024-04-09",
-        "category": "Miscellaneous",
-        "description": "Expense 897",
-        "amount": 32.11
-    },
-    {
-        "id": 898,
-        "date": "2024-07-01",
-        "category": "Miscellaneous",
-        "description": "Expense 898",
-        "amount": 23.33
-    },
-    {
-        "id": 899,
-        "date": "2024-09-01",
-        "category": "Food",
-        "description": "Expense 899",
-        "amount": 394.59
-    },
-    {
-        "id": 900,
-        "date": "2024-06-17",
-        "category": "Healthcare",
-        "description": "Expense 900",
-        "amount": 32.95
-    },
-    {
-        "id": 901,
-        "date": "2024-09-05",
-        "category": "Housing",
-        "description": "Expense 901",
-        "amount": 17.06
-    },
-    {
-        "id": 902,
-        "date": "2024-01-18",
-        "category": "Groceries",
-        "description": "Expense 902",
-        "amount": 12.06
-    },
-    {
-        "id": 903,
-        "date": "2024-12-30",
-        "category": "Transportation",
-        "description": "Expense 903",
-        "amount": 18.98
-    },
-    {
-        "id": 904,
-        "date": "2024-08-13",
-        "category": "Food",
-        "description": "Expense 904",
-        "amount": 363.28
-    },
-    {
-        "id": 905,
-        "date": "2024-08-06",
-        "category": "Education",
-        "description": "Expense 905",
-        "amount": 47.74
-    },
-    {
-        "id": 906,
-        "date": "2024-04-18",
-        "category": "Housing",
-        "description": "Expense 906",
-        "amount": 27.65
-    },
-    {
-        "id": 907,
-        "date": "2024-06-09",
-        "category": "Education",
-        "description": "Expense 907",
-        "amount": 22.98
-    },
-    {
-        "id": 908,
-        "date": "2024-10-19",
-        "category": "Housing",
-        "description": "Expense 908",
-        "amount": 11.41
-    },
-    {
-        "id": 909,
-        "date": "2024-08-05",
-        "category": "Healthcare",
-        "description": "Expense 909",
-        "amount": 37.8
-    },
-    {
-        "id": 910,
-        "date": "2024-02-15",
-        "category": "Utilities",
-        "description": "Expense 910",
-        "amount": 36.51
-    },
-    {
-        "id": 911,
-        "date": "2024-02-26",
-        "category": "Miscellaneous",
-        "description": "Expense 911",
-        "amount": 43.74
-    },
-    {
-        "id": 912,
-        "date": "2024-07-25",
-        "category": "Miscellaneous",
-        "description": "Expense 912",
-        "amount": 11.31
-    },
-    {
-        "id": 913,
-        "date": "2024-01-25",
-        "category": "Entertainment",
-        "description": "Expense 913",
-        "amount": 27.71
-    },
-    {
-        "id": 914,
-        "date": "2024-01-13",
-        "category": "Transportation",
-        "description": "Expense 914",
-        "amount": 32.69
-    },
-    {
-        "id": 915,
-        "date": "2024-12-03",
-        "category": "Groceries",
-        "description": "Expense 915",
-        "amount": 10.55
-    },
-    {
-        "id": 916,
-        "date": "2024-10-27",
-        "category": "Housing",
-        "description": "Expense 916",
-        "amount": 15.72
-    },
-    {
-        "id": 917,
-        "date": "2024-09-20",
-        "category": "Transportation",
-        "description": "Expense 917",
-        "amount": 9.41
-    },
-    {
-        "id": 918,
-        "date": "2024-04-29",
-        "category": "Food",
-        "description": "Expense 918",
-        "amount": 319.01
-    },
-    {
-        "id": 919,
-        "date": "2024-02-26",
-        "category": "Transportation",
-        "description": "Expense 919",
-        "amount": 9.43
-    },
-    {
-        "id": 920,
-        "date": "2024-05-02",
-        "category": "Transportation",
-        "description": "Expense 920",
-        "amount": 10.32
-    },
-    {
-        "id": 921,
-        "date": "2024-04-24",
-        "category": "Food",
-        "description": "Expense 921",
-        "amount": 388.18
-    },
-    {
-        "id": 922,
-        "date": "2024-03-19",
-        "category": "Miscellaneous",
-        "description": "Expense 922",
-        "amount": 17.59
-    },
-    {
-        "id": 923,
-        "date": "2024-01-06",
-        "category": "Education",
-        "description": "Expense 923",
-        "amount": 6.35
-    },
-    {
-        "id": 924,
-        "date": "2024-04-03",
-        "category": "Food",
-        "description": "Expense 924",
-        "amount": 280.51
-    },
-    {
-        "id": 925,
-        "date": "2024-12-29",
-        "category": "Entertainment",
-        "description": "Expense 925",
-        "amount": 9.16
-    },
-    {
-        "id": 926,
-        "date": "2024-08-02",
-        "category": "Education",
-        "description": "Expense 926",
-        "amount": 9.68
-    },
-    {
-        "id": 927,
-        "date": "2024-08-20",
-        "category": "Miscellaneous",
-        "description": "Expense 927",
-        "amount": 39.63
-    },
-    {
-        "id": 928,
-        "date": "2024-08-24",
-        "category": "Healthcare",
-        "description": "Expense 928",
-        "amount": 6.54
-    },
-    {
-        "id": 929,
-        "date": "2024-03-18",
-        "category": "Education",
-        "description": "Expense 929",
-        "amount": 22.77
-    },
-    {
-        "id": 930,
-        "date": "2024-05-27",
-        "category": "Miscellaneous",
-        "description": "Expense 930",
-        "amount": 9.59
-    },
-    {
-        "id": 931,
-        "date": "2024-10-21",
-        "category": "Groceries",
-        "description": "Expense 931",
-        "amount": 29.42
-    },
-    {
-        "id": 932,
-        "date": "2024-10-04",
-        "category": "Food",
-        "description": "Expense 932",
-        "amount": 294.37
-    },
-    {
-        "id": 933,
-        "date": "2024-12-28",
-        "category": "Transportation",
-        "description": "Expense 933",
-        "amount": 9.43
-    },
-    {
-        "id": 934,
-        "date": "2024-10-04",
-        "category": "Entertainment",
-        "description": "Expense 934",
-        "amount": 24.39
-    },
-    {
-        "id": 935,
-        "date": "2024-01-23",
-        "category": "Groceries",
-        "description": "Expense 935",
-        "amount": 18.74
-    },
-    {
-        "id": 936,
-        "date": "2024-11-27",
-        "category": "Education",
-        "description": "Expense 936",
-        "amount": 27.66
-    },
-    {
-        "id": 937,
-        "date": "2024-09-22",
-        "category": "Housing",
-        "description": "Expense 937",
-        "amount": 23.61
-    },
-    {
-        "id": 938,
-        "date": "2024-04-21",
-        "category": "Transportation",
-        "description": "Expense 938",
-        "amount": 14.39
-    },
-    {
-        "id": 939,
-        "date": "2024-05-07",
-        "category": "Entertainment",
-        "description": "Expense 939",
-        "amount": 8.2
-    },
-    {
-        "id": 940,
-        "date": "2024-06-09",
-        "category": "Groceries",
-        "description": "Expense 940",
-        "amount": 24.43
-    },
-    {
-        "id": 941,
-        "date": "2024-11-19",
-        "category": "Transportation",
-        "description": "Expense 941",
-        "amount": 21.06
-    },
-    {
-        "id": 942,
-        "date": "2024-01-30",
-        "category": "Groceries",
-        "description": "Expense 942",
-        "amount": 42.7
-    },
-    {
-        "id": 943,
-        "date": "2024-08-05",
-        "category": "Miscellaneous",
-        "description": "Expense 943",
-        "amount": 38.06
-    },
-    {
-        "id": 944,
-        "date": "2024-04-10",
-        "category": "Miscellaneous",
-        "description": "Expense 944",
-        "amount": 26.5
-    },
-    {
-        "id": 945,
-        "date": "2024-01-22",
-        "category": "Miscellaneous",
-        "description": "Expense 945",
-        "amount": 30.2
-    },
-    {
-        "id": 946,
-        "date": "2024-06-06",
-        "category": "Healthcare",
-        "description": "Expense 946",
-        "amount": 42.13
-    },
-    {
-        "id": 947,
-        "date": "2024-03-31",
-        "category": "Healthcare",
-        "description": "Expense 947",
-        "amount": 44.27
-    },
-    {
-        "id": 948,
-        "date": "2024-07-06",
-        "category": "Education",
-        "description": "Expense 948",
-        "amount": 5.84
-    },
-    {
-        "id": 949,
-        "date": "2024-09-15",
-        "category": "Entertainment",
-        "description": "Expense 949",
-        "amount": 12.2
-    },
-    {
-        "id": 950,
-        "date": "2024-01-10",
-        "category": "Transportation",
-        "description": "Expense 950",
-        "amount": 41.61
-    },
-    {
-        "id": 951,
-        "date": "2024-07-19",
-        "category": "Utilities",
-        "description": "Expense 951",
-        "amount": 7.77
-    },
-    {
-        "id": 952,
-        "date": "2024-10-03",
-        "category": "Education",
-        "description": "Expense 952",
-        "amount": 16.75
-    },
-    {
-        "id": 953,
-        "date": "2024-10-18",
-        "category": "Housing",
-        "description": "Expense 953",
-        "amount": 30.99
-    },
-    {
-        "id": 954,
-        "date": "2024-06-11",
-        "category": "Entertainment",
-        "description": "Expense 954",
-        "amount": 12.9
-    },
-    {
-        "id": 955,
-        "date": "2024-06-10",
-        "category": "Entertainment",
-        "description": "Expense 955",
-        "amount": 31.8
-    },
-    {
-        "id": 956,
-        "date": "2024-01-06",
-        "category": "Education",
-        "description": "Expense 956",
-        "amount": 43.2
-    },
-    {
-        "id": 957,
-        "date": "2024-10-14",
-        "category": "Housing",
-        "description": "Expense 957",
-        "amount": 33.1
-    },
-    {
-        "id": 958,
-        "date": "2024-03-18",
-        "category": "Miscellaneous",
-        "description": "Expense 958",
-        "amount": 41.65
-    },
-    {
-        "id": 959,
-        "date": "2024-12-04",
-        "category": "Healthcare",
-        "description": "Expense 959",
-        "amount": 44.35
-    },
-    {
-        "id": 960,
-        "date": "2024-08-08",
-        "category": "Food",
-        "description": "Expense 960",
-        "amount": 279.78
-    },
-    {
-        "id": 961,
-        "date": "2024-07-22",
-        "category": "Housing",
-        "description": "Expense 961",
-        "amount": 20.83
-    },
-    {
-        "id": 962,
-        "date": "2024-07-21",
-        "category": "Healthcare",
-        "description": "Expense 962",
-        "amount": 44.67
-    },
-    {
-        "id": 963,
-        "date": "2024-01-28",
-        "category": "Healthcare",
-        "description": "Expense 963",
-        "amount": 6.17
-    },
-    {
-        "id": 964,
-        "date": "2024-07-26",
-        "category": "Entertainment",
-        "description": "Expense 964",
-        "amount": 22.69
-    },
-    {
-        "id": 965,
-        "date": "2024-10-24",
-        "category": "Housing",
-        "description": "Expense 965",
-        "amount": 6.45
-    },
-    {
-        "id": 966,
-        "date": "2024-08-07",
-        "category": "Transportation",
-        "description": "Expense 966",
-        "amount": 14.77
-    },
-    {
-        "id": 967,
-        "date": "2024-03-06",
-        "category": "Utilities",
-        "description": "Expense 967",
-        "amount": 46.76
-    },
-    {
-        "id": 968,
-        "date": "2024-04-21",
-        "category": "Entertainment",
-        "description": "Expense 968",
-        "amount": 13.09
-    },
-    {
-        "id": 969,
-        "date": "2024-03-14",
-        "category": "Entertainment",
-        "description": "Expense 969",
-        "amount": 10.79
-    },
-    {
-        "id": 970,
-        "date": "2024-08-26",
-        "category": "Education",
-        "description": "Expense 970",
-        "amount": 11.46
-    },
-    {
-        "id": 971,
-        "date": "2024-02-27",
-        "category": "Groceries",
-        "description": "Expense 971",
-        "amount": 13.5
-    },
-    {
-        "id": 972,
-        "date": "2024-05-03",
-        "category": "Education",
-        "description": "Expense 972",
-        "amount": 37.89
-    },
-    {
-        "id": 973,
-        "date": "2024-11-24",
-        "category": "Utilities",
-        "description": "Expense 973",
-        "amount": 46.24
-    },
-    {
-        "id": 974,
-        "date": "2024-08-17",
-        "category": "Transportation",
-        "description": "Expense 974",
-        "amount": 11.45
-    },
-    {
-        "id": 975,
-        "date": "2024-06-12",
-        "category": "Utilities",
-        "description": "Expense 975",
-        "amount": 43.1
-    },
-    {
-        "id": 976,
-        "date": "2024-04-18",
-        "category": "Utilities",
-        "description": "Expense 976",
-        "amount": 41.47
-    },
-    {
-        "id": 977,
-        "date": "2024-03-18",
-        "category": "Entertainment",
-        "description": "Expense 977",
-        "amount": 31.56
-    },
-    {
-        "id": 978,
-        "date": "2024-09-22",
-        "category": "Food",
-        "description": "Expense 978",
-        "amount": 276.06
-    },
-    {
-        "id": 979,
-        "date": "2024-08-19",
-        "category": "Miscellaneous",
-        "description": "Expense 979",
-        "amount": 49.15
-    },
-    {
-        "id": 980,
-        "date": "2024-06-27",
-        "category": "Healthcare",
-        "description": "Expense 980",
-        "amount": 20.3
-    },
-    {
-        "id": 981,
-        "date": "2024-10-19",
-        "category": "Housing",
-        "description": "Expense 981",
-        "amount": 42.33
-    },
-    {
-        "id": 982,
-        "date": "2024-12-18",
-        "category": "Miscellaneous",
-        "description": "Expense 982",
-        "amount": 33.47
-    },
-    {
-        "id": 983,
-        "date": "2024-08-03",
-        "category": "Transportation",
-        "description": "Expense 983",
-        "amount": 42.22
-    },
-    {
-        "id": 984,
-        "date": "2024-03-12",
-        "category": "Food",
-        "description": "Expense 984",
-        "amount": 292.02
-    },
-    {
-        "id": 985,
-        "date": "2024-10-28",
-        "category": "Entertainment",
-        "description": "Expense 985",
-        "amount": 6.81
-    },
-    {
-        "id": 986,
-        "date": "2024-03-13",
-        "category": "Groceries",
-        "description": "Expense 986",
-        "amount": 34.65
-    },
-    {
-        "id": 987,
-        "date": "2024-08-21",
-        "category": "Utilities",
-        "description": "Expense 987",
-        "amount": 40.69
-    },
-    {
-        "id": 988,
-        "date": "2024-02-12",
-        "category": "Healthcare",
-        "description": "Expense 988",
-        "amount": 38.89
-    },
-    {
-        "id": 989,
-        "date": "2024-10-30",
-        "category": "Utilities",
-        "description": "Expense 989",
-        "amount": 48.34
-    },
-    {
-        "id": 990,
-        "date": "2024-09-27",
-        "category": "Food",
-        "description": "Expense 990",
-        "amount": 340.0
-    },
-    {
-        "id": 991,
-        "date": "2024-05-01",
-        "category": "Entertainment",
-        "description": "Expense 991",
-        "amount": 9.03
-    },
-    {
-        "id": 992,
-        "date": "2024-04-20",
-        "category": "Healthcare",
-        "description": "Expense 992",
-        "amount": 8.34
-    },
-    {
-        "id": 993,
-        "date": "2024-06-27",
-        "category": "Transportation",
-        "description": "Expense 993",
-        "amount": 24.13
-    },
-    {
-        "id": 994,
-        "date": "2024-04-06",
-        "category": "Groceries",
-        "description": "Expense 994",
-        "amount": 8.0
-    },
-    {
-        "id": 995,
-        "date": "2024-06-03",
-        "category": "Utilities",
-        "description": "Expense 995",
-        "amount": 17.92
-    },
-    {
-        "id": 996,
-        "date": "2024-02-04",
-        "category": "Miscellaneous",
-        "description": "Expense 996",
-        "amount": 29.37
-    },
-    {
-        "id": 997,
-        "date": "2024-12-10",
-        "category": "Education",
-        "description": "Expense 997",
-        "amount": 8.52
-    },
-    {
-        "id": 998,
-        "date": "2024-06-01",
-        "category": "Healthcare",
-        "description": "Expense 998",
-        "amount": 27.8
-    },
-    {
-        "id": 999,
-        "date": "2024-10-28",
-        "category": "Food",
-        "description": "Expense 999",
-        "amount": 328.7
-    },
-    {
-        "id": 1000,
-        "date": "2024-04-02",
-        "category": "Healthcare",
-        "description": "Expense 1000",
-        "amount": 10.32
-    }
-]
-`
-  localStorage.setItem("expenses", mockData)
+//   const mockData = `[
+//     {
+//         "id": 1,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 406.38,
+//         "date": "2024-10-15"
+//     },
+//     {
+//         "id": 2,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 58.36,
+//         "date": "2024-08-20"
+//     },
+//     {
+//         "id": 3,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 30.96,
+//         "date": "2024-02-14"
+//     },
+//     {
+//         "id": 4,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 497.97,
+//         "date": "2024-01-22"
+//     },
+//     {
+//         "id": 5,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 150.96,
+//         "date": "2024-07-28"
+//     },
+//     {
+//         "id": 6,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 257.16,
+//         "date": "2023-11-26"
+//     },
+//     {
+//         "id": 7,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 277.86,
+//         "date": "2024-06-25"
+//     },
+//     {
+//         "id": 8,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 8.1,
+//         "date": "2023-12-12"
+//     },
+//     {
+//         "id": 9,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 237.98,
+//         "date": "2024-09-24"
+//     },
+//     {
+//         "id": 10,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 172.5,
+//         "date": "2024-04-06"
+//     },
+//     {
+//         "id": 11,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 96.72,
+//         "date": "2024-02-22"
+//     },
+//     {
+//         "id": 12,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 93.08,
+//         "date": "2023-11-09"
+//     },
+//     {
+//         "id": 13,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 176.82,
+//         "date": "2024-08-16"
+//     },
+//     {
+//         "id": 14,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 283.98,
+//         "date": "2023-12-16"
+//     },
+//     {
+//         "id": 15,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 371.37,
+//         "date": "2024-07-01"
+//     },
+//     {
+//         "id": 16,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 487.58,
+//         "date": "2024-04-28"
+//     },
+//     {
+//         "id": 17,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 493.31,
+//         "date": "2024-02-11"
+//     },
+//     {
+//         "id": 18,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 180.45,
+//         "date": "2024-04-16"
+//     },
+//     {
+//         "id": 19,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 65.58,
+//         "date": "2024-02-02"
+//     },
+//     {
+//         "id": 20,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 442.87,
+//         "date": "2024-08-07"
+//     },
+//     {
+//         "id": 21,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 307.26,
+//         "date": "2024-03-09"
+//     },
+//     {
+//         "id": 22,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 61.38,
+//         "date": "2024-06-23"
+//     },
+//     {
+//         "id": 23,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 448.45,
+//         "date": "2024-06-19"
+//     },
+//     {
+//         "id": 24,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 322.41,
+//         "date": "2024-06-16"
+//     },
+//     {
+//         "id": 25,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 74.17,
+//         "date": "2024-02-09"
+//     },
+//     {
+//         "id": 26,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 131.86,
+//         "date": "2024-06-28"
+//     },
+//     {
+//         "id": 27,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 366.13,
+//         "date": "2024-06-10"
+//     },
+//     {
+//         "id": 28,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 490.35,
+//         "date": "2023-12-22"
+//     },
+//     {
+//         "id": 29,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 322.71,
+//         "date": "2024-01-22"
+//     },
+//     {
+//         "id": 30,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 143.41,
+//         "date": "2024-02-10"
+//     },
+//     {
+//         "id": 31,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 226.92,
+//         "date": "2024-01-16"
+//     },
+//     {
+//         "id": 32,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 65.03,
+//         "date": "2024-03-01"
+//     },
+//     {
+//         "id": 33,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 369.19,
+//         "date": "2024-10-01"
+//     },
+//     {
+//         "id": 34,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 0.48,
+//         "date": "2023-12-31"
+//     },
+//     {
+//         "id": 35,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 452.32,
+//         "date": "2024-04-26"
+//     },
+//     {
+//         "id": 36,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 376.62,
+//         "date": "2024-03-12"
+//     },
+//     {
+//         "id": 37,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 253.85,
+//         "date": "2024-03-22"
+//     },
+//     {
+//         "id": 38,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 42.45,
+//         "date": "2024-07-12"
+//     },
+//     {
+//         "id": 39,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 328.12,
+//         "date": "2024-09-29"
+//     },
+//     {
+//         "id": 40,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 110.95,
+//         "date": "2024-09-14"
+//     },
+//     {
+//         "id": 41,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 427.61,
+//         "date": "2023-10-30"
+//     },
+//     {
+//         "id": 42,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 156.02,
+//         "date": "2024-01-11"
+//     },
+//     {
+//         "id": 43,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 495.2,
+//         "date": "2023-11-15"
+//     },
+//     {
+//         "id": 44,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 432.17,
+//         "date": "2023-11-11"
+//     },
+//     {
+//         "id": 45,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 196.71,
+//         "date": "2023-11-14"
+//     },
+//     {
+//         "id": 46,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 188.49,
+//         "date": "2024-01-21"
+//     },
+//     {
+//         "id": 47,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 469.52,
+//         "date": "2024-08-27"
+//     },
+//     {
+//         "id": 48,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 436.48,
+//         "date": "2024-05-25"
+//     },
+//     {
+//         "id": 49,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 25.13,
+//         "date": "2023-12-18"
+//     },
+//     {
+//         "id": 50,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 482.52,
+//         "date": "2024-05-07"
+//     },
+//     {
+//         "id": 51,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 476.59,
+//         "date": "2024-07-01"
+//     },
+//     {
+//         "id": 52,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 160.74,
+//         "date": "2024-05-22"
+//     },
+//     {
+//         "id": 53,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 89.45,
+//         "date": "2023-11-26"
+//     },
+//     {
+//         "id": 54,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 490.71,
+//         "date": "2024-10-14"
+//     },
+//     {
+//         "id": 55,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 282.62,
+//         "date": "2024-02-23"
+//     },
+//     {
+//         "id": 56,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 74.61,
+//         "date": "2024-06-30"
+//     },
+//     {
+//         "id": 57,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 134.07,
+//         "date": "2023-11-23"
+//     },
+//     {
+//         "id": 58,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 49.94,
+//         "date": "2024-04-19"
+//     },
+//     {
+//         "id": 59,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 261.17,
+//         "date": "2024-07-28"
+//     },
+//     {
+//         "id": 60,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 73.86,
+//         "date": "2024-08-13"
+//     },
+//     {
+//         "id": 61,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 362.84,
+//         "date": "2024-01-12"
+//     },
+//     {
+//         "id": 62,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 216.59,
+//         "date": "2024-10-14"
+//     },
+//     {
+//         "id": 63,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 206.63,
+//         "date": "2023-11-29"
+//     },
+//     {
+//         "id": 64,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 433.81,
+//         "date": "2023-11-30"
+//     },
+//     {
+//         "id": 65,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 216.49,
+//         "date": "2024-04-01"
+//     },
+//     {
+//         "id": 66,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 178.88,
+//         "date": "2024-01-21"
+//     },
+//     {
+//         "id": 67,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 318.25,
+//         "date": "2023-10-28"
+//     },
+//     {
+//         "id": 68,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 326.78,
+//         "date": "2024-08-19"
+//     },
+//     {
+//         "id": 69,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 89.18,
+//         "date": "2024-06-17"
+//     },
+//     {
+//         "id": 70,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 383.9,
+//         "date": "2023-11-15"
+//     },
+//     {
+//         "id": 71,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 16.34,
+//         "date": "2024-04-06"
+//     },
+//     {
+//         "id": 72,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 307.86,
+//         "date": "2024-03-31"
+//     },
+//     {
+//         "id": 73,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 484.08,
+//         "date": "2024-01-22"
+//     },
+//     {
+//         "id": 74,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 464.35,
+//         "date": "2023-10-25"
+//     },
+//     {
+//         "id": 75,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 139.09,
+//         "date": "2023-12-09"
+//     },
+//     {
+//         "id": 76,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 233.51,
+//         "date": "2024-09-01"
+//     },
+//     {
+//         "id": 77,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 55.88,
+//         "date": "2023-10-18"
+//     },
+//     {
+//         "id": 78,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 154.43,
+//         "date": "2024-01-15"
+//     },
+//     {
+//         "id": 79,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 419.51,
+//         "date": "2024-10-04"
+//     },
+//     {
+//         "id": 80,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 486.5,
+//         "date": "2024-05-14"
+//     },
+//     {
+//         "id": 81,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 86.71,
+//         "date": "2024-08-11"
+//     },
+//     {
+//         "id": 82,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 435.48,
+//         "date": "2024-01-21"
+//     },
+//     {
+//         "id": 83,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 382.69,
+//         "date": "2023-12-01"
+//     },
+//     {
+//         "id": 84,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 337.95,
+//         "date": "2024-04-20"
+//     },
+//     {
+//         "id": 85,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 204.76,
+//         "date": "2024-01-11"
+//     },
+//     {
+//         "id": 86,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 109.32,
+//         "date": "2024-09-12"
+//     },
+//     {
+//         "id": 87,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 80.88,
+//         "date": "2024-05-11"
+//     },
+//     {
+//         "id": 88,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 311.41,
+//         "date": "2024-10-08"
+//     },
+//     {
+//         "id": 89,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 248.03,
+//         "date": "2024-07-15"
+//     },
+//     {
+//         "id": 90,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 259.06,
+//         "date": "2024-04-12"
+//     },
+//     {
+//         "id": 91,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 233.96,
+//         "date": "2023-11-02"
+//     },
+//     {
+//         "id": 92,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 50.11,
+//         "date": "2023-10-26"
+//     },
+//     {
+//         "id": 93,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 60.22,
+//         "date": "2023-11-27"
+//     },
+//     {
+//         "id": 94,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 398.75,
+//         "date": "2023-11-24"
+//     },
+//     {
+//         "id": 95,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 472.07,
+//         "date": "2024-03-03"
+//     },
+//     {
+//         "id": 96,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 451.39,
+//         "date": "2024-01-03"
+//     },
+//     {
+//         "id": 97,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 117.4,
+//         "date": "2023-12-14"
+//     },
+//     {
+//         "id": 98,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 355.36,
+//         "date": "2024-07-28"
+//     },
+//     {
+//         "id": 99,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 319.38,
+//         "date": "2024-02-06"
+//     },
+//     {
+//         "id": 100,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 245.48,
+//         "date": "2024-08-07"
+//     },
+//     {
+//         "id": 101,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 427.77,
+//         "date": "2024-07-01"
+//     },
+//     {
+//         "id": 102,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 217.68,
+//         "date": "2024-02-16"
+//     },
+//     {
+//         "id": 103,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 279.84,
+//         "date": "2024-05-29"
+//     },
+//     {
+//         "id": 104,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 389.66,
+//         "date": "2023-11-18"
+//     },
+//     {
+//         "id": 105,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 68.35,
+//         "date": "2024-09-25"
+//     },
+//     {
+//         "id": 106,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 35.28,
+//         "date": "2024-06-19"
+//     },
+//     {
+//         "id": 107,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 405.43,
+//         "date": "2024-07-16"
+//     },
+//     {
+//         "id": 108,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 39.86,
+//         "date": "2024-05-27"
+//     },
+//     {
+//         "id": 109,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 397.2,
+//         "date": "2024-06-22"
+//     },
+//     {
+//         "id": 110,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 416.54,
+//         "date": "2024-05-11"
+//     },
+//     {
+//         "id": 111,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 99.94,
+//         "date": "2024-08-18"
+//     },
+//     {
+//         "id": 112,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 483.62,
+//         "date": "2023-11-11"
+//     },
+//     {
+//         "id": 113,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 159.82,
+//         "date": "2023-11-19"
+//     },
+//     {
+//         "id": 114,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 359.93,
+//         "date": "2024-06-17"
+//     },
+//     {
+//         "id": 115,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 342.33,
+//         "date": "2023-10-26"
+//     },
+//     {
+//         "id": 116,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 382.69,
+//         "date": "2024-01-21"
+//     },
+//     {
+//         "id": 117,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 170.51,
+//         "date": "2024-01-20"
+//     },
+//     {
+//         "id": 118,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 228.97,
+//         "date": "2023-11-23"
+//     },
+//     {
+//         "id": 119,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 239.15,
+//         "date": "2024-01-07"
+//     },
+//     {
+//         "id": 120,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 103.84,
+//         "date": "2023-12-15"
+//     },
+//     {
+//         "id": 121,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 45.39,
+//         "date": "2024-07-17"
+//     },
+//     {
+//         "id": 122,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 160.65,
+//         "date": "2024-02-02"
+//     },
+//     {
+//         "id": 123,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 382.98,
+//         "date": "2024-07-13"
+//     },
+//     {
+//         "id": 124,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 284.86,
+//         "date": "2024-08-29"
+//     },
+//     {
+//         "id": 125,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 331.74,
+//         "date": "2023-11-01"
+//     },
+//     {
+//         "id": 126,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 209.89,
+//         "date": "2024-01-22"
+//     },
+//     {
+//         "id": 127,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 133.48,
+//         "date": "2024-05-31"
+//     },
+//     {
+//         "id": 128,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 435.05,
+//         "date": "2023-10-28"
+//     },
+//     {
+//         "id": 129,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 274.66,
+//         "date": "2023-10-22"
+//     },
+//     {
+//         "id": 130,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 13.5,
+//         "date": "2023-12-03"
+//     },
+//     {
+//         "id": 131,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 214.96,
+//         "date": "2024-04-30"
+//     },
+//     {
+//         "id": 132,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 415.59,
+//         "date": "2023-11-17"
+//     },
+//     {
+//         "id": 133,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 261.21,
+//         "date": "2024-10-10"
+//     },
+//     {
+//         "id": 134,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 103.06,
+//         "date": "2024-04-09"
+//     },
+//     {
+//         "id": 135,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 38.64,
+//         "date": "2024-01-31"
+//     },
+//     {
+//         "id": 136,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 66.05,
+//         "date": "2024-08-14"
+//     },
+//     {
+//         "id": 137,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 133.46,
+//         "date": "2023-11-02"
+//     },
+//     {
+//         "id": 138,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 441.53,
+//         "date": "2024-04-07"
+//     },
+//     {
+//         "id": 139,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 388.42,
+//         "date": "2024-04-30"
+//     },
+//     {
+//         "id": 140,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 246.5,
+//         "date": "2024-06-01"
+//     },
+//     {
+//         "id": 141,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 267.24,
+//         "date": "2024-09-22"
+//     },
+//     {
+//         "id": 142,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 434.89,
+//         "date": "2024-06-22"
+//     },
+//     {
+//         "id": 143,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 401.0,
+//         "date": "2023-12-28"
+//     },
+//     {
+//         "id": 144,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 453.39,
+//         "date": "2023-11-03"
+//     },
+//     {
+//         "id": 145,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 405.5,
+//         "date": "2024-06-09"
+//     },
+//     {
+//         "id": 146,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 160.05,
+//         "date": "2024-10-14"
+//     },
+//     {
+//         "id": 147,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 195.39,
+//         "date": "2024-07-31"
+//     },
+//     {
+//         "id": 148,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 104.62,
+//         "date": "2023-10-29"
+//     },
+//     {
+//         "id": 149,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 157.1,
+//         "date": "2024-10-13"
+//     },
+//     {
+//         "id": 150,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 26.6,
+//         "date": "2023-12-07"
+//     },
+//     {
+//         "id": 151,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 193.94,
+//         "date": "2024-01-27"
+//     },
+//     {
+//         "id": 152,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 253.91,
+//         "date": "2024-09-20"
+//     },
+//     {
+//         "id": 153,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 499.98,
+//         "date": "2024-04-18"
+//     },
+//     {
+//         "id": 154,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 355.38,
+//         "date": "2024-02-09"
+//     },
+//     {
+//         "id": 155,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 302.95,
+//         "date": "2023-10-21"
+//     },
+//     {
+//         "id": 156,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 317.95,
+//         "date": "2024-03-06"
+//     },
+//     {
+//         "id": 157,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 156.33,
+//         "date": "2024-09-11"
+//     },
+//     {
+//         "id": 158,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 282.19,
+//         "date": "2024-02-07"
+//     },
+//     {
+//         "id": 159,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 132.32,
+//         "date": "2023-10-30"
+//     },
+//     {
+//         "id": 160,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 113.86,
+//         "date": "2024-07-12"
+//     },
+//     {
+//         "id": 161,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 218.38,
+//         "date": "2024-07-06"
+//     },
+//     {
+//         "id": 162,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 150.88,
+//         "date": "2024-06-21"
+//     },
+//     {
+//         "id": 163,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 65.29,
+//         "date": "2024-01-06"
+//     },
+//     {
+//         "id": 164,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 5.2,
+//         "date": "2024-01-07"
+//     },
+//     {
+//         "id": 165,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 472.33,
+//         "date": "2024-05-06"
+//     },
+//     {
+//         "id": 166,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 269.97,
+//         "date": "2024-07-26"
+//     },
+//     {
+//         "id": 167,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 48.93,
+//         "date": "2023-10-19"
+//     },
+//     {
+//         "id": 168,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 42.59,
+//         "date": "2023-11-28"
+//     },
+//     {
+//         "id": 169,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 112.94,
+//         "date": "2023-11-19"
+//     },
+//     {
+//         "id": 170,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 484.07,
+//         "date": "2024-03-22"
+//     },
+//     {
+//         "id": 171,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 364.62,
+//         "date": "2023-10-31"
+//     },
+//     {
+//         "id": 172,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 126.11,
+//         "date": "2024-07-15"
+//     },
+//     {
+//         "id": 173,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 320.64,
+//         "date": "2024-07-09"
+//     },
+//     {
+//         "id": 174,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 368.69,
+//         "date": "2024-01-26"
+//     },
+//     {
+//         "id": 175,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 423.9,
+//         "date": "2024-06-18"
+//     },
+//     {
+//         "id": 176,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 151.53,
+//         "date": "2024-02-03"
+//     },
+//     {
+//         "id": 177,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 248.9,
+//         "date": "2024-01-11"
+//     },
+//     {
+//         "id": 178,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 67.05,
+//         "date": "2024-01-28"
+//     },
+//     {
+//         "id": 179,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 44.82,
+//         "date": "2024-03-25"
+//     },
+//     {
+//         "id": 180,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 260.36,
+//         "date": "2024-07-26"
+//     },
+//     {
+//         "id": 181,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 262.7,
+//         "date": "2024-09-03"
+//     },
+//     {
+//         "id": 182,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 218.83,
+//         "date": "2023-11-18"
+//     },
+//     {
+//         "id": 183,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 392.27,
+//         "date": "2024-01-04"
+//     },
+//     {
+//         "id": 184,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 68.73,
+//         "date": "2024-03-10"
+//     },
+//     {
+//         "id": 185,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 291.89,
+//         "date": "2024-10-05"
+//     },
+//     {
+//         "id": 186,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 58.39,
+//         "date": "2024-01-29"
+//     },
+//     {
+//         "id": 187,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 240.63,
+//         "date": "2024-03-28"
+//     },
+//     {
+//         "id": 188,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 8.55,
+//         "date": "2024-04-15"
+//     },
+//     {
+//         "id": 189,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 64.59,
+//         "date": "2024-01-06"
+//     },
+//     {
+//         "id": 190,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 413.02,
+//         "date": "2024-06-16"
+//     },
+//     {
+//         "id": 191,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 119.02,
+//         "date": "2024-06-02"
+//     },
+//     {
+//         "id": 192,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 358.43,
+//         "date": "2024-03-25"
+//     },
+//     {
+//         "id": 193,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 258.63,
+//         "date": "2023-11-04"
+//     },
+//     {
+//         "id": 194,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 489.62,
+//         "date": "2024-06-22"
+//     },
+//     {
+//         "id": 195,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 351.99,
+//         "date": "2024-04-14"
+//     },
+//     {
+//         "id": 196,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 116.07,
+//         "date": "2023-11-24"
+//     },
+//     {
+//         "id": 197,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 6.51,
+//         "date": "2024-09-16"
+//     },
+//     {
+//         "id": 198,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 315.85,
+//         "date": "2024-06-09"
+//     },
+//     {
+//         "id": 199,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 307.06,
+//         "date": "2024-03-08"
+//     },
+//     {
+//         "id": 200,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 116.73,
+//         "date": "2024-01-31"
+//     },
+//     {
+//         "id": 201,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 6.13,
+//         "date": "2024-03-05"
+//     },
+//     {
+//         "id": 202,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 357.79,
+//         "date": "2023-10-29"
+//     },
+//     {
+//         "id": 203,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 50.89,
+//         "date": "2024-08-25"
+//     },
+//     {
+//         "id": 204,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 377.16,
+//         "date": "2024-04-13"
+//     },
+//     {
+//         "id": 205,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 29.56,
+//         "date": "2024-02-26"
+//     },
+//     {
+//         "id": 206,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 122.18,
+//         "date": "2024-08-07"
+//     },
+//     {
+//         "id": 207,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 297.45,
+//         "date": "2024-01-03"
+//     },
+//     {
+//         "id": 208,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 93.53,
+//         "date": "2023-12-13"
+//     },
+//     {
+//         "id": 209,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 423.98,
+//         "date": "2024-09-27"
+//     },
+//     {
+//         "id": 210,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 325.73,
+//         "date": "2023-12-06"
+//     },
+//     {
+//         "id": 211,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 39.27,
+//         "date": "2024-07-11"
+//     },
+//     {
+//         "id": 212,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 64.37,
+//         "date": "2024-02-18"
+//     },
+//     {
+//         "id": 213,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 469.28,
+//         "date": "2023-11-29"
+//     },
+//     {
+//         "id": 214,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 285.5,
+//         "date": "2024-05-15"
+//     },
+//     {
+//         "id": 215,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 37.62,
+//         "date": "2024-04-05"
+//     },
+//     {
+//         "id": 216,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 167.94,
+//         "date": "2023-11-27"
+//     },
+//     {
+//         "id": 217,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 106.71,
+//         "date": "2024-10-16"
+//     },
+//     {
+//         "id": 218,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 45.63,
+//         "date": "2024-01-31"
+//     },
+//     {
+//         "id": 219,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 284.74,
+//         "date": "2024-08-19"
+//     },
+//     {
+//         "id": 220,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 327.54,
+//         "date": "2023-11-22"
+//     },
+//     {
+//         "id": 221,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 442.63,
+//         "date": "2024-03-25"
+//     },
+//     {
+//         "id": 222,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 352.12,
+//         "date": "2023-11-22"
+//     },
+//     {
+//         "id": 223,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 282.08,
+//         "date": "2024-06-27"
+//     },
+//     {
+//         "id": 224,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 279.22,
+//         "date": "2023-11-21"
+//     },
+//     {
+//         "id": 225,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 486.0,
+//         "date": "2024-05-12"
+//     },
+//     {
+//         "id": 226,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 258.29,
+//         "date": "2024-09-08"
+//     },
+//     {
+//         "id": 227,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 160.52,
+//         "date": "2023-11-21"
+//     },
+//     {
+//         "id": 228,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 297.84,
+//         "date": "2024-07-25"
+//     },
+//     {
+//         "id": 229,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 453.9,
+//         "date": "2023-11-13"
+//     },
+//     {
+//         "id": 230,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 171.88,
+//         "date": "2024-10-03"
+//     },
+//     {
+//         "id": 231,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 290.54,
+//         "date": "2024-01-30"
+//     },
+//     {
+//         "id": 232,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 176.38,
+//         "date": "2023-10-21"
+//     },
+//     {
+//         "id": 233,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 423.54,
+//         "date": "2024-07-18"
+//     },
+//     {
+//         "id": 234,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 446.79,
+//         "date": "2024-09-02"
+//     },
+//     {
+//         "id": 235,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 302.28,
+//         "date": "2024-03-14"
+//     },
+//     {
+//         "id": 236,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 155.08,
+//         "date": "2024-03-08"
+//     },
+//     {
+//         "id": 237,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 266.99,
+//         "date": "2024-04-30"
+//     },
+//     {
+//         "id": 238,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 415.87,
+//         "date": "2024-02-06"
+//     },
+//     {
+//         "id": 239,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 0.76,
+//         "date": "2024-08-06"
+//     },
+//     {
+//         "id": 240,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 71.17,
+//         "date": "2023-10-24"
+//     },
+//     {
+//         "id": 241,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 244.75,
+//         "date": "2023-12-27"
+//     },
+//     {
+//         "id": 242,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 91.28,
+//         "date": "2024-03-14"
+//     },
+//     {
+//         "id": 243,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 428.58,
+//         "date": "2024-06-18"
+//     },
+//     {
+//         "id": 244,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 68.74,
+//         "date": "2024-05-17"
+//     },
+//     {
+//         "id": 245,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 447.78,
+//         "date": "2024-03-03"
+//     },
+//     {
+//         "id": 246,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 277.46,
+//         "date": "2024-05-13"
+//     },
+//     {
+//         "id": 247,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 46.56,
+//         "date": "2024-10-01"
+//     },
+//     {
+//         "id": 248,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 401.9,
+//         "date": "2024-02-05"
+//     },
+//     {
+//         "id": 249,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 279.52,
+//         "date": "2023-12-04"
+//     },
+//     {
+//         "id": 250,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 107.48,
+//         "date": "2024-08-10"
+//     },
+//     {
+//         "id": 251,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 331.56,
+//         "date": "2024-04-10"
+//     },
+//     {
+//         "id": 252,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 178.89,
+//         "date": "2024-06-19"
+//     },
+//     {
+//         "id": 253,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 373.81,
+//         "date": "2023-12-11"
+//     },
+//     {
+//         "id": 254,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 426.68,
+//         "date": "2024-09-21"
+//     },
+//     {
+//         "id": 255,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 249.54,
+//         "date": "2024-08-14"
+//     },
+//     {
+//         "id": 256,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 379.65,
+//         "date": "2024-03-23"
+//     },
+//     {
+//         "id": 257,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 458.89,
+//         "date": "2023-11-04"
+//     },
+//     {
+//         "id": 258,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 480.44,
+//         "date": "2024-07-30"
+//     },
+//     {
+//         "id": 259,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 418.09,
+//         "date": "2024-01-04"
+//     },
+//     {
+//         "id": 260,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 87.77,
+//         "date": "2024-04-11"
+//     },
+//     {
+//         "id": 261,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 125.52,
+//         "date": "2023-10-22"
+//     },
+//     {
+//         "id": 262,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 267.95,
+//         "date": "2024-04-19"
+//     },
+//     {
+//         "id": 263,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 444.74,
+//         "date": "2023-11-19"
+//     },
+//     {
+//         "id": 264,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 56.6,
+//         "date": "2024-06-02"
+//     },
+//     {
+//         "id": 265,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 67.37,
+//         "date": "2024-08-19"
+//     },
+//     {
+//         "id": 266,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 147.61,
+//         "date": "2024-04-27"
+//     },
+//     {
+//         "id": 267,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 234.95,
+//         "date": "2023-11-25"
+//     },
+//     {
+//         "id": 268,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 389.56,
+//         "date": "2024-07-30"
+//     },
+//     {
+//         "id": 269,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 231.48,
+//         "date": "2024-05-13"
+//     },
+//     {
+//         "id": 270,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 189.16,
+//         "date": "2024-08-12"
+//     },
+//     {
+//         "id": 271,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 490.52,
+//         "date": "2024-07-17"
+//     },
+//     {
+//         "id": 272,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 444.79,
+//         "date": "2024-02-23"
+//     },
+//     {
+//         "id": 273,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 217.92,
+//         "date": "2024-04-01"
+//     },
+//     {
+//         "id": 274,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 117.89,
+//         "date": "2024-09-18"
+//     },
+//     {
+//         "id": 275,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 368.17,
+//         "date": "2024-10-13"
+//     },
+//     {
+//         "id": 276,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 146.95,
+//         "date": "2024-06-04"
+//     },
+//     {
+//         "id": 277,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 412.89,
+//         "date": "2024-07-16"
+//     },
+//     {
+//         "id": 278,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 301.3,
+//         "date": "2024-01-09"
+//     },
+//     {
+//         "id": 279,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 444.51,
+//         "date": "2023-12-25"
+//     },
+//     {
+//         "id": 280,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 40.55,
+//         "date": "2024-01-04"
+//     },
+//     {
+//         "id": 281,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 50.52,
+//         "date": "2024-05-13"
+//     },
+//     {
+//         "id": 282,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 344.92,
+//         "date": "2024-06-30"
+//     },
+//     {
+//         "id": 283,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 92.03,
+//         "date": "2023-11-13"
+//     },
+//     {
+//         "id": 284,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 101.54,
+//         "date": "2024-02-17"
+//     },
+//     {
+//         "id": 285,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 202.35,
+//         "date": "2023-12-21"
+//     },
+//     {
+//         "id": 286,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 437.98,
+//         "date": "2023-10-23"
+//     },
+//     {
+//         "id": 287,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 409.49,
+//         "date": "2023-11-10"
+//     },
+//     {
+//         "id": 288,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 226.4,
+//         "date": "2024-06-24"
+//     },
+//     {
+//         "id": 289,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 352.01,
+//         "date": "2023-11-25"
+//     },
+//     {
+//         "id": 290,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 332.35,
+//         "date": "2024-10-01"
+//     },
+//     {
+//         "id": 291,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 197.73,
+//         "date": "2024-02-08"
+//     },
+//     {
+//         "id": 292,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 346.27,
+//         "date": "2024-08-31"
+//     },
+//     {
+//         "id": 293,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 0.95,
+//         "date": "2024-03-10"
+//     },
+//     {
+//         "id": 294,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 218.57,
+//         "date": "2024-05-13"
+//     },
+//     {
+//         "id": 295,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 371.21,
+//         "date": "2024-02-09"
+//     },
+//     {
+//         "id": 296,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 308.27,
+//         "date": "2023-10-18"
+//     },
+//     {
+//         "id": 297,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 214.56,
+//         "date": "2024-05-07"
+//     },
+//     {
+//         "id": 298,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 266.27,
+//         "date": "2023-11-06"
+//     },
+//     {
+//         "id": 299,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 102.42,
+//         "date": "2024-04-05"
+//     },
+//     {
+//         "id": 300,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 394.36,
+//         "date": "2023-10-22"
+//     },
+//     {
+//         "id": 301,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 321.88,
+//         "date": "2024-09-21"
+//     },
+//     {
+//         "id": 302,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 429.48,
+//         "date": "2024-02-25"
+//     },
+//     {
+//         "id": 303,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 24.14,
+//         "date": "2024-05-20"
+//     },
+//     {
+//         "id": 304,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 382.63,
+//         "date": "2024-05-23"
+//     },
+//     {
+//         "id": 305,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 396.91,
+//         "date": "2024-06-09"
+//     },
+//     {
+//         "id": 306,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 310.14,
+//         "date": "2024-08-26"
+//     },
+//     {
+//         "id": 307,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 125.65,
+//         "date": "2024-05-26"
+//     },
+//     {
+//         "id": 308,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 19.49,
+//         "date": "2024-02-11"
+//     },
+//     {
+//         "id": 309,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 90.52,
+//         "date": "2024-02-10"
+//     },
+//     {
+//         "id": 310,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 103.96,
+//         "date": "2024-05-30"
+//     },
+//     {
+//         "id": 311,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 331.83,
+//         "date": "2024-04-03"
+//     },
+//     {
+//         "id": 312,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 484.25,
+//         "date": "2024-09-20"
+//     },
+//     {
+//         "id": 313,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 49.36,
+//         "date": "2024-09-21"
+//     },
+//     {
+//         "id": 314,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 287.86,
+//         "date": "2024-02-20"
+//     },
+//     {
+//         "id": 315,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 429.38,
+//         "date": "2024-05-30"
+//     },
+//     {
+//         "id": 316,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 123.3,
+//         "date": "2024-05-12"
+//     },
+//     {
+//         "id": 317,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 274.53,
+//         "date": "2024-05-06"
+//     },
+//     {
+//         "id": 318,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 185.89,
+//         "date": "2024-02-22"
+//     },
+//     {
+//         "id": 319,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 108.74,
+//         "date": "2024-03-18"
+//     },
+//     {
+//         "id": 320,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 322.3,
+//         "date": "2023-12-19"
+//     },
+//     {
+//         "id": 321,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 260.33,
+//         "date": "2024-08-21"
+//     },
+//     {
+//         "id": 322,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 132.28,
+//         "date": "2023-12-23"
+//     },
+//     {
+//         "id": 323,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 132.35,
+//         "date": "2024-10-06"
+//     },
+//     {
+//         "id": 324,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 342.95,
+//         "date": "2024-02-24"
+//     },
+//     {
+//         "id": 325,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 443.98,
+//         "date": "2024-04-17"
+//     },
+//     {
+//         "id": 326,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 499.55,
+//         "date": "2024-06-30"
+//     },
+//     {
+//         "id": 327,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 404.04,
+//         "date": "2023-11-14"
+//     },
+//     {
+//         "id": 328,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 100.65,
+//         "date": "2024-04-02"
+//     },
+//     {
+//         "id": 329,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 372.82,
+//         "date": "2024-04-30"
+//     },
+//     {
+//         "id": 330,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 146.5,
+//         "date": "2024-10-02"
+//     },
+//     {
+//         "id": 331,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 356.37,
+//         "date": "2024-06-03"
+//     },
+//     {
+//         "id": 332,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 425.48,
+//         "date": "2024-04-29"
+//     },
+//     {
+//         "id": 333,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 466.5,
+//         "date": "2024-09-08"
+//     },
+//     {
+//         "id": 334,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 238.58,
+//         "date": "2023-11-09"
+//     },
+//     {
+//         "id": 335,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 423.94,
+//         "date": "2023-10-28"
+//     },
+//     {
+//         "id": 336,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 47.71,
+//         "date": "2024-03-12"
+//     },
+//     {
+//         "id": 337,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 151.44,
+//         "date": "2024-03-08"
+//     },
+//     {
+//         "id": 338,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 401.14,
+//         "date": "2024-07-17"
+//     },
+//     {
+//         "id": 339,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 7.3,
+//         "date": "2024-10-01"
+//     },
+//     {
+//         "id": 340,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 166.94,
+//         "date": "2024-04-03"
+//     },
+//     {
+//         "id": 341,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 271.51,
+//         "date": "2024-06-14"
+//     },
+//     {
+//         "id": 342,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 434.16,
+//         "date": "2024-09-30"
+//     },
+//     {
+//         "id": 343,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 82.66,
+//         "date": "2024-07-06"
+//     },
+//     {
+//         "id": 344,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 290.24,
+//         "date": "2023-11-14"
+//     },
+//     {
+//         "id": 345,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 340.05,
+//         "date": "2024-02-15"
+//     },
+//     {
+//         "id": 346,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 4.12,
+//         "date": "2024-07-13"
+//     },
+//     {
+//         "id": 347,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 328.81,
+//         "date": "2024-03-07"
+//     },
+//     {
+//         "id": 348,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 343.44,
+//         "date": "2023-12-26"
+//     },
+//     {
+//         "id": 349,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 334.12,
+//         "date": "2024-07-09"
+//     },
+//     {
+//         "id": 350,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 154.57,
+//         "date": "2024-04-23"
+//     },
+//     {
+//         "id": 351,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 106.93,
+//         "date": "2024-08-16"
+//     },
+//     {
+//         "id": 352,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 224.74,
+//         "date": "2024-01-03"
+//     },
+//     {
+//         "id": 353,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 263.85,
+//         "date": "2024-09-28"
+//     },
+//     {
+//         "id": 354,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 31.99,
+//         "date": "2024-06-24"
+//     },
+//     {
+//         "id": 355,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 483.31,
+//         "date": "2024-08-12"
+//     },
+//     {
+//         "id": 356,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 405.68,
+//         "date": "2024-09-26"
+//     },
+//     {
+//         "id": 357,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 214.14,
+//         "date": "2024-08-24"
+//     },
+//     {
+//         "id": 358,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 405.52,
+//         "date": "2023-10-26"
+//     },
+//     {
+//         "id": 359,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 182.05,
+//         "date": "2023-12-30"
+//     },
+//     {
+//         "id": 360,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 196.92,
+//         "date": "2024-07-26"
+//     },
+//     {
+//         "id": 361,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 281.72,
+//         "date": "2023-12-03"
+//     },
+//     {
+//         "id": 362,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 479.82,
+//         "date": "2024-08-17"
+//     },
+//     {
+//         "id": 363,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 129.11,
+//         "date": "2024-02-06"
+//     },
+//     {
+//         "id": 364,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 119.17,
+//         "date": "2024-07-25"
+//     },
+//     {
+//         "id": 365,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 6.12,
+//         "date": "2024-08-08"
+//     },
+//     {
+//         "id": 366,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 216.35,
+//         "date": "2024-08-31"
+//     },
+//     {
+//         "id": 367,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 73.21,
+//         "date": "2024-02-15"
+//     },
+//     {
+//         "id": 368,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 337.74,
+//         "date": "2024-03-06"
+//     },
+//     {
+//         "id": 369,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 478.39,
+//         "date": "2024-09-28"
+//     },
+//     {
+//         "id": 370,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 154.78,
+//         "date": "2024-03-18"
+//     },
+//     {
+//         "id": 371,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 476.96,
+//         "date": "2024-04-09"
+//     },
+//     {
+//         "id": 372,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 64.87,
+//         "date": "2024-09-14"
+//     },
+//     {
+//         "id": 373,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 295.32,
+//         "date": "2024-08-24"
+//     },
+//     {
+//         "id": 374,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 240.41,
+//         "date": "2024-06-30"
+//     },
+//     {
+//         "id": 375,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 465.82,
+//         "date": "2024-07-01"
+//     },
+//     {
+//         "id": 376,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 91.99,
+//         "date": "2023-11-26"
+//     },
+//     {
+//         "id": 377,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 308.67,
+//         "date": "2023-12-10"
+//     },
+//     {
+//         "id": 378,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 3.09,
+//         "date": "2024-03-25"
+//     },
+//     {
+//         "id": 379,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 401.02,
+//         "date": "2024-09-21"
+//     },
+//     {
+//         "id": 380,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 418.51,
+//         "date": "2024-03-08"
+//     },
+//     {
+//         "id": 381,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 184.87,
+//         "date": "2024-07-12"
+//     },
+//     {
+//         "id": 382,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 392.03,
+//         "date": "2024-10-08"
+//     },
+//     {
+//         "id": 383,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 78.27,
+//         "date": "2024-04-17"
+//     },
+//     {
+//         "id": 384,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 2.34,
+//         "date": "2024-07-29"
+//     },
+//     {
+//         "id": 385,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 206.05,
+//         "date": "2024-04-30"
+//     },
+//     {
+//         "id": 386,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 277.04,
+//         "date": "2024-03-19"
+//     },
+//     {
+//         "id": 387,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 235.11,
+//         "date": "2024-03-14"
+//     },
+//     {
+//         "id": 388,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 490.5,
+//         "date": "2024-08-10"
+//     },
+//     {
+//         "id": 389,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 252.62,
+//         "date": "2023-10-30"
+//     },
+//     {
+//         "id": 390,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 135.42,
+//         "date": "2024-04-30"
+//     },
+//     {
+//         "id": 391,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 298.01,
+//         "date": "2024-07-29"
+//     },
+//     {
+//         "id": 392,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 353.21,
+//         "date": "2024-03-24"
+//     },
+//     {
+//         "id": 393,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 435.92,
+//         "date": "2024-02-15"
+//     },
+//     {
+//         "id": 394,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 239.26,
+//         "date": "2024-07-14"
+//     },
+//     {
+//         "id": 395,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 457.64,
+//         "date": "2024-07-06"
+//     },
+//     {
+//         "id": 396,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 414.23,
+//         "date": "2024-01-17"
+//     },
+//     {
+//         "id": 397,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 138.08,
+//         "date": "2023-12-12"
+//     },
+//     {
+//         "id": 398,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 465.09,
+//         "date": "2024-07-12"
+//     },
+//     {
+//         "id": 399,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 152.16,
+//         "date": "2024-10-12"
+//     },
+//     {
+//         "id": 400,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 70.78,
+//         "date": "2023-11-24"
+//     },
+//     {
+//         "id": 401,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 331.37,
+//         "date": "2023-11-18"
+//     },
+//     {
+//         "id": 402,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 190.71,
+//         "date": "2024-06-27"
+//     },
+//     {
+//         "id": 403,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 134.73,
+//         "date": "2024-02-29"
+//     },
+//     {
+//         "id": 404,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 4.73,
+//         "date": "2024-08-02"
+//     },
+//     {
+//         "id": 405,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 300.98,
+//         "date": "2024-05-19"
+//     },
+//     {
+//         "id": 406,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 368.65,
+//         "date": "2024-08-07"
+//     },
+//     {
+//         "id": 407,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 156.06,
+//         "date": "2023-10-30"
+//     },
+//     {
+//         "id": 408,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 488.05,
+//         "date": "2024-04-09"
+//     },
+//     {
+//         "id": 409,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 190.99,
+//         "date": "2023-12-15"
+//     },
+//     {
+//         "id": 410,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 343.17,
+//         "date": "2023-11-10"
+//     },
+//     {
+//         "id": 411,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 410.17,
+//         "date": "2024-02-19"
+//     },
+//     {
+//         "id": 412,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 105.03,
+//         "date": "2024-05-19"
+//     },
+//     {
+//         "id": 413,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 119.99,
+//         "date": "2024-09-13"
+//     },
+//     {
+//         "id": 414,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 384.46,
+//         "date": "2024-06-25"
+//     },
+//     {
+//         "id": 415,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 419.88,
+//         "date": "2024-06-01"
+//     },
+//     {
+//         "id": 416,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 361.93,
+//         "date": "2023-11-02"
+//     },
+//     {
+//         "id": 417,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 206.85,
+//         "date": "2024-04-19"
+//     },
+//     {
+//         "id": 418,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 125.34,
+//         "date": "2024-05-29"
+//     },
+//     {
+//         "id": 419,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 344.15,
+//         "date": "2024-05-21"
+//     },
+//     {
+//         "id": 420,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 344.25,
+//         "date": "2024-06-03"
+//     },
+//     {
+//         "id": 421,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 105.92,
+//         "date": "2024-06-23"
+//     },
+//     {
+//         "id": 422,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 148.5,
+//         "date": "2024-02-12"
+//     },
+//     {
+//         "id": 423,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 333.19,
+//         "date": "2024-05-16"
+//     },
+//     {
+//         "id": 424,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 225.12,
+//         "date": "2024-08-21"
+//     },
+//     {
+//         "id": 425,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 151.21,
+//         "date": "2024-03-05"
+//     },
+//     {
+//         "id": 426,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 351.68,
+//         "date": "2023-11-20"
+//     },
+//     {
+//         "id": 427,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 481.34,
+//         "date": "2024-09-06"
+//     },
+//     {
+//         "id": 428,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 317.16,
+//         "date": "2024-10-05"
+//     },
+//     {
+//         "id": 429,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 215.9,
+//         "date": "2024-03-05"
+//     },
+//     {
+//         "id": 430,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 320.88,
+//         "date": "2023-12-15"
+//     },
+//     {
+//         "id": 431,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 448.77,
+//         "date": "2023-11-05"
+//     },
+//     {
+//         "id": 432,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 375.58,
+//         "date": "2024-06-19"
+//     },
+//     {
+//         "id": 433,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 171.93,
+//         "date": "2024-04-18"
+//     },
+//     {
+//         "id": 434,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 352.66,
+//         "date": "2024-04-28"
+//     },
+//     {
+//         "id": 435,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 270.26,
+//         "date": "2024-04-18"
+//     },
+//     {
+//         "id": 436,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 470.03,
+//         "date": "2024-09-09"
+//     },
+//     {
+//         "id": 437,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 284.58,
+//         "date": "2024-04-18"
+//     },
+//     {
+//         "id": 438,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 324.21,
+//         "date": "2024-03-02"
+//     },
+//     {
+//         "id": 439,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 115.93,
+//         "date": "2024-05-03"
+//     },
+//     {
+//         "id": 440,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 287.44,
+//         "date": "2024-01-25"
+//     },
+//     {
+//         "id": 441,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 255.54,
+//         "date": "2024-02-13"
+//     },
+//     {
+//         "id": 442,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 325.0,
+//         "date": "2023-10-24"
+//     },
+//     {
+//         "id": 443,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 39.81,
+//         "date": "2024-09-03"
+//     },
+//     {
+//         "id": 444,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 341.72,
+//         "date": "2023-12-26"
+//     },
+//     {
+//         "id": 445,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 431.78,
+//         "date": "2024-06-09"
+//     },
+//     {
+//         "id": 446,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 350.68,
+//         "date": "2024-07-03"
+//     },
+//     {
+//         "id": 447,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 130.35,
+//         "date": "2023-12-24"
+//     },
+//     {
+//         "id": 448,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 435.5,
+//         "date": "2023-11-29"
+//     },
+//     {
+//         "id": 449,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 149.48,
+//         "date": "2024-06-01"
+//     },
+//     {
+//         "id": 450,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 429.32,
+//         "date": "2024-09-19"
+//     },
+//     {
+//         "id": 451,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 456.79,
+//         "date": "2024-01-21"
+//     },
+//     {
+//         "id": 452,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 88.8,
+//         "date": "2024-04-05"
+//     },
+//     {
+//         "id": 453,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 201.72,
+//         "date": "2024-02-15"
+//     },
+//     {
+//         "id": 454,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 171.89,
+//         "date": "2024-03-09"
+//     },
+//     {
+//         "id": 455,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 285.11,
+//         "date": "2024-01-28"
+//     },
+//     {
+//         "id": 456,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 69.58,
+//         "date": "2024-03-08"
+//     },
+//     {
+//         "id": 457,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 2.53,
+//         "date": "2024-01-22"
+//     },
+//     {
+//         "id": 458,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 189.88,
+//         "date": "2023-11-16"
+//     },
+//     {
+//         "id": 459,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 426.52,
+//         "date": "2023-10-20"
+//     },
+//     {
+//         "id": 460,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 163.6,
+//         "date": "2023-11-29"
+//     },
+//     {
+//         "id": 461,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 370.45,
+//         "date": "2024-09-21"
+//     },
+//     {
+//         "id": 462,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 46.33,
+//         "date": "2024-02-26"
+//     },
+//     {
+//         "id": 463,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 110.43,
+//         "date": "2024-08-17"
+//     },
+//     {
+//         "id": 464,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 473.3,
+//         "date": "2024-01-29"
+//     },
+//     {
+//         "id": 465,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 256.59,
+//         "date": "2024-08-23"
+//     },
+//     {
+//         "id": 466,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 29.38,
+//         "date": "2023-11-18"
+//     },
+//     {
+//         "id": 467,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 157.93,
+//         "date": "2023-11-23"
+//     },
+//     {
+//         "id": 468,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 246.09,
+//         "date": "2023-10-26"
+//     },
+//     {
+//         "id": 469,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 341.72,
+//         "date": "2023-10-26"
+//     },
+//     {
+//         "id": 470,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 257.98,
+//         "date": "2024-01-17"
+//     },
+//     {
+//         "id": 471,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 134.75,
+//         "date": "2024-03-07"
+//     },
+//     {
+//         "id": 472,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 86.43,
+//         "date": "2024-05-09"
+//     },
+//     {
+//         "id": 473,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 52.57,
+//         "date": "2024-07-17"
+//     },
+//     {
+//         "id": 474,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 401.78,
+//         "date": "2024-03-15"
+//     },
+//     {
+//         "id": 475,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 451.75,
+//         "date": "2024-06-05"
+//     },
+//     {
+//         "id": 476,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 137.25,
+//         "date": "2024-08-26"
+//     },
+//     {
+//         "id": 477,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 493.79,
+//         "date": "2024-05-06"
+//     },
+//     {
+//         "id": 478,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 359.06,
+//         "date": "2024-01-19"
+//     },
+//     {
+//         "id": 479,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 109.14,
+//         "date": "2024-06-04"
+//     },
+//     {
+//         "id": 480,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 27.22,
+//         "date": "2024-04-04"
+//     },
+//     {
+//         "id": 481,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 240.04,
+//         "date": "2024-09-18"
+//     },
+//     {
+//         "id": 482,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 375.12,
+//         "date": "2024-07-12"
+//     },
+//     {
+//         "id": 483,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 312.33,
+//         "date": "2024-07-19"
+//     },
+//     {
+//         "id": 484,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 248.62,
+//         "date": "2024-05-01"
+//     },
+//     {
+//         "id": 485,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 21.84,
+//         "date": "2024-08-30"
+//     },
+//     {
+//         "id": 486,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 70.98,
+//         "date": "2024-03-30"
+//     },
+//     {
+//         "id": 487,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 291.91,
+//         "date": "2024-04-29"
+//     },
+//     {
+//         "id": 488,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 353.91,
+//         "date": "2024-01-24"
+//     },
+//     {
+//         "id": 489,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 393.03,
+//         "date": "2023-10-18"
+//     },
+//     {
+//         "id": 490,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 265.42,
+//         "date": "2024-04-15"
+//     },
+//     {
+//         "id": 491,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 385.72,
+//         "date": "2024-04-10"
+//     },
+//     {
+//         "id": 492,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 404.63,
+//         "date": "2024-04-08"
+//     },
+//     {
+//         "id": 493,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 72.6,
+//         "date": "2024-03-31"
+//     },
+//     {
+//         "id": 494,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 147.03,
+//         "date": "2023-10-23"
+//     },
+//     {
+//         "id": 495,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 265.44,
+//         "date": "2024-07-15"
+//     },
+//     {
+//         "id": 496,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 152.02,
+//         "date": "2024-08-10"
+//     },
+//     {
+//         "id": 497,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 289.96,
+//         "date": "2024-01-21"
+//     },
+//     {
+//         "id": 498,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 486.8,
+//         "date": "2023-12-12"
+//     },
+//     {
+//         "id": 499,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 433.84,
+//         "date": "2024-01-22"
+//     },
+//     {
+//         "id": 500,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 94.62,
+//         "date": "2024-01-02"
+//     },
+//     {
+//         "id": 501,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 65.67,
+//         "date": "2024-04-19"
+//     },
+//     {
+//         "id": 502,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 189.31,
+//         "date": "2024-05-25"
+//     },
+//     {
+//         "id": 503,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 45.89,
+//         "date": "2024-07-01"
+//     },
+//     {
+//         "id": 504,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 476.55,
+//         "date": "2023-11-18"
+//     },
+//     {
+//         "id": 505,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 194.62,
+//         "date": "2024-06-25"
+//     },
+//     {
+//         "id": 506,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 269.12,
+//         "date": "2024-07-06"
+//     },
+//     {
+//         "id": 507,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 14.53,
+//         "date": "2023-11-28"
+//     },
+//     {
+//         "id": 508,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 158.15,
+//         "date": "2024-04-11"
+//     },
+//     {
+//         "id": 509,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 424.04,
+//         "date": "2023-11-03"
+//     },
+//     {
+//         "id": 510,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 191.84,
+//         "date": "2024-09-09"
+//     },
+//     {
+//         "id": 511,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 11.84,
+//         "date": "2024-04-23"
+//     },
+//     {
+//         "id": 512,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 92.63,
+//         "date": "2024-10-14"
+//     },
+//     {
+//         "id": 513,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 232.84,
+//         "date": "2024-07-21"
+//     },
+//     {
+//         "id": 514,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 263.48,
+//         "date": "2024-01-21"
+//     },
+//     {
+//         "id": 515,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 28.59,
+//         "date": "2023-11-28"
+//     },
+//     {
+//         "id": 516,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 417.91,
+//         "date": "2024-07-05"
+//     },
+//     {
+//         "id": 517,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 296.66,
+//         "date": "2024-08-01"
+//     },
+//     {
+//         "id": 518,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 356.07,
+//         "date": "2023-11-16"
+//     },
+//     {
+//         "id": 519,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 276.77,
+//         "date": "2024-03-03"
+//     },
+//     {
+//         "id": 520,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 304.91,
+//         "date": "2024-03-09"
+//     },
+//     {
+//         "id": 521,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 298.74,
+//         "date": "2024-08-13"
+//     },
+//     {
+//         "id": 522,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 177.61,
+//         "date": "2024-06-27"
+//     },
+//     {
+//         "id": 523,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 128.16,
+//         "date": "2024-07-28"
+//     },
+//     {
+//         "id": 524,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 88.73,
+//         "date": "2024-05-07"
+//     },
+//     {
+//         "id": 525,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 393.72,
+//         "date": "2024-09-19"
+//     },
+//     {
+//         "id": 526,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 481.34,
+//         "date": "2024-05-15"
+//     },
+//     {
+//         "id": 527,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 349.17,
+//         "date": "2024-10-17"
+//     },
+//     {
+//         "id": 528,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 406.68,
+//         "date": "2024-05-03"
+//     },
+//     {
+//         "id": 529,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 253.02,
+//         "date": "2024-05-17"
+//     },
+//     {
+//         "id": 530,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 363.05,
+//         "date": "2024-06-24"
+//     },
+//     {
+//         "id": 531,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 189.59,
+//         "date": "2024-09-19"
+//     },
+//     {
+//         "id": 532,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 327.86,
+//         "date": "2024-08-24"
+//     },
+//     {
+//         "id": 533,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 279.5,
+//         "date": "2024-09-25"
+//     },
+//     {
+//         "id": 534,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 31.22,
+//         "date": "2023-11-30"
+//     },
+//     {
+//         "id": 535,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 324.58,
+//         "date": "2024-05-26"
+//     },
+//     {
+//         "id": 536,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 262.55,
+//         "date": "2024-06-10"
+//     },
+//     {
+//         "id": 537,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 29.68,
+//         "date": "2024-10-06"
+//     },
+//     {
+//         "id": 538,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 404.43,
+//         "date": "2024-08-23"
+//     },
+//     {
+//         "id": 539,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 332.44,
+//         "date": "2024-04-26"
+//     },
+//     {
+//         "id": 540,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 419.8,
+//         "date": "2024-06-08"
+//     },
+//     {
+//         "id": 541,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 478.58,
+//         "date": "2024-08-08"
+//     },
+//     {
+//         "id": 542,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 484.73,
+//         "date": "2024-08-13"
+//     },
+//     {
+//         "id": 543,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 38.25,
+//         "date": "2024-07-21"
+//     },
+//     {
+//         "id": 544,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 145.03,
+//         "date": "2024-03-31"
+//     },
+//     {
+//         "id": 545,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 81.55,
+//         "date": "2024-06-23"
+//     },
+//     {
+//         "id": 546,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 423.53,
+//         "date": "2024-01-25"
+//     },
+//     {
+//         "id": 547,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 110.74,
+//         "date": "2024-06-27"
+//     },
+//     {
+//         "id": 548,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 10.48,
+//         "date": "2024-06-28"
+//     },
+//     {
+//         "id": 549,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 243.4,
+//         "date": "2024-06-28"
+//     },
+//     {
+//         "id": 550,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 48.64,
+//         "date": "2024-05-01"
+//     },
+//     {
+//         "id": 551,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 112.68,
+//         "date": "2024-01-09"
+//     },
+//     {
+//         "id": 552,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 370.49,
+//         "date": "2024-03-28"
+//     },
+//     {
+//         "id": 553,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 316.79,
+//         "date": "2024-08-01"
+//     },
+//     {
+//         "id": 554,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 9.49,
+//         "date": "2024-03-08"
+//     },
+//     {
+//         "id": 555,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 114.6,
+//         "date": "2024-02-22"
+//     },
+//     {
+//         "id": 556,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 94.49,
+//         "date": "2024-01-17"
+//     },
+//     {
+//         "id": 557,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 357.35,
+//         "date": "2023-11-20"
+//     },
+//     {
+//         "id": 558,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 443.81,
+//         "date": "2024-02-04"
+//     },
+//     {
+//         "id": 559,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 65.64,
+//         "date": "2023-12-19"
+//     },
+//     {
+//         "id": 560,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 339.88,
+//         "date": "2024-01-02"
+//     },
+//     {
+//         "id": 561,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 49.39,
+//         "date": "2024-02-27"
+//     },
+//     {
+//         "id": 562,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 266.6,
+//         "date": "2024-04-02"
+//     },
+//     {
+//         "id": 563,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 182.51,
+//         "date": "2024-06-10"
+//     },
+//     {
+//         "id": 564,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 182.23,
+//         "date": "2024-03-21"
+//     },
+//     {
+//         "id": 565,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 493.84,
+//         "date": "2024-06-04"
+//     },
+//     {
+//         "id": 566,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 112.13,
+//         "date": "2024-01-05"
+//     },
+//     {
+//         "id": 567,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 265.0,
+//         "date": "2024-07-18"
+//     },
+//     {
+//         "id": 568,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 248.57,
+//         "date": "2024-08-19"
+//     },
+//     {
+//         "id": 569,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 314.55,
+//         "date": "2024-06-30"
+//     },
+//     {
+//         "id": 570,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 217.33,
+//         "date": "2024-02-27"
+//     },
+//     {
+//         "id": 571,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 80.77,
+//         "date": "2024-10-06"
+//     },
+//     {
+//         "id": 572,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 26.26,
+//         "date": "2024-04-04"
+//     },
+//     {
+//         "id": 573,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 427.27,
+//         "date": "2024-03-24"
+//     },
+//     {
+//         "id": 574,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 467.71,
+//         "date": "2024-03-11"
+//     },
+//     {
+//         "id": 575,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 31.85,
+//         "date": "2023-12-21"
+//     },
+//     {
+//         "id": 576,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 391.27,
+//         "date": "2024-05-23"
+//     },
+//     {
+//         "id": 577,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 353.32,
+//         "date": "2023-11-23"
+//     },
+//     {
+//         "id": 578,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 43.99,
+//         "date": "2024-08-16"
+//     },
+//     {
+//         "id": 579,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 408.86,
+//         "date": "2023-12-29"
+//     },
+//     {
+//         "id": 580,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 226.12,
+//         "date": "2024-03-22"
+//     },
+//     {
+//         "id": 581,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 117.48,
+//         "date": "2024-09-17"
+//     },
+//     {
+//         "id": 582,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 499.95,
+//         "date": "2024-07-09"
+//     },
+//     {
+//         "id": 583,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 285.07,
+//         "date": "2024-04-10"
+//     },
+//     {
+//         "id": 584,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 164.95,
+//         "date": "2024-07-29"
+//     },
+//     {
+//         "id": 585,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 229.37,
+//         "date": "2024-06-18"
+//     },
+//     {
+//         "id": 586,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 218.89,
+//         "date": "2024-02-16"
+//     },
+//     {
+//         "id": 587,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 254.88,
+//         "date": "2023-11-14"
+//     },
+//     {
+//         "id": 588,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 100.02,
+//         "date": "2024-05-31"
+//     },
+//     {
+//         "id": 589,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 274.68,
+//         "date": "2024-08-21"
+//     },
+//     {
+//         "id": 590,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 183.4,
+//         "date": "2024-08-27"
+//     },
+//     {
+//         "id": 591,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 188.82,
+//         "date": "2024-06-18"
+//     },
+//     {
+//         "id": 592,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 341.57,
+//         "date": "2024-04-28"
+//     },
+//     {
+//         "id": 593,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 28.08,
+//         "date": "2024-05-18"
+//     },
+//     {
+//         "id": 594,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 455.74,
+//         "date": "2024-08-28"
+//     },
+//     {
+//         "id": 595,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 134.07,
+//         "date": "2024-03-23"
+//     },
+//     {
+//         "id": 596,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 266.33,
+//         "date": "2024-07-18"
+//     },
+//     {
+//         "id": 597,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 45.92,
+//         "date": "2023-11-09"
+//     },
+//     {
+//         "id": 598,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 205.5,
+//         "date": "2024-03-11"
+//     },
+//     {
+//         "id": 599,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 262.95,
+//         "date": "2024-10-14"
+//     },
+//     {
+//         "id": 600,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 412.68,
+//         "date": "2024-04-07"
+//     },
+//     {
+//         "id": 601,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 298.17,
+//         "date": "2024-02-22"
+//     },
+//     {
+//         "id": 602,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 27.2,
+//         "date": "2024-01-09"
+//     },
+//     {
+//         "id": 603,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 5.86,
+//         "date": "2024-05-12"
+//     },
+//     {
+//         "id": 604,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 127.99,
+//         "date": "2024-04-07"
+//     },
+//     {
+//         "id": 605,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 286.84,
+//         "date": "2024-05-04"
+//     },
+//     {
+//         "id": 606,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 387.45,
+//         "date": "2024-07-11"
+//     },
+//     {
+//         "id": 607,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 266.64,
+//         "date": "2024-04-03"
+//     },
+//     {
+//         "id": 608,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 47.29,
+//         "date": "2024-06-04"
+//     },
+//     {
+//         "id": 609,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 66.91,
+//         "date": "2024-09-16"
+//     },
+//     {
+//         "id": 610,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 338.24,
+//         "date": "2024-02-01"
+//     },
+//     {
+//         "id": 611,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 465.53,
+//         "date": "2024-04-26"
+//     },
+//     {
+//         "id": 612,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 233.72,
+//         "date": "2024-06-21"
+//     },
+//     {
+//         "id": 613,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 440.21,
+//         "date": "2024-05-06"
+//     },
+//     {
+//         "id": 614,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 165.25,
+//         "date": "2023-11-23"
+//     },
+//     {
+//         "id": 615,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 322.02,
+//         "date": "2024-04-13"
+//     },
+//     {
+//         "id": 616,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 212.57,
+//         "date": "2024-08-12"
+//     },
+//     {
+//         "id": 617,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 104.17,
+//         "date": "2024-01-13"
+//     },
+//     {
+//         "id": 618,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 37.39,
+//         "date": "2024-07-12"
+//     },
+//     {
+//         "id": 619,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 211.06,
+//         "date": "2024-07-30"
+//     },
+//     {
+//         "id": 620,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 457.85,
+//         "date": "2024-10-03"
+//     },
+//     {
+//         "id": 621,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 35.14,
+//         "date": "2024-02-11"
+//     },
+//     {
+//         "id": 622,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 215.99,
+//         "date": "2024-02-06"
+//     },
+//     {
+//         "id": 623,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 327.83,
+//         "date": "2024-05-24"
+//     },
+//     {
+//         "id": 624,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 199.98,
+//         "date": "2024-08-16"
+//     },
+//     {
+//         "id": 625,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 244.16,
+//         "date": "2023-12-22"
+//     },
+//     {
+//         "id": 626,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 391.66,
+//         "date": "2024-09-19"
+//     },
+//     {
+//         "id": 627,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 176.46,
+//         "date": "2024-09-02"
+//     },
+//     {
+//         "id": 628,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 488.32,
+//         "date": "2024-03-03"
+//     },
+//     {
+//         "id": 629,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 425.62,
+//         "date": "2024-07-08"
+//     },
+//     {
+//         "id": 630,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 142.56,
+//         "date": "2024-04-18"
+//     },
+//     {
+//         "id": 631,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 189.39,
+//         "date": "2024-08-06"
+//     },
+//     {
+//         "id": 632,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 67.85,
+//         "date": "2024-04-09"
+//     },
+//     {
+//         "id": 633,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 230.49,
+//         "date": "2024-01-03"
+//     },
+//     {
+//         "id": 634,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 163.72,
+//         "date": "2024-03-06"
+//     },
+//     {
+//         "id": 635,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 404.67,
+//         "date": "2024-09-20"
+//     },
+//     {
+//         "id": 636,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 86.82,
+//         "date": "2024-04-27"
+//     },
+//     {
+//         "id": 637,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 186.7,
+//         "date": "2024-01-10"
+//     },
+//     {
+//         "id": 638,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 102.32,
+//         "date": "2024-04-27"
+//     },
+//     {
+//         "id": 639,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 347.62,
+//         "date": "2024-04-20"
+//     },
+//     {
+//         "id": 640,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 224.35,
+//         "date": "2024-03-19"
+//     },
+//     {
+//         "id": 641,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 150.26,
+//         "date": "2023-11-10"
+//     },
+//     {
+//         "id": 642,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 226.1,
+//         "date": "2024-02-07"
+//     },
+//     {
+//         "id": 643,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 44.75,
+//         "date": "2024-08-02"
+//     },
+//     {
+//         "id": 644,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 15.66,
+//         "date": "2024-01-12"
+//     },
+//     {
+//         "id": 645,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 284.58,
+//         "date": "2024-04-24"
+//     },
+//     {
+//         "id": 646,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 79.93,
+//         "date": "2023-11-30"
+//     },
+//     {
+//         "id": 647,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 166.78,
+//         "date": "2024-07-27"
+//     },
+//     {
+//         "id": 648,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 49.04,
+//         "date": "2024-06-13"
+//     },
+//     {
+//         "id": 649,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 301.81,
+//         "date": "2024-10-04"
+//     },
+//     {
+//         "id": 650,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 272.73,
+//         "date": "2024-01-10"
+//     },
+//     {
+//         "id": 651,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 353.59,
+//         "date": "2024-09-20"
+//     },
+//     {
+//         "id": 652,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 24.79,
+//         "date": "2023-10-27"
+//     },
+//     {
+//         "id": 653,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 54.36,
+//         "date": "2024-03-27"
+//     },
+//     {
+//         "id": 654,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 92.1,
+//         "date": "2024-04-07"
+//     },
+//     {
+//         "id": 655,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 325.29,
+//         "date": "2024-03-11"
+//     },
+//     {
+//         "id": 656,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 328.23,
+//         "date": "2024-06-16"
+//     },
+//     {
+//         "id": 657,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 226.28,
+//         "date": "2024-09-12"
+//     },
+//     {
+//         "id": 658,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 287.4,
+//         "date": "2024-07-19"
+//     },
+//     {
+//         "id": 659,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 82.38,
+//         "date": "2024-10-12"
+//     },
+//     {
+//         "id": 660,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 421.41,
+//         "date": "2024-04-23"
+//     },
+//     {
+//         "id": 661,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 367.6,
+//         "date": "2024-05-19"
+//     },
+//     {
+//         "id": 662,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 357.5,
+//         "date": "2024-08-15"
+//     },
+//     {
+//         "id": 663,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 309.7,
+//         "date": "2024-01-09"
+//     },
+//     {
+//         "id": 664,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 303.47,
+//         "date": "2024-08-14"
+//     },
+//     {
+//         "id": 665,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 11.4,
+//         "date": "2024-01-15"
+//     },
+//     {
+//         "id": 666,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 290.35,
+//         "date": "2024-05-13"
+//     },
+//     {
+//         "id": 667,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 331.5,
+//         "date": "2024-09-15"
+//     },
+//     {
+//         "id": 668,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 170.48,
+//         "date": "2024-08-20"
+//     },
+//     {
+//         "id": 669,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 317.06,
+//         "date": "2023-10-22"
+//     },
+//     {
+//         "id": 670,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 160.99,
+//         "date": "2024-10-13"
+//     },
+//     {
+//         "id": 671,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 61.56,
+//         "date": "2023-10-24"
+//     },
+//     {
+//         "id": 672,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 472.71,
+//         "date": "2024-05-08"
+//     },
+//     {
+//         "id": 673,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 407.24,
+//         "date": "2024-02-29"
+//     },
+//     {
+//         "id": 674,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 408.97,
+//         "date": "2024-03-21"
+//     },
+//     {
+//         "id": 675,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 9.92,
+//         "date": "2024-08-09"
+//     },
+//     {
+//         "id": 676,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 247.68,
+//         "date": "2024-08-10"
+//     },
+//     {
+//         "id": 677,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 16.64,
+//         "date": "2023-10-19"
+//     },
+//     {
+//         "id": 678,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 193.04,
+//         "date": "2024-07-29"
+//     },
+//     {
+//         "id": 679,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 14.84,
+//         "date": "2024-02-07"
+//     },
+//     {
+//         "id": 680,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 102.2,
+//         "date": "2024-05-24"
+//     },
+//     {
+//         "id": 681,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 297.07,
+//         "date": "2024-04-13"
+//     },
+//     {
+//         "id": 682,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 30.66,
+//         "date": "2024-05-01"
+//     },
+//     {
+//         "id": 683,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 177.03,
+//         "date": "2023-11-25"
+//     },
+//     {
+//         "id": 684,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 439.87,
+//         "date": "2024-05-01"
+//     },
+//     {
+//         "id": 685,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 374.24,
+//         "date": "2023-12-29"
+//     },
+//     {
+//         "id": 686,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 427.47,
+//         "date": "2023-12-05"
+//     },
+//     {
+//         "id": 687,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 330.64,
+//         "date": "2024-04-20"
+//     },
+//     {
+//         "id": 688,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 53.81,
+//         "date": "2023-11-29"
+//     },
+//     {
+//         "id": 689,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 437.99,
+//         "date": "2024-06-26"
+//     },
+//     {
+//         "id": 690,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 488.81,
+//         "date": "2024-09-13"
+//     },
+//     {
+//         "id": 691,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 79.69,
+//         "date": "2024-08-03"
+//     },
+//     {
+//         "id": 692,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 279.92,
+//         "date": "2024-07-08"
+//     },
+//     {
+//         "id": 693,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 228.95,
+//         "date": "2023-10-24"
+//     },
+//     {
+//         "id": 694,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 279.45,
+//         "date": "2024-04-29"
+//     },
+//     {
+//         "id": 695,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 222.29,
+//         "date": "2024-03-22"
+//     },
+//     {
+//         "id": 696,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 158.06,
+//         "date": "2024-05-30"
+//     },
+//     {
+//         "id": 697,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 451.9,
+//         "date": "2024-02-09"
+//     },
+//     {
+//         "id": 698,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 420.03,
+//         "date": "2023-12-21"
+//     },
+//     {
+//         "id": 699,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 218.52,
+//         "date": "2024-04-09"
+//     },
+//     {
+//         "id": 700,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 358.02,
+//         "date": "2024-02-24"
+//     },
+//     {
+//         "id": 701,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 411.45,
+//         "date": "2024-04-26"
+//     },
+//     {
+//         "id": 702,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 215.53,
+//         "date": "2024-09-10"
+//     },
+//     {
+//         "id": 703,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 253.3,
+//         "date": "2024-04-13"
+//     },
+//     {
+//         "id": 704,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 233.69,
+//         "date": "2024-07-12"
+//     },
+//     {
+//         "id": 705,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 71.41,
+//         "date": "2024-06-22"
+//     },
+//     {
+//         "id": 706,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 287.09,
+//         "date": "2023-11-07"
+//     },
+//     {
+//         "id": 707,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 493.31,
+//         "date": "2024-08-17"
+//     },
+//     {
+//         "id": 708,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 95.21,
+//         "date": "2024-06-10"
+//     },
+//     {
+//         "id": 709,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 83.33,
+//         "date": "2024-06-10"
+//     },
+//     {
+//         "id": 710,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 183.45,
+//         "date": "2024-03-21"
+//     },
+//     {
+//         "id": 711,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 171.97,
+//         "date": "2024-07-10"
+//     },
+//     {
+//         "id": 712,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 445.88,
+//         "date": "2023-12-22"
+//     },
+//     {
+//         "id": 713,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 483.89,
+//         "date": "2024-10-06"
+//     },
+//     {
+//         "id": 714,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 170.31,
+//         "date": "2024-02-22"
+//     },
+//     {
+//         "id": 715,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 237.5,
+//         "date": "2024-01-06"
+//     },
+//     {
+//         "id": 716,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 424.33,
+//         "date": "2024-07-16"
+//     },
+//     {
+//         "id": 717,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 288.03,
+//         "date": "2023-12-02"
+//     },
+//     {
+//         "id": 718,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 274.29,
+//         "date": "2024-03-28"
+//     },
+//     {
+//         "id": 719,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 81.57,
+//         "date": "2024-06-26"
+//     },
+//     {
+//         "id": 720,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 461.14,
+//         "date": "2024-03-30"
+//     },
+//     {
+//         "id": 721,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 173.69,
+//         "date": "2024-03-31"
+//     },
+//     {
+//         "id": 722,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 97.55,
+//         "date": "2024-02-20"
+//     },
+//     {
+//         "id": 723,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 268.6,
+//         "date": "2024-07-19"
+//     },
+//     {
+//         "id": 724,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 383.38,
+//         "date": "2024-06-12"
+//     },
+//     {
+//         "id": 725,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 100.23,
+//         "date": "2023-11-11"
+//     },
+//     {
+//         "id": 726,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 379.17,
+//         "date": "2024-08-17"
+//     },
+//     {
+//         "id": 727,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 98.14,
+//         "date": "2024-02-16"
+//     },
+//     {
+//         "id": 728,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 137.34,
+//         "date": "2024-01-21"
+//     },
+//     {
+//         "id": 729,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 436.34,
+//         "date": "2024-05-18"
+//     },
+//     {
+//         "id": 730,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 10.09,
+//         "date": "2024-08-26"
+//     },
+//     {
+//         "id": 731,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 241.11,
+//         "date": "2023-12-24"
+//     },
+//     {
+//         "id": 732,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 145.21,
+//         "date": "2024-04-30"
+//     },
+//     {
+//         "id": 733,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 421.88,
+//         "date": "2024-07-27"
+//     },
+//     {
+//         "id": 734,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 328.27,
+//         "date": "2023-12-28"
+//     },
+//     {
+//         "id": 735,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 461.68,
+//         "date": "2024-03-30"
+//     },
+//     {
+//         "id": 736,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 230.94,
+//         "date": "2023-11-19"
+//     },
+//     {
+//         "id": 737,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 144.89,
+//         "date": "2024-03-24"
+//     },
+//     {
+//         "id": 738,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 290.52,
+//         "date": "2024-09-10"
+//     },
+//     {
+//         "id": 739,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 266.18,
+//         "date": "2024-09-06"
+//     },
+//     {
+//         "id": 740,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 423.89,
+//         "date": "2024-03-26"
+//     },
+//     {
+//         "id": 741,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 88.47,
+//         "date": "2024-02-12"
+//     },
+//     {
+//         "id": 742,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 479.54,
+//         "date": "2023-12-04"
+//     },
+//     {
+//         "id": 743,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 218.02,
+//         "date": "2024-05-01"
+//     },
+//     {
+//         "id": 744,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 274.85,
+//         "date": "2024-04-27"
+//     },
+//     {
+//         "id": 745,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 491.25,
+//         "date": "2024-09-29"
+//     },
+//     {
+//         "id": 746,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 25.33,
+//         "date": "2024-04-15"
+//     },
+//     {
+//         "id": 747,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 123.88,
+//         "date": "2024-01-05"
+//     },
+//     {
+//         "id": 748,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 296.83,
+//         "date": "2024-07-25"
+//     },
+//     {
+//         "id": 749,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 345.34,
+//         "date": "2024-07-13"
+//     },
+//     {
+//         "id": 750,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 440.15,
+//         "date": "2023-11-04"
+//     },
+//     {
+//         "id": 751,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 214.82,
+//         "date": "2024-06-09"
+//     },
+//     {
+//         "id": 752,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 433.15,
+//         "date": "2024-03-07"
+//     },
+//     {
+//         "id": 753,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 375.23,
+//         "date": "2024-09-30"
+//     },
+//     {
+//         "id": 754,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 184.1,
+//         "date": "2024-02-27"
+//     },
+//     {
+//         "id": 755,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 489.97,
+//         "date": "2023-12-02"
+//     },
+//     {
+//         "id": 756,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 229.93,
+//         "date": "2024-04-25"
+//     },
+//     {
+//         "id": 757,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 169.86,
+//         "date": "2024-01-09"
+//     },
+//     {
+//         "id": 758,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 284.11,
+//         "date": "2024-01-13"
+//     },
+//     {
+//         "id": 759,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 145.9,
+//         "date": "2023-11-24"
+//     },
+//     {
+//         "id": 760,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 113.14,
+//         "date": "2024-02-17"
+//     },
+//     {
+//         "id": 761,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 491.45,
+//         "date": "2024-09-19"
+//     },
+//     {
+//         "id": 762,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 406.69,
+//         "date": "2024-03-19"
+//     },
+//     {
+//         "id": 763,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 328.19,
+//         "date": "2024-04-27"
+//     },
+//     {
+//         "id": 764,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 371.92,
+//         "date": "2024-05-19"
+//     },
+//     {
+//         "id": 765,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 107.76,
+//         "date": "2024-08-15"
+//     },
+//     {
+//         "id": 766,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 308.46,
+//         "date": "2024-03-16"
+//     },
+//     {
+//         "id": 767,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 122.06,
+//         "date": "2023-11-04"
+//     },
+//     {
+//         "id": 768,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 349.18,
+//         "date": "2024-03-04"
+//     },
+//     {
+//         "id": 769,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 337.46,
+//         "date": "2024-05-21"
+//     },
+//     {
+//         "id": 770,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 498.57,
+//         "date": "2024-10-11"
+//     },
+//     {
+//         "id": 771,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 365.06,
+//         "date": "2023-11-05"
+//     },
+//     {
+//         "id": 772,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 341.93,
+//         "date": "2024-09-23"
+//     },
+//     {
+//         "id": 773,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 95.49,
+//         "date": "2024-04-29"
+//     },
+//     {
+//         "id": 774,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 380.46,
+//         "date": "2024-06-03"
+//     },
+//     {
+//         "id": 775,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 6.73,
+//         "date": "2024-06-21"
+//     },
+//     {
+//         "id": 776,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 366.57,
+//         "date": "2023-11-30"
+//     },
+//     {
+//         "id": 777,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 151.44,
+//         "date": "2024-05-12"
+//     },
+//     {
+//         "id": 778,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 268.64,
+//         "date": "2024-03-18"
+//     },
+//     {
+//         "id": 779,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 175.09,
+//         "date": "2024-02-07"
+//     },
+//     {
+//         "id": 780,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 264.49,
+//         "date": "2024-07-11"
+//     },
+//     {
+//         "id": 781,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 0.72,
+//         "date": "2024-05-19"
+//     },
+//     {
+//         "id": 782,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 58.48,
+//         "date": "2024-05-23"
+//     },
+//     {
+//         "id": 783,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 218.2,
+//         "date": "2024-07-23"
+//     },
+//     {
+//         "id": 784,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 212.54,
+//         "date": "2024-03-20"
+//     },
+//     {
+//         "id": 785,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 52.32,
+//         "date": "2024-03-18"
+//     },
+//     {
+//         "id": 786,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 417.82,
+//         "date": "2024-08-26"
+//     },
+//     {
+//         "id": 787,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 1.46,
+//         "date": "2024-09-10"
+//     },
+//     {
+//         "id": 788,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 181.0,
+//         "date": "2024-08-22"
+//     },
+//     {
+//         "id": 789,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 211.0,
+//         "date": "2024-03-06"
+//     },
+//     {
+//         "id": 790,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 223.44,
+//         "date": "2023-12-13"
+//     },
+//     {
+//         "id": 791,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 362.51,
+//         "date": "2023-11-27"
+//     },
+//     {
+//         "id": 792,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 86.69,
+//         "date": "2024-07-26"
+//     },
+//     {
+//         "id": 793,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 459.73,
+//         "date": "2024-04-08"
+//     },
+//     {
+//         "id": 794,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 488.24,
+//         "date": "2024-02-02"
+//     },
+//     {
+//         "id": 795,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 366.15,
+//         "date": "2024-08-21"
+//     },
+//     {
+//         "id": 796,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 364.42,
+//         "date": "2024-02-04"
+//     },
+//     {
+//         "id": 797,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 398.95,
+//         "date": "2024-01-17"
+//     },
+//     {
+//         "id": 798,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 287.65,
+//         "date": "2023-12-09"
+//     },
+//     {
+//         "id": 799,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 107.28,
+//         "date": "2024-05-03"
+//     },
+//     {
+//         "id": 800,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 270.35,
+//         "date": "2024-03-11"
+//     },
+//     {
+//         "id": 801,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 41.2,
+//         "date": "2024-03-04"
+//     },
+//     {
+//         "id": 802,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 228.97,
+//         "date": "2024-05-04"
+//     },
+//     {
+//         "id": 803,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 453.79,
+//         "date": "2024-01-22"
+//     },
+//     {
+//         "id": 804,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 416.87,
+//         "date": "2024-01-08"
+//     },
+//     {
+//         "id": 805,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 87.73,
+//         "date": "2024-06-02"
+//     },
+//     {
+//         "id": 806,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 419.86,
+//         "date": "2024-03-09"
+//     },
+//     {
+//         "id": 807,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 498.56,
+//         "date": "2024-04-26"
+//     },
+//     {
+//         "id": 808,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 343.99,
+//         "date": "2024-05-28"
+//     },
+//     {
+//         "id": 809,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 325.35,
+//         "date": "2024-02-20"
+//     },
+//     {
+//         "id": 810,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 458.03,
+//         "date": "2024-05-14"
+//     },
+//     {
+//         "id": 811,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 119.06,
+//         "date": "2024-03-30"
+//     },
+//     {
+//         "id": 812,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 347.42,
+//         "date": "2024-07-27"
+//     },
+//     {
+//         "id": 813,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 282.56,
+//         "date": "2024-08-02"
+//     },
+//     {
+//         "id": 814,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 208.63,
+//         "date": "2024-01-14"
+//     },
+//     {
+//         "id": 815,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 244.84,
+//         "date": "2024-09-29"
+//     },
+//     {
+//         "id": 816,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 63.28,
+//         "date": "2024-01-26"
+//     },
+//     {
+//         "id": 817,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 32.8,
+//         "date": "2024-09-12"
+//     },
+//     {
+//         "id": 818,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 213.77,
+//         "date": "2024-08-24"
+//     },
+//     {
+//         "id": 819,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 35.04,
+//         "date": "2024-02-26"
+//     },
+//     {
+//         "id": 820,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 395.72,
+//         "date": "2024-07-16"
+//     },
+//     {
+//         "id": 821,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 116.75,
+//         "date": "2024-01-05"
+//     },
+//     {
+//         "id": 822,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 14.74,
+//         "date": "2024-03-31"
+//     },
+//     {
+//         "id": 823,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 479.6,
+//         "date": "2024-05-29"
+//     },
+//     {
+//         "id": 824,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 60.5,
+//         "date": "2023-11-26"
+//     },
+//     {
+//         "id": 825,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 302.24,
+//         "date": "2024-01-27"
+//     },
+//     {
+//         "id": 826,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 386.18,
+//         "date": "2024-01-18"
+//     },
+//     {
+//         "id": 827,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 388.26,
+//         "date": "2024-06-02"
+//     },
+//     {
+//         "id": 828,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 288.11,
+//         "date": "2024-02-11"
+//     },
+//     {
+//         "id": 829,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 101.58,
+//         "date": "2024-07-17"
+//     },
+//     {
+//         "id": 830,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 482.38,
+//         "date": "2023-12-18"
+//     },
+//     {
+//         "id": 831,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 409.06,
+//         "date": "2024-05-10"
+//     },
+//     {
+//         "id": 832,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 370.0,
+//         "date": "2024-06-18"
+//     },
+//     {
+//         "id": 833,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 188.23,
+//         "date": "2024-04-11"
+//     },
+//     {
+//         "id": 834,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 277.63,
+//         "date": "2024-08-05"
+//     },
+//     {
+//         "id": 835,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 93.62,
+//         "date": "2024-04-21"
+//     },
+//     {
+//         "id": 836,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 6.72,
+//         "date": "2023-12-17"
+//     },
+//     {
+//         "id": 837,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 55.18,
+//         "date": "2024-06-08"
+//     },
+//     {
+//         "id": 838,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 83.75,
+//         "date": "2024-07-14"
+//     },
+//     {
+//         "id": 839,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 481.71,
+//         "date": "2024-05-10"
+//     },
+//     {
+//         "id": 840,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 322.76,
+//         "date": "2024-03-18"
+//     },
+//     {
+//         "id": 841,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 246.73,
+//         "date": "2024-07-21"
+//     },
+//     {
+//         "id": 842,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 92.63,
+//         "date": "2024-05-13"
+//     },
+//     {
+//         "id": 843,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 407.34,
+//         "date": "2024-02-07"
+//     },
+//     {
+//         "id": 844,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 249.55,
+//         "date": "2024-10-05"
+//     },
+//     {
+//         "id": 845,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 492.38,
+//         "date": "2024-07-15"
+//     },
+//     {
+//         "id": 846,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 60.85,
+//         "date": "2024-07-08"
+//     },
+//     {
+//         "id": 847,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 11.9,
+//         "date": "2024-04-27"
+//     },
+//     {
+//         "id": 848,
+//         "category": "food",
+//         "description": "Dinner at a restaurant",
+//         "amount": 476.92,
+//         "date": "2024-04-26"
+//     },
+//     {
+//         "id": 849,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 455.6,
+//         "date": "2023-11-11"
+//     },
+//     {
+//         "id": 850,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 135.6,
+//         "date": "2024-04-16"
+//     },
+//     {
+//         "id": 851,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 281.57,
+//         "date": "2024-07-13"
+//     },
+//     {
+//         "id": 852,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 194.66,
+//         "date": "2024-06-18"
+//     },
+//     {
+//         "id": 853,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 179.11,
+//         "date": "2024-09-30"
+//     },
+//     {
+//         "id": 854,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 210.75,
+//         "date": "2024-08-24"
+//     },
+//     {
+//         "id": 855,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 268.49,
+//         "date": "2024-08-19"
+//     },
+//     {
+//         "id": 856,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 327.75,
+//         "date": "2023-10-27"
+//     },
+//     {
+//         "id": 857,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 157.99,
+//         "date": "2024-08-28"
+//     },
+//     {
+//         "id": 858,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 447.94,
+//         "date": "2024-01-18"
+//     },
+//     {
+//         "id": 859,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 251.52,
+//         "date": "2024-01-20"
+//     },
+//     {
+//         "id": 860,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 399.6,
+//         "date": "2023-12-02"
+//     },
+//     {
+//         "id": 861,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 33.48,
+//         "date": "2024-04-18"
+//     },
+//     {
+//         "id": 862,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 180.45,
+//         "date": "2024-09-03"
+//     },
+//     {
+//         "id": 863,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 141.17,
+//         "date": "2024-05-21"
+//     },
+//     {
+//         "id": 864,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 259.47,
+//         "date": "2024-10-02"
+//     },
+//     {
+//         "id": 865,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 151.4,
+//         "date": "2024-08-06"
+//     },
+//     {
+//         "id": 866,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 382.04,
+//         "date": "2024-10-12"
+//     },
+//     {
+//         "id": 867,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 227.61,
+//         "date": "2024-01-16"
+//     },
+//     {
+//         "id": 868,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 486.33,
+//         "date": "2024-07-20"
+//     },
+//     {
+//         "id": 869,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 374.87,
+//         "date": "2024-02-16"
+//     },
+//     {
+//         "id": 870,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 58.15,
+//         "date": "2024-08-21"
+//     },
+//     {
+//         "id": 871,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 419.51,
+//         "date": "2024-04-24"
+//     },
+//     {
+//         "id": 872,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 191.52,
+//         "date": "2024-05-25"
+//     },
+//     {
+//         "id": 873,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 112.56,
+//         "date": "2024-07-27"
+//     },
+//     {
+//         "id": 874,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 202.85,
+//         "date": "2023-12-07"
+//     },
+//     {
+//         "id": 875,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 319.44,
+//         "date": "2024-01-02"
+//     },
+//     {
+//         "id": 876,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 445.58,
+//         "date": "2023-11-10"
+//     },
+//     {
+//         "id": 877,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 285.95,
+//         "date": "2024-05-18"
+//     },
+//     {
+//         "id": 878,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 147.3,
+//         "date": "2024-06-01"
+//     },
+//     {
+//         "id": 879,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 493.66,
+//         "date": "2023-12-11"
+//     },
+//     {
+//         "id": 880,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 163.82,
+//         "date": "2024-07-18"
+//     },
+//     {
+//         "id": 881,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 197.03,
+//         "date": "2023-12-09"
+//     },
+//     {
+//         "id": 882,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 233.38,
+//         "date": "2024-01-03"
+//     },
+//     {
+//         "id": 883,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 6.21,
+//         "date": "2024-05-01"
+//     },
+//     {
+//         "id": 884,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 285.88,
+//         "date": "2024-02-14"
+//     },
+//     {
+//         "id": 885,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 437.59,
+//         "date": "2024-01-25"
+//     },
+//     {
+//         "id": 886,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 403.64,
+//         "date": "2024-02-06"
+//     },
+//     {
+//         "id": 887,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 237.2,
+//         "date": "2023-10-26"
+//     },
+//     {
+//         "id": 888,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 460.43,
+//         "date": "2024-02-12"
+//     },
+//     {
+//         "id": 889,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 138.89,
+//         "date": "2024-02-13"
+//     },
+//     {
+//         "id": 890,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 90.88,
+//         "date": "2023-12-27"
+//     },
+//     {
+//         "id": 891,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 398.38,
+//         "date": "2024-05-21"
+//     },
+//     {
+//         "id": 892,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 391.82,
+//         "date": "2024-04-14"
+//     },
+//     {
+//         "id": 893,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 0.63,
+//         "date": "2023-11-25"
+//     },
+//     {
+//         "id": 894,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 451.26,
+//         "date": "2024-02-28"
+//     },
+//     {
+//         "id": 895,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 96.38,
+//         "date": "2024-07-21"
+//     },
+//     {
+//         "id": 896,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 298.71,
+//         "date": "2024-09-28"
+//     },
+//     {
+//         "id": 897,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 378.9,
+//         "date": "2024-06-10"
+//     },
+//     {
+//         "id": 898,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 22.96,
+//         "date": "2024-08-24"
+//     },
+//     {
+//         "id": 899,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 180.8,
+//         "date": "2024-08-26"
+//     },
+//     {
+//         "id": 900,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 185.36,
+//         "date": "2024-02-11"
+//     },
+//     {
+//         "id": 901,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 437.0,
+//         "date": "2023-12-17"
+//     },
+//     {
+//         "id": 902,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 196.59,
+//         "date": "2024-05-30"
+//     },
+//     {
+//         "id": 903,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 182.61,
+//         "date": "2023-12-08"
+//     },
+//     {
+//         "id": 904,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 102.37,
+//         "date": "2024-04-17"
+//     },
+//     {
+//         "id": 905,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 142.23,
+//         "date": "2023-10-30"
+//     },
+//     {
+//         "id": 906,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 349.84,
+//         "date": "2024-01-16"
+//     },
+//     {
+//         "id": 907,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 385.01,
+//         "date": "2023-12-09"
+//     },
+//     {
+//         "id": 908,
+//         "category": "shopping",
+//         "description": "Buy some grocery",
+//         "amount": 19.02,
+//         "date": "2024-10-01"
+//     },
+//     {
+//         "id": 909,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 410.93,
+//         "date": "2024-09-17"
+//     },
+//     {
+//         "id": 910,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 208.5,
+//         "date": "2023-12-04"
+//     },
+//     {
+//         "id": 911,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 202.1,
+//         "date": "2023-12-18"
+//     },
+//     {
+//         "id": 912,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 390.82,
+//         "date": "2024-02-03"
+//     },
+//     {
+//         "id": 913,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 318.84,
+//         "date": "2024-05-23"
+//     },
+//     {
+//         "id": 914,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 451.27,
+//         "date": "2023-12-29"
+//     },
+//     {
+//         "id": 915,
+//         "category": "food",
+//         "description": "Clothing purchase",
+//         "amount": 126.65,
+//         "date": "2024-07-24"
+//     },
+//     {
+//         "id": 916,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 295.98,
+//         "date": "2024-04-05"
+//     },
+//     {
+//         "id": 917,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 210.38,
+//         "date": "2024-08-16"
+//     },
+//     {
+//         "id": 918,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 283.96,
+//         "date": "2024-01-13"
+//     },
+//     {
+//         "id": 919,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 293.42,
+//         "date": "2024-06-27"
+//     },
+//     {
+//         "id": 920,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 175.43,
+//         "date": "2024-08-04"
+//     },
+//     {
+//         "id": 921,
+//         "category": "food",
+//         "description": "Fuel for car",
+//         "amount": 457.43,
+//         "date": "2024-01-15"
+//     },
+//     {
+//         "id": 922,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 428.28,
+//         "date": "2023-12-15"
+//     },
+//     {
+//         "id": 923,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 354.04,
+//         "date": "2024-06-01"
+//     },
+//     {
+//         "id": 924,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 53.0,
+//         "date": "2023-11-14"
+//     },
+//     {
+//         "id": 925,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 241.07,
+//         "date": "2024-03-29"
+//     },
+//     {
+//         "id": 926,
+//         "category": "shopping",
+//         "description": "Monthly subscription",
+//         "amount": 186.62,
+//         "date": "2024-07-27"
+//     },
+//     {
+//         "id": 927,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 314.42,
+//         "date": "2024-02-10"
+//     },
+//     {
+//         "id": 928,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 78.64,
+//         "date": "2024-06-03"
+//     },
+//     {
+//         "id": 929,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 384.24,
+//         "date": "2024-08-15"
+//     },
+//     {
+//         "id": 930,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 319.01,
+//         "date": "2024-02-22"
+//     },
+//     {
+//         "id": 931,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 484.65,
+//         "date": "2024-03-05"
+//     },
+//     {
+//         "id": 932,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 399.75,
+//         "date": "2024-06-27"
+//     },
+//     {
+//         "id": 933,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 207.01,
+//         "date": "2024-03-24"
+//     },
+//     {
+//         "id": 934,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 19.79,
+//         "date": "2024-04-17"
+//     },
+//     {
+//         "id": 935,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 93.31,
+//         "date": "2024-02-08"
+//     },
+//     {
+//         "id": 936,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 383.37,
+//         "date": "2024-08-19"
+//     },
+//     {
+//         "id": 937,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 192.87,
+//         "date": "2024-04-11"
+//     },
+//     {
+//         "id": 938,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 73.49,
+//         "date": "2023-12-29"
+//     },
+//     {
+//         "id": 939,
+//         "category": "food",
+//         "description": "Taxi fare",
+//         "amount": 211.6,
+//         "date": "2024-07-11"
+//     },
+//     {
+//         "id": 940,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 383.64,
+//         "date": "2024-02-22"
+//     },
+//     {
+//         "id": 941,
+//         "category": "entertainment",
+//         "description": "Dinner at a restaurant",
+//         "amount": 295.18,
+//         "date": "2023-12-21"
+//     },
+//     {
+//         "id": 942,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 15.77,
+//         "date": "2024-01-18"
+//     },
+//     {
+//         "id": 943,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 2.64,
+//         "date": "2024-03-08"
+//     },
+//     {
+//         "id": 944,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 442.42,
+//         "date": "2024-09-11"
+//     },
+//     {
+//         "id": 945,
+//         "category": "transport",
+//         "description": "Electronics repair",
+//         "amount": 364.51,
+//         "date": "2024-04-06"
+//     },
+//     {
+//         "id": 946,
+//         "category": "transport",
+//         "description": "Buy some grocery",
+//         "amount": 158.41,
+//         "date": "2023-10-31"
+//     },
+//     {
+//         "id": 947,
+//         "category": "food",
+//         "description": "Movie tickets",
+//         "amount": 104.65,
+//         "date": "2024-01-31"
+//     },
+//     {
+//         "id": 948,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 319.98,
+//         "date": "2023-12-17"
+//     },
+//     {
+//         "id": 949,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 129.03,
+//         "date": "2024-02-20"
+//     },
+//     {
+//         "id": 950,
+//         "category": "transport",
+//         "description": "Gift shopping",
+//         "amount": 254.38,
+//         "date": "2024-02-06"
+//     },
+//     {
+//         "id": 951,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 391.06,
+//         "date": "2024-10-12"
+//     },
+//     {
+//         "id": 952,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 332.0,
+//         "date": "2024-05-11"
+//     },
+//     {
+//         "id": 953,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 411.3,
+//         "date": "2024-09-13"
+//     },
+//     {
+//         "id": 954,
+//         "category": "entertainment",
+//         "description": "Gift shopping",
+//         "amount": 164.35,
+//         "date": "2024-03-21"
+//     },
+//     {
+//         "id": 955,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 45.03,
+//         "date": "2024-06-02"
+//     },
+//     {
+//         "id": 956,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 48.16,
+//         "date": "2024-02-03"
+//     },
+//     {
+//         "id": 957,
+//         "category": "transport",
+//         "description": "Taxi fare",
+//         "amount": 430.42,
+//         "date": "2024-01-31"
+//     },
+//     {
+//         "id": 958,
+//         "category": "food",
+//         "description": "Buy some grocery",
+//         "amount": 77.62,
+//         "date": "2024-01-30"
+//     },
+//     {
+//         "id": 959,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 119.26,
+//         "date": "2024-04-26"
+//     },
+//     {
+//         "id": 960,
+//         "category": "entertainment",
+//         "description": "Monthly subscription",
+//         "amount": 154.82,
+//         "date": "2024-04-16"
+//     },
+//     {
+//         "id": 961,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 374.42,
+//         "date": "2024-02-05"
+//     },
+//     {
+//         "id": 962,
+//         "category": "shopping",
+//         "description": "Electronics repair",
+//         "amount": 454.39,
+//         "date": "2024-04-12"
+//     },
+//     {
+//         "id": 963,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 222.03,
+//         "date": "2024-07-29"
+//     },
+//     {
+//         "id": 964,
+//         "category": "food",
+//         "description": "Monthly subscription",
+//         "amount": 128.62,
+//         "date": "2024-05-13"
+//     },
+//     {
+//         "id": 965,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 219.77,
+//         "date": "2024-04-18"
+//     },
+//     {
+//         "id": 966,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 195.6,
+//         "date": "2024-07-07"
+//     },
+//     {
+//         "id": 967,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 85.21,
+//         "date": "2024-05-26"
+//     },
+//     {
+//         "id": 968,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 35.64,
+//         "date": "2024-01-04"
+//     },
+//     {
+//         "id": 969,
+//         "category": "transport",
+//         "description": "Fuel for car",
+//         "amount": 182.63,
+//         "date": "2024-01-03"
+//     },
+//     {
+//         "id": 970,
+//         "category": "entertainment",
+//         "description": "Clothing purchase",
+//         "amount": 414.04,
+//         "date": "2024-01-14"
+//     },
+//     {
+//         "id": 971,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 158.36,
+//         "date": "2023-10-18"
+//     },
+//     {
+//         "id": 972,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 143.31,
+//         "date": "2024-06-26"
+//     },
+//     {
+//         "id": 973,
+//         "category": "transport",
+//         "description": "Dinner at a restaurant",
+//         "amount": 195.53,
+//         "date": "2024-03-05"
+//     },
+//     {
+//         "id": 974,
+//         "category": "shopping",
+//         "description": "Gift shopping",
+//         "amount": 370.67,
+//         "date": "2024-03-16"
+//     },
+//     {
+//         "id": 975,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 24.78,
+//         "date": "2024-05-11"
+//     },
+//     {
+//         "id": 976,
+//         "category": "shopping",
+//         "description": "Clothing purchase",
+//         "amount": 387.5,
+//         "date": "2023-11-18"
+//     },
+//     {
+//         "id": 977,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 175.42,
+//         "date": "2023-11-23"
+//     },
+//     {
+//         "id": 978,
+//         "category": "entertainment",
+//         "description": "Movie tickets",
+//         "amount": 36.78,
+//         "date": "2024-07-31"
+//     },
+//     {
+//         "id": 979,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 8.31,
+//         "date": "2024-04-07"
+//     },
+//     {
+//         "id": 980,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 281.74,
+//         "date": "2024-02-26"
+//     },
+//     {
+//         "id": 981,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 182.09,
+//         "date": "2024-02-09"
+//     },
+//     {
+//         "id": 982,
+//         "category": "transport",
+//         "description": "Movie tickets",
+//         "amount": 28.44,
+//         "date": "2024-07-30"
+//     },
+//     {
+//         "id": 983,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 456.86,
+//         "date": "2024-07-15"
+//     },
+//     {
+//         "id": 984,
+//         "category": "entertainment",
+//         "description": "Concert tickets",
+//         "amount": 56.97,
+//         "date": "2024-02-04"
+//     },
+//     {
+//         "id": 985,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 108.65,
+//         "date": "2023-12-31"
+//     },
+//     {
+//         "id": 986,
+//         "category": "transport",
+//         "description": "Clothing purchase",
+//         "amount": 238.96,
+//         "date": "2023-12-27"
+//     },
+//     {
+//         "id": 987,
+//         "category": "shopping",
+//         "description": "Dinner at a restaurant",
+//         "amount": 33.28,
+//         "date": "2024-09-07"
+//     },
+//     {
+//         "id": 988,
+//         "category": "food",
+//         "description": "Gift shopping",
+//         "amount": 493.21,
+//         "date": "2024-07-08"
+//     },
+//     {
+//         "id": 989,
+//         "category": "transport",
+//         "description": "Monthly subscription",
+//         "amount": 112.91,
+//         "date": "2024-08-04"
+//     },
+//     {
+//         "id": 990,
+//         "category": "food",
+//         "description": "Concert tickets",
+//         "amount": 301.73,
+//         "date": "2024-05-27"
+//     },
+//     {
+//         "id": 991,
+//         "category": "shopping",
+//         "description": "Taxi fare",
+//         "amount": 134.11,
+//         "date": "2024-06-23"
+//     },
+//     {
+//         "id": 992,
+//         "category": "food",
+//         "description": "Electronics repair",
+//         "amount": 446.98,
+//         "date": "2024-06-07"
+//     },
+//     {
+//         "id": 993,
+//         "category": "shopping",
+//         "description": "Movie tickets",
+//         "amount": 446.63,
+//         "date": "2024-03-29"
+//     },
+//     {
+//         "id": 994,
+//         "category": "entertainment",
+//         "description": "Taxi fare",
+//         "amount": 382.65,
+//         "date": "2024-10-01"
+//     },
+//     {
+//         "id": 995,
+//         "category": "transport",
+//         "description": "Concert tickets",
+//         "amount": 28.95,
+//         "date": "2024-07-15"
+//     },
+//     {
+//         "id": 996,
+//         "category": "shopping",
+//         "description": "Fuel for car",
+//         "amount": 381.55,
+//         "date": "2024-03-10"
+//     },
+//     {
+//         "id": 997,
+//         "category": "shopping",
+//         "description": "Concert tickets",
+//         "amount": 134.12,
+//         "date": "2024-02-29"
+//     },
+//     {
+//         "id": 998,
+//         "category": "entertainment",
+//         "description": "Buy some grocery",
+//         "amount": 149.2,
+//         "date": "2023-12-02"
+//     },
+//     {
+//         "id": 999,
+//         "category": "entertainment",
+//         "description": "Electronics repair",
+//         "amount": 253.12,
+//         "date": "2024-09-30"
+//     },
+//     {
+//         "id": 1000,
+//         "category": "entertainment",
+//         "description": "Fuel for car",
+//         "amount": 227.04,
+//         "date": "2024-08-16"
+//     }
+// ]`;
+  // localStorage.setItem("expenses", mockData)
   // render expenses first
   renderExpenses();
 
@@ -7103,11 +7129,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const item = e.target.closest(".expense-item");
     if (item) {
       const index = item.getAttribute("data-index");
-      const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
-      const selectedExpense = expenses[index];
+      const budget = JSON.parse(localStorage.getItem("budget")) ?? [];
+      const selectedBudget = budget[index];
       sessionStorage.setItem(
-        "selectedExpense",
-        JSON.stringify(selectedExpense)
+        "selectedBudget",
+        JSON.stringify(selectedBudget)
       );
       const queryString = new URLSearchParams({ isEdit: true }).toString();
       const url = `${window.location.origin}/add?${queryString}`;
@@ -7115,6 +7141,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   
+    // connect saveItem function to form submit event
+    const budgetForm = document.getElementById("addBudgetForm");
+    budgetForm.addEventListener("submit",saveBudget);
+  
+    // 클릭한 항목을 add 페이지로 전송
+    // document.body.addEventListener("click", (e) => {
+    //   const item = e.target.closest(".expense-item");
+    //   if (item) {
+    //     const index = item.getAttribute("data-index");
+    //     const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
+    //     const selectedExpense = expenses[index];
+    //     sessionStorage.setItem(
+    //       "selectedExpense",
+    //       JSON.stringify(selectedExpense)
+    //     );
+    //     const queryString = new URLSearchParams({ isEdit: true }).toString();
+    //     const url = `${window.location.origin}/add?${queryString}`;
+    //     navigate(url);
+    //   }
+    // });
+
   App();
 });
 
@@ -7197,5 +7244,65 @@ function deleteItem(event) {
     } else {
       alert("No expense data found to delete.");
     }
+  }
+}
+
+function saveBudget(event) {
+  event.preventDefault();
+
+  const params = new URLSearchParams(window.location.search);
+  const isEdit = params.get("isEdit") === "true"; // isEdit 값 확인
+  const today = new Date();
+  const selectedDate = today.getFullYear() + "-" + today.getMonth(); // 예산 달 선택
+  const budgetFS = localStorage.getItem("budgets");
+  const budgets = JSON.parse(budgetFS) ?? {};
+
+  const amount = document.getElementById("budget").value;
+  const category = document.getElementById("budget-category").value;
+
+  // 해당 달의 예산 배열 초기화
+  if (!budgets[selectedDate]) {
+    budgets[selectedDate] = [];
+  }
+
+  const isDuplicate = budgets[selectedDate].some(
+    (budget) => budget.category === category
+  );
+  if(isDuplicate){ // have to change alert => inner text 
+    alert('budget already exist');
+  }else{
+    if (isEdit) {
+      const selectedBudgetFS = sessionStorage.getItem("selectedBudget");
+      if (selectedBudgetFS) {
+        const selectedBudget = JSON.parse(selectedBudgetFS);
+      
+        const updatedArr = budgets[selectedDate].map((item) => {
+          if (item.id !== selectedBudget.id) return item;
+        
+          const updatedBudgetObj = {
+            id: selectedBudget.id,
+            category: category,
+            amount: amount,
+          };
+          return updatedBudgetObj;
+        });
+        budgets[selectedDate] = updatedArr;
+      }
+    } else {
+      const id =
+        budgets[selectedDate].length === 0
+          ? 1
+          : budgets[selectedDate][budgets[selectedDate].length - 1].id + 1;
+      const newBudgetObj = {
+        id: id,
+        category: category,
+        amount: amount,
+      };
+    
+      budgets[selectedDate].push(newBudgetObj);
+    }
+  
+    localStorage.setItem("budgets", JSON.stringify(budgets));
+    navigate("/budget");
   }
 }
