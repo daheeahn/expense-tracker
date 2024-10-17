@@ -14,22 +14,49 @@
   <body>
     <script type="module" src="App.js"></script>
 
-    <div class="container">
+    <div>
       <header class="header"></header>
 
       <section id="mainSection" class="section">
-        <div class="total-expenses">
-          <h2>Total Expenses</h2>
-          <h1 id="total-expense">$9400</h1>
+        <div
+          class="total-expenses flex flex-col w-full h-60 bg-yellow-yellow-20"
+        >
+          <div class="flex flex-row justify-between px-5 py-4">
+            <select
+              id="month-menu"
+              name="month-menu"
+              class="bg-transparent font-inter font-medium text-sm text-base-dark-dark-50"
+            >
+              <option value="2024-10" selected>2024-10</option>
+              <option value="2024-09">2024-09</option>
+              <option value="2024-08">2024-08</option>
+              <option value="2024-07">2024-07</option>
+            </select>
+
+            <a href="/add">
+              <img class="add-button" src="./assets/img/add-button.png" />
+            </a>
+          </div>
+
+          <div class="flex flex-col flex-1 justify-center pb-8">
+            <p
+              class="font-inter font-medium text-sm text-base-light-light-20 text-center"
+            >
+              Total Expenses
+            </p>
+            <h1
+              id="total-expense"
+              class="font-inter font-semibold text-4xl text-base-dark-dark-75 text-center"
+            >
+              $9400
+            </h1>
+          </div>
         </div>
 
-        <div class="expenses-list">
+        <div class="expenses-list px-3">
           <ul></ul>
         </div>
 
-        <div>
-          <a href="/add">Go To Add Item Page</a>
-        </div>
         <div>
           <a href="/report">Go To Expense Report Page</a>
         </div>
