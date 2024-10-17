@@ -188,8 +188,7 @@
   }
   const dateSelector = document.querySelector(".date-category");
   dateSelector.addEventListener("click", (e) => {
-  
-  
+    
     document.querySelector("ul").classList.remove("hidden");
   });
   

@@ -38,10 +38,11 @@
       </div>
     </section>
 
-
     <section id="reportSection" style="display: none; max-width: 400px;" class="section">
-      <div>
+      <div class="flex justify-between">
+        <a href="/">←</a>
         <h2 class="text-2xl mb-4">Expenses Report</h2>
+        <span></span>
       </div>
       <div>
         <div class="date-navigation flex items-center justify-between my-2 border-2 border-[#F1F1FA] px-2 py-1 rounded-full">
@@ -64,51 +65,51 @@
         <div class="summary_list">
       </div>
   </div>
-  </section>
-
-  </div>
-      <section id="addSection" style="display: none" class="section">
-        <div class="container">
-          <form id="expenseForm">
-            <label for="amount">How much?</label>
-            <input
-              type="number"
-              id="amount"
-              name="amount"
-              placeholder="$0"
-              required
-            />
-
-            <label for="category">Category</label>
-            <select id="category" name="category" required>
-              <option value="" disabled selected>Select category</option>
-              <option value="food">Food</option>
-              <option value="transport">Transport</option>
-              <option value="shopping">Shopping</option>
-              <option value="entertainment">Entertainment</option>
-            </select>
-
-            <label for="description">Description</label>
-            <input
-              type="text"
-              id="description"
-              name="description"
-              placeholder="Description"
-              required
-            />
-
-            <label for="date">Date</label>
-            <input type="date" id="date" name="date" required />
-
-            <button type="submit" class="btn">Save</button>
-            <button type="button" id="deleteButton" class="btn">Delete</button>
-          </form>
-        </div>
-      </section>
-    </div>
-    <section id="budgetSection" style="display:none" class="section">
-      
     </section>
+
+    <section id="budgetSection" style="display:none; max-width: 400px;" class="section">
+      <div>
+        <h2 class="text-2xl mb-4">Budget Management</h2>
+      </div>
+      <div class="budget-list">
+        <div class="flex justify-between content-center pb-2">
+          <div class="badge flex items-center px-2 py-1 border-2 border-[#F1F1FA] rounded-full">
+            <div class="label bg-orange-500"></div>
+            <p>Shopping</p>
+          </div>
+          <p class="bg-red-600 text-white w-[20px] h-[20px] rounded-full text-center">!</p>
+        </div>
+        <div>
+          <h3>Remaining $0</h3>
+        </div>
+        <div class="flex w-full h-3 bg-[#F1F1FA] rounded-full">
+          <div class="w-[80%] h-3 bg-orange-500 rounded-full">
+          </div>
+        </div>
+        <div>$1200 of $1000</div>
+        <div class="budget-alert text-red-600">You’ve exceed the limit!</div>
+      </div>
+      <form style="display:none" class="flex flex-col">
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+          <option value="" disabled selected>Select category</option>
+          <option value="food">Food</option>
+          <option value="transport">Transport</option>
+          <option value="shopping">Shopping</option>
+          <option value="entertainment">Entertainment</option>
+        </select>
+        <input
+          type="text"
+          id="budget"
+          name="budget"
+          placeholder="budget"
+          required
+        />
+        <button>Save</button>
+      </form>
+      <button class="w-full bg">Create a budget</button>
+    </section>
+  </div>
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
