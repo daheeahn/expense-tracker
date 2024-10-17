@@ -8,6 +8,8 @@
      date: "2024-10-13",
    }
  */
+   const MONTH_STR = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+   let selectedDate = new Date();
 
    function renderExpenses() {
     // retrieve expenses from localStorage
@@ -42,29 +44,21 @@
       expensesList.appendChild(li);
     });
   }
-  
-  
-  let selectedDate = new Date();
+
+  let total_tMONTH_amount = 0;
   let myChart;
-  
-  function renderExpensesReport() {
-    let currentYear = selectedDate.getFullYear();
-    let currentMonth = selectedDate.getMonth() + 1;
-  
+
+  function renderExpensesReport() {  
     // order by date (current data -> get a date)
     const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
-    const filteredExpensesByDate = expenses.filter(({ date }) => {
-      const [year, month] = date.split("-").map(Number);
-      return year === currentYear && month === currentMonth;
-    });
-    const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-  
+    filterExpensesBySelectedDate(expenses, selectedDate);
+
     //group by category
     const report_summary = Object.groupBy(
       filteredExpensesByDate,
       ({ category }) => category
     );
-  
+
     for (let el in report_summary) {
       let total = 0;
       for (amount of report_summary[el]) {
@@ -72,37 +66,9 @@
       }
       report_summary[el] = total;
     }
-    let total_this_month_amount = 0;
-    function combineAndSortExpenses(expenses) {
-      // Object to [key, value], Order by desc
-      const sortedArray = Object.entries(expenses).sort((a, b) => b[1] - a[1]);
-  
-      const result = {};
-      let etcValue = 0;
-  
-      for (let i = 0; i < sortedArray.length; i++) {
-        const [key, value] = sortedArray[i];
-  
-        if (i < 4) {
-          // if over 4
-          result[key] = Number(value).toFixed(2);
-          total_this_month_amount += Number(value);
-        } else {
-          etcValue += Number(value); // combine every value
-        }
-      }
-  
-      // combined value to 'ETC'
-      if (etcValue > 0) {
-        total_this_month_amount += etcValue;
-        result["Etc"] = Number(etcValue).toFixed(2);
-      }
-  
-      return result;
-    }
-  
+
     let summary = combineAndSortExpenses(report_summary);
-    const bgColor = ["#FF6384", "#36A2FF", "#FFCD56", "#9cf772", "#e8e8e8"];
+    const bgColor = ["#FCAC12", "#7F3DFF", "#FD3C4A", "#4CD964", "#e8e8e8"];
     const ctx = document.getElementById("myChart");
   
     if(Object.values(summary).length>0){
@@ -137,7 +103,6 @@
       }
     }else {
       myChart.clear();
-      
       myChart.ctx.fillText('no data',myChart.width/2,myChart.height/2);
     }
     //Show list
@@ -172,7 +137,7 @@
       <a id="prevDate">◀️</a>
       <div class="align-center">
         <p>${currentYear}</p>
-        <h3 class="text-3xl">${month[currentMonth-1]}</h3>
+        <h3 class="text-3xl">${MONTH_STR[currentMonth-1]}</h3>
       </div>
       <a id="nextDate">▶️</a>
     `

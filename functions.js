@@ -11,3 +11,13 @@ function getCategoryImage(category) {
       return "./assets/icons/shopping.png";
   }
 }
+
+function filterExpensesBySelectedDate(expenses, selectedDate) {
+  const currentYear = selectedDate.getFullYear();
+  const currentMonth = selectedDate.getMonth() + 1;
+
+  return expenses.filter(({ date }) => {
+    const [year, month] = date.split("-").map(Number);
+    return year === currentYear && month === currentMonth;
+  });
+}
