@@ -41,7 +41,7 @@
                 <p
                   class="font-inter font-medium text-sm text-base-light-light-20"
                 >
-                  Buy some grocery
+                  Buy some grocery 
                 </p>
               </div>
               <div
@@ -74,17 +74,16 @@
           <h2 class="text-2xl mb-4">Expenses Report</h2>
         </div>
         <div>
-          <div class="date-category mb-2">
-            <div
-              class="flex max-w-28 px-2 py-1 border-2 border-[#F1F1FA] rounded-full"
+          <div class="date-category mb-2 flex flex-col relative">
+            <button type="button"
+                    class="flex items-center max-w-28 px-2 py-1 border-2 border-[#F1F1FA] rounded-full"
+                    id="monthSelectButton"
             >
-              <img src="./assets/img/Vector.svg" class="pr-2" />
-              <span>Month</span>
+              <img src="./assets/img/report-toggle-arrow.svg" class="pr-2" />
+              <span class="month-label"></span>
+            </button>
+            <div id="monthSelect" class="absolute top-8 left-0 mt-2 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
             </div>
-            <ul class="hidden">
-              <li>Year</li>
-              <li>Month</li>
-            </ul>
           </div>
           <div class="container">
             <div>
@@ -94,7 +93,7 @@
           <div class="summary_list"></div>
         </div>
       </section>
-    </div>
+
     <section id="addSection" style="display: none" class="section">
       <div class="container">
         <form id="expenseForm">
@@ -132,35 +131,6 @@
           <button type="button" id="deleteButton" class="btn">Delete</button>
         </form>
       </div>
-    </section>
-
-    <section id="reportSection" style="display: none; max-width: 400px;" class="section">
-      <div class="flex justify-between">
-        <a href="/">←</a>
-        <h2 class="text-2xl mb-4">Expenses Report</h2>
-        <span></span>
-      </div>
-      <div>
-        <div class="date-navigation flex items-center justify-between my-2 border-2 border-[#F1F1FA] px-2 py-1 rounded-full">
-        </div>
-        <div class="date-category mb-2">
-          <div class="flex max-w-28 px-2 py-1 border-2 border-[#F1F1FA] rounded-full">
-            <img src="./assets/img/report-toggle-arrow.svg" class="pr-2">
-            <span>Month</span>
-          </div>
-          <ul class="hidden">
-            <li>Year</li>
-            <li>Month</li>
-          </ul>
-        </div>
-        <div class="container">
-          <div>
-            <canvas id="myChart"></canvas>
-          </div>
-        </div>
-        <div class="summary_list">
-      </div>
-  </div>
     </section>
 
     <section id="budgetSection" style="display: none; max-width: 400px;" class="section">

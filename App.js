@@ -66,6 +66,7 @@ const App = async () => {
     }
     if(match.route.sectionId === "reportSection") {
       renderExpensesReport();
+      renderMonth()
     }
   }
 };
@@ -73,7 +74,7 @@ const App = async () => {
 // Fired when the HTML is fully parsed and the DOM is completely built.
 document.addEventListener("DOMContentLoaded", () => {
   // localStorage.removeItem("expenses"); // 🚨 just for test
-  const mockData = `[
+    const mockData = `[
     {
         "id": 1,
         "date": "2024-10-27",
