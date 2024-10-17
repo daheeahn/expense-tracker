@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/output.css" />
+    <link rel="preconnect" href="https://rsms.me/" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
   </head>
 
   <body>
@@ -23,13 +25,32 @@
 
         <div class="expenses-list">
           <ul>
-            <!-- <div class="expense-item" data-index="${index}">
-              <div class="details">
-                <p class="category">Shopping</p>
-                <p class="description">Buy some grocery</p>
+            <li>
+              <div class="flex row" data-index="2">
+                <img
+                  src="./assets/icons/shopping.png"
+                  alt="shopping icon"
+                  class="category-icon"
+                />
+                <div class="flex-1">
+                  <p
+                    class="font-inter font-medium text-base text-base-dark-dark-25"
+                  >
+                    Shopping
+                  </p>
+                  <p
+                    class="font-inter font-medium text-sm text-base-light-light-20"
+                  >
+                    Buy some grocery
+                  </p>
+                </div>
+                <div
+                  class="font-inter text-base font-semibold text-red-red-100"
+                >
+                  - $120
+                </div>
               </div>
-              <div class="amount">- $120</div>
-            </div> -->
+            </li>
           </ul>
         </div>
 

@@ -8,6 +8,9 @@ module.exports = {
         "base-light-light-20": "#91919F",
         "red-red-100": "#FD3C4A",
       },
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+      },
     },
   },
   plugins: [],

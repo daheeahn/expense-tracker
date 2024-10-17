@@ -676,6 +676,10 @@ video {
   padding-right: 0.5rem;
 }
 
+.font-inter {
+  font-family: Inter, sans-serif;
+}
+
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
@@ -691,8 +695,17 @@ video {
   line-height: 1.25rem;
 }
 
+.font-medium {
+  font-weight: 500;
+}
+
 .font-semibold {
   font-weight: 600;
+}
+
+.text-base-dark-dark-25 {
+  --tw-text-opacity: 1;
+  color: rgb(41 43 45 / var(--tw-text-opacity));
 }
 
 .text-base-light-light-20 {
@@ -708,11 +721,6 @@ video {
 .text-red-red-100 {
   --tw-text-opacity: 1;
   color: rgb(253 60 74 / var(--tw-text-opacity));
-}
-
-.text-base-dark-dark-25 {
-  --tw-text-opacity: 1;
-  color: rgb(41 43 45 / var(--tw-text-opacity));
 }
 
 .filter {
