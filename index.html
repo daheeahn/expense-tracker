@@ -143,8 +143,10 @@
     </section>
     <section id="addBudgetSection" style="display:none;" class="section">
       <form id="addBudgetForm" class="flex flex-col">
-        <label for="budget-category">Category</label>
-        <select id="budget-category" name="budget-category" required>
+        <select id="budget-category" 
+                class="p-4 mb-2.5 rounded-2xl border border-base-border"
+                name="budget-category" 
+                required>
           <option value="" disabled selected>Select category</option>
           <option value="food">Food</option>
           <option value="transport">Transport</option>
@@ -154,11 +156,12 @@
         <input
           type="text"
           id="budget"
+          class="px-4 py-3 mb-2.5 rounded-2xl border border-base-border"
           name="budget"
           placeholder="budget"
           required
         />
-        <button class="bg-base-purple">Save</button>
+        <button class="w-full bg-base-purple py-4 text-base-light-light-80 rounded-2xl text-lg">Save</button>
       </form>
     </section>
   </div>
