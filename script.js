@@ -11,7 +11,10 @@
 
 function renderExpenses() {
   // retrieve expenses from localStorage
+  // const mockData = `[{"id":1,"category":"shopping","description":"Buy some grocery","amount":120,"date":"2024-10-13"},{"id":2,"category":"transportation","description":"Compass card","amount":200,"date":"2024-10-14"},{"id":3,"category":"food","description":"Fruit","amount":50,"date":"2024-10-15"}]`; // for test
+  // localStorage.setItem("expenses", mockData); // for test
   const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
+  expenses.sort((a, b) => new Date(b.date) - new Date(a.date));
 
   // calculate total expense
   const totalExpense =
@@ -26,19 +29,35 @@ function renderExpenses() {
   // render list
   const expensesList = document.querySelector(".expenses-list ul");
   expensesList.innerHTML = "";
+  let previousDate = null;
+
   expenses.forEach((expense, index) => {
     const li = document.createElement("li");
-    li.innerHTML = `
-      <div class="expense-item" data-index="${index}">
-        <div class="details">
-        <p class="category">${expense.category}</p>
-        <p class="description">${expense.description}</p>
-        <p>${expense.date}</p>
-        <p>(id: ${expense.id})</p>
+    const imageUrl = getCategoryImage(expense.category);
+    const category =
+      expense.category[0].toUpperCase() + expense.category.slice(1); // capitalize
+    const currentDate = expense.date;
+    if (currentDate !== previousDate) {
+      li.innerHTML += `
+        <h2 class=" font-inter font-semibold text-lg mt-5 mb-2.5">
+          ${currentDate}
+        </h2>
+      `;
+    }
+
+    li.innerHTML += `
+      <div class="expense-item flex row py-3.5 px-4 lg:px-10 bg-base-light-light-80 rounded-3xl mb-2" data-id="${expense.id}">
+        <img src="${imageUrl}" alt="${expense.category} icon" class="category-icon mr-2.5 self-center" />
+        <div class="flex-1 flex flex-col gap-3">
+          <p class="font-inter font-medium text-base text-base-dark-dark-25">${category}</p>
+          <p class="font-inter font-medium text-sm text-base-light-light-20">${expense.description}</p>
         </div>
-        <div class="amount">- $${expense.amount}</div>
+        <div class="font-inter text-base font-semibold text-red-red-100 self-center">- $${expense.amount}</div>
       </div>
     `;
+
+    previousDate = currentDate;
+
     expensesList.appendChild(li);
   });
 }
@@ -152,7 +171,7 @@ function renderExpensesReport() {
   for (let category in summary) {
     let div = document.createElement("div");
     div.classList.add("mt-5");
-    
+
     div.innerHTML = `
       <div class="flex justify-between content-center pb-2">
         <div class="badge flex items-center px-2 py-1 border-2 border-[#F1F1FA] rounded-full">
