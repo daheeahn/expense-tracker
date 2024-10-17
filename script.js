@@ -45,13 +45,13 @@
     });
   }
 
-  let total_tMONTH_amount = 0;
+  let total_this_month_amount = 0;
   let myChart;
 
   function renderExpensesReport() {  
     // order by date (current data -> get a date)
     const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
-    filterExpensesBySelectedDate(expenses, selectedDate);
+    const filteredExpensesByDate = filterExpensesBySelectedDate(expenses, selectedDate);
 
     //group by category
     const report_summary = Object.groupBy(
