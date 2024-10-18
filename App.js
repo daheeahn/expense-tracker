@@ -7128,12 +7128,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const item = e.target.closest(".expense-item");
     if (item) {
       const id = item.getAttribute("data-id");
-      const budget = JSON.parse(localStorage.getItem("budget")) ?? [];
-      const selectedBudget = budget.find((item) => item.id === id);
-      if (selectedBudget) {
+
+      const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
+      const selectedExpense = expenses.find((item) => item.id === id);
+
+      if (selectedExpense) {
         sessionStorage.setItem(
-          "selectedBudget",
-          JSON.stringify(selectedBudget)
+          "selectedExpense",
+          JSON.stringify(selectedExpense)
         );
         const queryString = new URLSearchParams({ isEdit: true }).toString();
         const url = `${window.location.origin}/add?${queryString}`;
@@ -7145,25 +7147,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // connect saveItem function to form submit event
   const budgetForm = document.getElementById("addBudgetForm");
   budgetForm.addEventListener("submit", saveBudget);
-
-  // 클릭한 항목을 add 페이지로 전송
-  //   document.body.addEventListener("click", (e) => {
-  //     const item = e.target.closest(".expense-item");
-  //     if (item) {
-  //       const id = item.getAttribute("data-id");
-  //       const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
-  //       const selectedExpense = expenses.find((item) => item.id === id);
-  //       if (selectedExpense) {
-  //         sessionStorage.setItem(
-  //           "selectedExpense",
-  //           JSON.stringify(selectedExpense)
-  //         );
-  //         const queryString = new URLSearchParams({ isEdit: true }).toString();
-  //         const url = `${window.location.origin}/add?${queryString}`;
-  //         navigate(url);
-  //       }
-  //     }
-  //   });
 
   App();
 });
