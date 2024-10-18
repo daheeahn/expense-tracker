@@ -2,8 +2,8 @@ function getCategoryImage(category) {
   switch (category) {
     case "food":
       return "./assets/icons/food.png";
-    case "transportation":
-      return "./assets/icons/transportation.png";
+    case "transport":
+      return "./assets/icons/transport.png";
     case "subscription":
       return "./assets/icons/subscription.png";
     case "shopping":
@@ -50,14 +50,12 @@ function filterExpensesBySelectedDate(expenses, selectedDate) {
   });
 }
 
-function handleBudgetColor(remainAmount){
-  if(remainAmount > 0){
-      return "bg-alert-remain";
-  }else {
+function handleBudgetColor(remainAmount) {
+  if (remainAmount > 0) {
+    return "bg-alert-remain";
+  } else {
     return "bg-alert-exceed";
   }
 }
 
-function showBudgetAlert(){
-
-}
+function showBudgetAlert() {}
