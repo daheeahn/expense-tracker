@@ -10,79 +10,82 @@
     <link rel="preconnect" href="https://rsms.me/" />
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
   </head>
-<body>
-  <script type="module" src="App.js"></script>
+  <body>
+    <script type="module" src="App.js"></script>
 
-  <div class="container">
-    <header class="header"></header>
+    <div class="container">
+      <header class="header"></header>
 
-    <section id="mainSection" class="section">
-      <div class="total-expenses">
-        
-        <h2>Total Expenses</h2>
-        <h1 id="total-expense">$9400</h1>
-      </div>
+      <section id="mainSection" class="section">
+        <div
+          class="total-expenses flex flex-col w-full h-60 bg-yellow-yellow-20"
+        >
+          <div class="flex flex-row justify-between px-5 py-4">
+            <select
+              id="month-menu"
+              name="month-menu"
+              class="bg-transparent font-inter font-medium text-sm text-base-dark-dark-50"
+            >
+              <option value="2024-10" selected>2024-10</option>
+              <option value="2024-09">2024-09</option>
+              <option value="2024-08">2024-08</option>
+              <option value="2024-07">2024-07</option>
+            </select>
 
-      <div class="expenses-list">
-        <ul>
-          <li>
-            <div class="flex row" data-index="2">
-              <img
-                src="./assets/icons/shopping.png"
-                alt="shopping icon"
-                class="category-icon"
-              />
-              <div class="flex-1">
-                <p
-                  class="font-inter font-medium text-base text-base-dark-dark-25"
-                >
-                  Shopping
-                </p>
-                <p
-                  class="font-inter font-medium text-sm text-base-light-light-20"
-                >
-                  Buy some grocery 
-                </p>
-              </div>
-              <div
-                class="font-inter text-base font-semibold text-red-red-100"
-              >
-                - $120
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
+            <a href="/add">
+              <img class="add-button" src="./assets/img/add-button.png" />
+            </a>
+          </div>
 
-      <div>
-        <a href="/add">Go To Add Item Page</a>
-      </div>
-      <div>
-        <a href="/report">Go To Expense Report Page</a>
-      </div>
-      <div>
-        <a href="/budget">Go To Buget Management Page</a>
-      </div>
+          <div class="flex flex-col flex-1 justify-center pb-8">
+            <p
+              class="font-inter font-medium text-sm text-base-light-light-20 text-center"
+            >
+              Total Expenses
+            </p>
+            <h1
+              id="total-expense"
+              class="font-inter font-semibold text-4xl text-base-dark-dark-75 text-center"
+            >
+              $9400
+            </h1>
+          </div>
+        </div>
+
+        <div class="expenses-list px-3">
+          <ul></ul>
+        </div>
+
+        <div>
+          <a href="/report">Go To Expense Report Page</a>
+        </div>
+        <div>
+          <a href="/budget">Go To Buget Management Page</a>
+        </div>
       </section>
 
-      <section id="reportSection"
-                style="display: none; max-width: 400px"
-                class="section"
+      <section
+        id="reportSection"
+        style="display: none; max-width: 400px"
+        class="section"
       >
         <div>
           <h2 class="text-2xl mb-4">Expenses Report</h2>
         </div>
         <div>
           <div class="date-category mb-2 flex flex-col relative">
-            <button type="button"
-                    class="flex items-center max-w-28 px-2 py-1 border-2 border-[#F1F1FA] rounded-full"
-                    id="monthSelectButton"
+            <button
+              type="button"
+              class="flex items-center max-w-28 px-2 py-1 border-2 border-[#F1F1FA] rounded-full"
+              id="monthSelectButton"
             >
               <img src="./assets/img/report-toggle-arrow.svg" class="pr-2" />
               <span class="month-label"></span>
             </button>
-            <div id="monthSelect" class="absolute top-8 left-0 mt-2 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
-            </div>
+            <div
+              id="monthSelect"
+              class="absolute top-8 left-0 mt-2 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
+            ></div>
           </div>
           <div class="container">
             <div>
@@ -93,78 +96,88 @@
         </div>
       </section>
 
-    <section id="addSection" style="display: none" class="section">
-      <div class="container">
-        <form id="expenseForm">
-          <label for="amount">How much?</label>
-          <input
-            type="number"
-            id="amount"
-            name="amount"
-            placeholder="$0"
-            required
-          />
+      <section id="addSection" style="display: none" class="section">
+        <div class="container">
+          <form id="expenseForm">
+            <label for="amount">How much?</label>
+            <input
+              type="number"
+              id="amount"
+              name="amount"
+              placeholder="$0"
+              required
+            />
 
-          <label for="category">Category</label>
-          <select id="category" name="category" required>
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+              <option value="" disabled selected>Select category</option>
+              <option value="food">Food</option>
+              <option value="transport">Transport</option>
+              <option value="shopping">Shopping</option>
+              <option value="entertainment">Entertainment</option>
+            </select>
+
+            <label for="description">Description</label>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              placeholder="Description"
+              required
+            />
+
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" required />
+
+            <button type="submit" class="btn">Save</button>
+            <button type="button" id="deleteButton" class="btn">Delete</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="budgetSection" style="display: none" class="section">
+        <div>
+          <h2 class="text-2xl mb-4">Budget Management</h2>
+        </div>
+        <div id="budgetList" class="p-4 mb-4"></div>
+        <a href="/add-budget"
+          ><button
+            class="w-full bg-base-purple py-4 text-base-light-light-80 rounded-2xl text-lg"
+          >
+            Create a budget
+          </button></a
+        >
+      </section>
+      <section id="addBudgetSection" style="display: none" class="section">
+        <form id="addBudgetForm" class="flex flex-col">
+          <select
+            id="budget-category"
+            class="p-4 mb-2.5 rounded-2xl border border-base-border"
+            name="budget-category"
+            required
+          >
             <option value="" disabled selected>Select category</option>
             <option value="food">Food</option>
             <option value="transport">Transport</option>
             <option value="shopping">Shopping</option>
             <option value="entertainment">Entertainment</option>
           </select>
-
-          <label for="description">Description</label>
           <input
             type="text"
-            id="description"
-            name="description"
-            placeholder="Description"
+            id="budget"
+            class="px-4 py-3 mb-2.5 rounded-2xl border border-base-border"
+            name="budget"
+            placeholder="budget"
             required
           />
-
-          <label for="date">Date</label>
-          <input type="date" id="date" name="date" required />
-
-          <button type="submit" class="btn">Save</button>
-          <button type="button" id="deleteButton" class="btn">Delete</button>
+          <button
+            class="w-full bg-base-purple py-4 text-base-light-light-80 rounded-2xl text-lg"
+          >
+            Save
+          </button>
         </form>
-      </div>
-    </section>
-
-    <section id="budgetSection" style="display:none" class="section">
-      <div>
-        <h2 class="text-2xl mb-4">Budget Management</h2>
-      </div>
-      <div id="budgetList" class="p-4 mb-4">
-
-      </div>
-      <a href="/add-budget"><button class="w-full bg-base-purple py-4 text-base-light-light-80 rounded-2xl text-lg">Create a budget</button></a>
-    </section>
-    <section id="addBudgetSection" style="display:none;" class="section">
-      <form id="addBudgetForm" class="flex flex-col">
-        <select id="budget-category" 
-                class="p-4 mb-2.5 rounded-2xl border border-base-border"
-                name="budget-category" 
-                required>
-          <option value="" disabled selected>Select category</option>
-          <option value="food">Food</option>
-          <option value="transport">Transport</option>
-          <option value="shopping">Shopping</option>
-          <option value="entertainment">Entertainment</option>
-        </select>
-        <input
-          type="text"
-          id="budget"
-          class="px-4 py-3 mb-2.5 rounded-2xl border border-base-border"
-          name="budget"
-          placeholder="budget"
-          required
-        />
-        <button class="w-full bg-base-purple py-4 text-base-light-light-80 rounded-2xl text-lg">Save</button>
-      </form>
-    </section>
-  </div>
+      </section>
+    </div>
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="functions.js"></script>

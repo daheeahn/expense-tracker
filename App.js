@@ -69,17 +69,16 @@ const App = async () => {
       }
     }
 
-    if(match.route.sectionId === "reportSection") {
+    if (match.route.sectionId === "reportSection") {
       renderExpensesReport();
-      renderMonth();// 광역에서 호출하도록 수정 필요
+      renderMonth(); // 광역에서 호출하도록 수정 필요
     }
 
-    if(match.route.sectionId === "budgetSection") {
-        renderBudgetManagement();
-      }
+    if (match.route.sectionId === "budgetSection") {
+      renderBudgetManagement();
+    }
 
     if (match.route.sectionId === "addBudgetSection") {
-
       const params = new URLSearchParams(window.location.search);
       const isEdit = params.get("isEdit") === "true";
       if (isEdit) {
@@ -7103,7 +7102,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "date": "2024-08-16"
     }
 ]`;
-  localStorage.setItem("expenses", mockData)
+  localStorage.setItem("expenses", mockData);
   // render expenses first
   renderExpenses();
 
@@ -7128,39 +7127,43 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.addEventListener("click", (e) => {
     const item = e.target.closest(".expense-item");
     if (item) {
-      const index = item.getAttribute("data-index");
+      const id = item.getAttribute("data-id");
       const budget = JSON.parse(localStorage.getItem("budget")) ?? [];
-      const selectedBudget = budget[index];
-      sessionStorage.setItem(
-        "selectedBudget",
-        JSON.stringify(selectedBudget)
-      );
-      const queryString = new URLSearchParams({ isEdit: true }).toString();
-      const url = `${window.location.origin}/add?${queryString}`;
-      navigate(url);
+      const selectedBudget = budget.find((item) => item.id === id);
+      if (selectedBudget) {
+        sessionStorage.setItem(
+          "selectedBudget",
+          JSON.stringify(selectedBudget)
+        );
+        const queryString = new URLSearchParams({ isEdit: true }).toString();
+        const url = `${window.location.origin}/add?${queryString}`;
+        navigate(url);
+      }
     }
   });
-  
-    // connect saveItem function to form submit event
-    const budgetForm = document.getElementById("addBudgetForm");
-    budgetForm.addEventListener("submit",saveBudget);
-  
-    // 클릭한 항목을 add 페이지로 전송
-    // document.body.addEventListener("click", (e) => {
-    //   const item = e.target.closest(".expense-item");
-    //   if (item) {
-    //     const index = item.getAttribute("data-index");
-    //     const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
-    //     const selectedExpense = expenses[index];
-    //     sessionStorage.setItem(
-    //       "selectedExpense",
-    //       JSON.stringify(selectedExpense)
-    //     );
-    //     const queryString = new URLSearchParams({ isEdit: true }).toString();
-    //     const url = `${window.location.origin}/add?${queryString}`;
-    //     navigate(url);
-    //   }
-    // });
+
+  // connect saveItem function to form submit event
+  const budgetForm = document.getElementById("addBudgetForm");
+  budgetForm.addEventListener("submit", saveBudget);
+
+  // 클릭한 항목을 add 페이지로 전송
+  //   document.body.addEventListener("click", (e) => {
+  //     const item = e.target.closest(".expense-item");
+  //     if (item) {
+  //       const id = item.getAttribute("data-id");
+  //       const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
+  //       const selectedExpense = expenses.find((item) => item.id === id);
+  //       if (selectedExpense) {
+  //         sessionStorage.setItem(
+  //           "selectedExpense",
+  //           JSON.stringify(selectedExpense)
+  //         );
+  //         const queryString = new URLSearchParams({ isEdit: true }).toString();
+  //         const url = `${window.location.origin}/add?${queryString}`;
+  //         navigate(url);
+  //       }
+  //     }
+  //   });
 
   App();
 });
@@ -7268,17 +7271,18 @@ function saveBudget(event) {
   const isDuplicate = budgets[selectedDate].some(
     (budget) => budget.category === category
   );
-  if(isDuplicate){ // have to change alert => inner text 
-    alert('budget already exist');
-  }else{
+  if (isDuplicate) {
+    // have to change alert => inner text
+    alert("budget already exist");
+  } else {
     if (isEdit) {
       const selectedBudgetFS = sessionStorage.getItem("selectedBudget");
       if (selectedBudgetFS) {
         const selectedBudget = JSON.parse(selectedBudgetFS);
-      
+
         const updatedArr = budgets[selectedDate].map((item) => {
           if (item.id !== selectedBudget.id) return item;
-        
+
           const updatedBudgetObj = {
             id: selectedBudget.id,
             category: category,
@@ -7298,10 +7302,10 @@ function saveBudget(event) {
         category: category,
         amount: amount,
       };
-    
+
       budgets[selectedDate].push(newBudgetObj);
     }
-  
+
     localStorage.setItem("budgets", JSON.stringify(budgets));
     navigate("/budget");
   }
