@@ -53,7 +53,9 @@ function renderExpenses() {
           .map((item) => Number(item.amount))
           .reduce((acc, val) => acc + val);
   // apply total expense
-  document.getElementById("total-expense").innerText = `$${totalExpense}`;
+  document.getElementById("total-expense").innerText = `$${totalExpense.toFixed(
+    2
+  )}`;
 
   // render list
   const expensesList = document.querySelector(".expenses-list ul");
