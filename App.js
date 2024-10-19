@@ -67,6 +67,12 @@ const App = async () => {
         document.getElementById("description").value = null;
         document.getElementById("date").value = null;
       }
+
+      if (isEdit) {
+        document.getElementById("deleteButton").style.display = "block";
+      } else {
+        document.getElementById("deleteButton").style.display = "none";
+      }
     }
 
     if (match.route.sectionId === "reportSection") {
