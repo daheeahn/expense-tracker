@@ -68,6 +68,12 @@ const App = async () => {
         document.getElementById("description").value = null;
         document.getElementById("date").value = null;
       }
+
+      if (isEdit) {
+        document.getElementById("deleteButton").style.display = "block";
+      } else {
+        document.getElementById("deleteButton").style.display = "none";
+      }
     }
 
     if (match.route.sectionId === "reportSection") {
@@ -310,3 +316,8 @@ async function loadMockData() {
       console.error('Error fetching data:', error);
   }
 }
+
+// go back to previous page
+window.goBack = () => {
+  window.history.back();
+};
