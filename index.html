@@ -87,7 +87,13 @@
       <section id="addSection" style="display: none" class="section">
         <div class="bg-base-purple w-full h-full">
           <div class="flex flex-row px-4 py-4 mb-16">
-            <img src="./assets/arrow-left.png" width="30" height="30" />
+            <img
+              onclick="goBack()"
+              id="addSection-backButon"
+              src="./assets/arrow-left.png"
+              width="30"
+              height="30"
+            />
             <div class="flex flex-1 justify-center">
               <h2
                 class="font-inter font-semibold text-lg text-white"
@@ -121,7 +127,7 @@
                 id="category"
                 name="category"
                 required
-                class="p-3 border-2 rounded-xl text-base-light-light-20"
+                class="p-3 border-2 rounded-xl placeholder-base-light-light-20 text-base-light-light-20"
               >
                 <option value="" disabled selected>Category</option>
                 <option value="food">Food</option>

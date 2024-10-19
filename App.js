@@ -7299,3 +7299,8 @@ function saveBudget(event) {
     navigate("/budget");
   }
 }
+
+// go back to previous page
+window.goBack = () => {
+  window.history.back();
+};
