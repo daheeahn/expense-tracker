@@ -31,6 +31,7 @@ window.navigate = (url) => {
 // render page by url & state is maintained without refreshing.
 const App = async () => {
   renderExpenses(); // DOMContentLoaded와 겹침 중복 제거 필요
+  renderMonth(); // 광역에서 호출하도록 수정 필요
 
   // hide all sections
   document.querySelectorAll(".section").forEach((section) => {
@@ -71,7 +72,7 @@ const App = async () => {
 
     if (match.route.sectionId === "reportSection") {
       renderExpensesReport();
-      renderMonth(); // 광역에서 호출하도록 수정 필요
+
     }
 
     if (match.route.sectionId === "budgetSection") {

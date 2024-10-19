@@ -40,11 +40,12 @@ function combineAndSortExpenses(expenses) {
   return result;
 }
 
-function filterExpensesBySelectedDate(expenses, selectedDate) {
+function filterExpensesBySelectedDate(expenses) {
+  const sortedArray = expenses.sort((a, b) => new Date(b.date) - new Date(a.date));
   const currentYear = selectedDate.getFullYear();
   const currentMonth = selectedDate.getMonth() + 1;
 
-  return expenses.filter(({ date }) => {
+  return sortedArray.filter(({ date }) => {
     const [year, month] = date.split("-").map(Number);
     return year === currentYear && month === currentMonth;
   });

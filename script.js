@@ -188,7 +188,7 @@ function renderMonth() {
   const dropdownMenu = document.getElementById("monthSelect");
 
   //generate select date
-  generateMonthSelect(dropdownMenu, selectedDate);
+  generateMonthSelect(dropdownMenu);
   //
   function toggleDropdown(e) {
     e.stopPropagation();
@@ -217,9 +217,9 @@ function renderMonth() {
   }
 }
 
-function generateMonthSelect(selectedMenu, currentDate) {
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth();
+function generateMonthSelect(selectedMenu) {
+  const currentYear = selectedDate.getFullYear();
+  const currentMonth = selectedDate.getMonth();
 
   // init
   if (selectedMenu) selectedMenu.innerHTML = "";
@@ -256,7 +256,7 @@ function generateMonthSelect(selectedMenu, currentDate) {
   selectedMenu.querySelectorAll(".month").forEach((monthElement) => {
     monthElement.addEventListener("click", (e) => {
       const monthIndex = parseInt(e.target.dataset.monthIndex, 10);
-      currentDate.setMonth(monthIndex);
+      selectedDate.setMonth(monthIndex);
       document.querySelector(".month-label").innerHTML = MONTH_STR[monthIndex]; // show updated month
       selectedMenu.classList.add("hidden"); // close the menu
       navigate(window.location.href); //redirect to current page
