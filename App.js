@@ -78,6 +78,7 @@ const App = async () => {
 
     if (match.route.sectionId === "reportSection") {
       renderExpensesReport();
+      renderMonth();
 
     }
 
