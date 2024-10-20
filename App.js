@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const id = item.getAttribute("data-id");
 
       const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
-      const selectedExpense = expenses.find((item) => item.id === id);
+      const selectedExpense = expenses.find((item) => item.id === Number(id));
 
       if (selectedExpense) {
         sessionStorage.setItem(

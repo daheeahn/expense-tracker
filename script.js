@@ -43,8 +43,8 @@ let isDropdownListenerRegistered = false;
 
 function renderExpenses() {
   // retrieve expenses from localStorage
-  const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
-
+  const expenses = filterExpensesBySelectedDate(JSON.parse(localStorage.getItem("expenses"))) ?? [];
+  
   // calculate total expense
   const totalExpense =
     expenses.length === 0
