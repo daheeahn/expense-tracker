@@ -36,6 +36,13 @@ const App = async () => {
   // hide all sections
   document.querySelectorAll(".section").forEach((section) => {
     section.style.display = "none";
+
+    // for test
+    // if (section.id === "addSection") {
+    //   section.style.display = "block";
+    // } else {
+    //   section.style.display = "none";
+    // }
   });
 
   // find page to show
@@ -106,8 +113,8 @@ const App = async () => {
 // Fired when the HTML is fully parsed and the DOM is completely built.
 document.addEventListener("DOMContentLoaded", () => {
   // localStorage.removeItem("expenses"); // 🚨 just for test
-  if(!localStorage.getItem("expenses")){
-      loadMockData();
+  if (!localStorage.getItem("expenses")) {
+    loadMockData();
   }
   // render expenses first
   renderExpenses();
@@ -136,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const id = item.getAttribute("data-id");
 
       const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
-      const selectedExpense = expenses.find((item) => item.id === Number(id));
+      const selectedExpense = expenses.find((item) => item.id == id);
 
       if (selectedExpense) {
         sessionStorage.setItem(
@@ -153,7 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // connect saveItem function to form submit event
   const budgetForm = document.getElementById("addBudgetForm");
   budgetForm.addEventListener("submit", saveBudget);
-  
 
   App();
 });
@@ -245,7 +251,8 @@ function saveBudget(event) {
 
   const params = new URLSearchParams(window.location.search);
   const isEdit = params.get("isEdit") === "true"; // isEdit 값 확인
-  const thisDate = selectedDate.getFullYear() + "-" + (selectedDate.getMonth() + 1); // 예산 달 선택
+  const thisDate =
+    selectedDate.getFullYear() + "-" + (selectedDate.getMonth() + 1); // 예산 달 선택
   const budgetFS = localStorage.getItem("budgets");
   const budgets = JSON.parse(budgetFS) ?? {};
 
@@ -303,15 +310,15 @@ function saveBudget(event) {
 // getMockData
 async function loadMockData() {
   try {
-    const response = await fetch('expenses_data.json');
+    const response = await fetch("expenses_data.json");
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error("Network response was not ok");
     }
-      const jsonData = await response.json();
-      localStorage.setItem('expenses', JSON.stringify(jsonData)); // Save in localStorage
-      navigate('/')
+    const jsonData = await response.json();
+    localStorage.setItem("expenses", JSON.stringify(jsonData)); // Save in localStorage
+    navigate("/");
   } catch (error) {
-      console.error('Error fetching data:', error);
+    console.error("Error fetching data:", error);
   }
 }
 
