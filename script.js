@@ -98,7 +98,7 @@ let myChart;
 function renderExpensesReport() {
   // order by date (current data -> get a date)
   const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
-
+  total_month_amount = 0;
   //group by category
   const report_summary = Object.groupBy(
     filterExpensesBySelectedDate(expenses),
