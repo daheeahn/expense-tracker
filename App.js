@@ -78,8 +78,6 @@ const App = async () => {
 
     if (match.route.sectionId === "reportSection") {
       renderExpensesReport();
-      renderMonth();
-
     }
 
     if (match.route.sectionId === "budgetSection") {
@@ -247,8 +245,7 @@ function saveBudget(event) {
 
   const params = new URLSearchParams(window.location.search);
   const isEdit = params.get("isEdit") === "true"; // isEdit 값 확인
-  const today = new Date();
-  const selectedDate = today.getFullYear() + "-" + today.getMonth(); // 예산 달 선택
+  const thisDate = selectedDate.getFullYear() + "-" + (selectedDate.getMonth() + 1); // 예산 달 선택
   const budgetFS = localStorage.getItem("budgets");
   const budgets = JSON.parse(budgetFS) ?? {};
 
@@ -256,11 +253,11 @@ function saveBudget(event) {
   const category = document.getElementById("budget-category").value;
 
   // 해당 달의 예산 배열 초기화
-  if (!budgets[selectedDate]) {
-    budgets[selectedDate] = [];
+  if (!budgets[thisDate]) {
+    budgets[thisDate] = [];
   }
 
-  const isDuplicate = budgets[selectedDate].some(
+  const isDuplicate = budgets[thisDate].some(
     (budget) => budget.category === category
   );
   if (isDuplicate) {
@@ -272,7 +269,7 @@ function saveBudget(event) {
       if (selectedBudgetFS) {
         const selectedBudget = JSON.parse(selectedBudgetFS);
 
-        const updatedArr = budgets[selectedDate].map((item) => {
+        const updatedArr = budgets[thisDate].map((item) => {
           if (item.id !== selectedBudget.id) return item;
 
           const updatedBudgetObj = {
@@ -282,20 +279,20 @@ function saveBudget(event) {
           };
           return updatedBudgetObj;
         });
-        budgets[selectedDate] = updatedArr;
+        budgets[thisDate] = updatedArr;
       }
     } else {
       const id =
-        budgets[selectedDate].length === 0
+        budgets[thisDate].length === 0
           ? 1
-          : budgets[selectedDate][budgets[selectedDate].length - 1].id + 1;
+          : budgets[thisDate][budgets[thisDate].length - 1].id + 1;
       const newBudgetObj = {
         id: id,
         category: category,
         amount: amount,
       };
 
-      budgets[selectedDate].push(newBudgetObj);
+      budgets[thisDate].push(newBudgetObj);
     }
 
     localStorage.setItem("budgets", JSON.stringify(budgets));

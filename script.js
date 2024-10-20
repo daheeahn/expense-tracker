@@ -101,10 +101,10 @@ function renderExpensesReport() {
 
   //group by category
   const report_summary = Object.groupBy(
-    filterExpensesBySelectedDate(expenses, selectedDate),
+    filterExpensesBySelectedDate(expenses),
     ({ category }) => category
   );
-
+  console.log(report_summary)
   for (let el in report_summary) {
     let total = 0;
     for (amount of report_summary[el]) {
@@ -281,8 +281,7 @@ function renderBudgetManagement() {
   // retrieve expenses from localStorage
   const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
   const filteredExpensesByDate = filterExpensesBySelectedDate(
-    expenses,
-    selectedDate
+    expenses
   );
 
   //group by category category:total expense
@@ -294,29 +293,37 @@ function renderBudgetManagement() {
   for (let report in report_summary) {
     let total = 0;
     for (amount of report_summary[report]) {
-      total += amount["amount"];
+      total += Number(amount["amount"]);;
     }
     report_summary[report] = Number(total.toFixed(2));
   }
 
   const budgets = JSON.parse(localStorage.getItem("budgets")) ?? [];
   const budget_list = document.querySelector("#budgetList");
-  const thisMonth = selectedDate.getFullYear() + "-" + selectedDate.getMonth();
+  const thisMonth = selectedDate.getFullYear() + "-" + (selectedDate.getMonth() + 1);
+
 
   //initialize
   budget_list.innerHTML = "";
 
-  if (budgets.length <= 0 || budgets[thisMonth].length <= 0) {
+  if (budgets.length <= 0) {
     const div = document.createElement("div");
     div.innerHTML = `<div>no Budget</div>`;
     budget_list.appendChild(div);
-  } else {
+  }else if (!budgets[thisMonth] || budgets[thisMonth].length === 0) {
+    const div = document.createElement("div");
+    div.innerHTML = `<div>No Budget for ${thisMonth}</div>`;
+    budget_list.appendChild(div);
+  }  
+  else {
     budgets[thisMonth].forEach((budget) => {
       const div = document.createElement("div");
       const currentExpense = report_summary[budget.category]
         ? report_summary[budget.category]
         : 0;
-      let remainAmount = Number(budget.amount - currentExpense.toFixed(2));
+      const currentExpenseValue = Number(currentExpense);
+      const budgetAmountValue = Number(budget.amount);
+      let remainAmount = budgetAmountValue - currentExpenseValue;
       let isRemain = remainAmount > 0 ? true : false;
 
       div.classList.add("p-4");
@@ -359,3 +366,4 @@ function renderBudgetManagement() {
 
   //create a budget click event
 }
+
