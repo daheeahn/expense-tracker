@@ -108,7 +108,7 @@ function renderExpensesReport() {
   for (let el in report_summary) {
     let total = 0;
     for (amount of report_summary[el]) {
-      total += amount["amount"];
+      total += Number(amount["amount"]);
     }
     report_summary[el] = total;
   }
