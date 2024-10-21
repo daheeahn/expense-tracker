@@ -42,9 +42,14 @@ let selectedDate = new Date();
 let isDropdownListenerRegistered = false;
 
 function renderExpenses() {
+  // 가계부 리스트 렌더링
+
   // retrieve expenses from localStorage
-  const expenses = filterExpensesBySelectedDate(JSON.parse(localStorage.getItem("expenses"))) ?? [];
-  
+  const expenses =
+    filterExpensesBySelectedDate(
+      JSON.parse(localStorage.getItem("expenses"))
+    ) ?? [];
+
   // calculate total expense
   const totalExpense =
     expenses.length === 0
@@ -59,23 +64,24 @@ function renderExpenses() {
 
   // render list
   const expensesList = document.querySelector(".expenses-list ul");
-  expensesList.innerHTML = "";
-  let previousDate = null;
-  expenses.forEach((expense, index) => {
-    const li = document.createElement("li");
-    const imageUrl = getCategoryImage(expense.category);
-    const category =
-      expense.category[0].toUpperCase() + expense.category.slice(1); // capitalize
-    const currentDate = expense.date;
-    if (currentDate !== previousDate) {
-      li.innerHTML += `
-        <h2 class=" font-inter font-semibold text-lg mt-5 mb-2.5">
+  if (expensesList) {
+    expensesList.innerHTML = "";
+    let previousDate = null;
+    expenses.forEach((expense) => {
+      const li = document.createElement("li");
+      const imageUrl = getCategoryImage(expense.category);
+      const category =
+        expense.category[0].toUpperCase() + expense.category.slice(1); // capitalize
+      const currentDate = expense.date;
+      if (currentDate !== previousDate) {
+        li.innerHTML += `
+        <h2 class="font-inter font-semibold text-lg mt-5 mb-2.5">
           ${currentDate}
         </h2>
       `;
-    }
+      }
 
-    li.innerHTML += `
+      li.innerHTML += `
       <div class="expense-item flex row py-3.5 px-4 lg:px-10 bg-base-light-light-80 rounded-3xl mb-2" data-id="${expense.id}">
         <img src="${imageUrl}" alt="${expense.category} icon" class="category-icon mr-2.5 self-center" />
         <div class="flex-1 flex flex-col gap-3">
@@ -86,10 +92,11 @@ function renderExpenses() {
       </div>
     `;
 
-    previousDate = currentDate;
+      previousDate = currentDate;
 
-    expensesList.appendChild(li);
-  });
+      expensesList.appendChild(li);
+    });
+  }
 }
 
 let total_month_amount = 0;
@@ -99,12 +106,11 @@ function renderExpensesReport() {
   // order by date (current data -> get a date)
   const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
   total_month_amount = 0;
-  //group by category
+  // group by category
   const report_summary = Object.groupBy(
     filterExpensesBySelectedDate(expenses),
     ({ category }) => category
   );
-  console.log(report_summary)
   for (let el in report_summary) {
     let total = 0;
     for (amount of report_summary[el]) {
@@ -152,7 +158,8 @@ function renderExpensesReport() {
     myChart.clear();
     myChart.ctx.fillText("no data", myChart.width / 2, myChart.height / 2);
   }
-  //Show list
+
+  // show list
   const summary_list = document.querySelector(".summary_list");
   summary_list.innerHTML = "";
   let idx = 0;
@@ -280,9 +287,7 @@ function generateMonthSelect(selectedMenu) {
 function renderBudgetManagement() {
   // retrieve expenses from localStorage
   const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
-  const filteredExpensesByDate = filterExpensesBySelectedDate(
-    expenses
-  );
+  const filteredExpensesByDate = filterExpensesBySelectedDate(expenses);
 
   //group by category category:total expense
   const report_summary = Object.groupBy(
@@ -293,15 +298,15 @@ function renderBudgetManagement() {
   for (let report in report_summary) {
     let total = 0;
     for (amount of report_summary[report]) {
-      total += Number(amount["amount"]);;
+      total += Number(amount["amount"]);
     }
     report_summary[report] = Number(total.toFixed(2));
   }
 
   const budgets = JSON.parse(localStorage.getItem("budgets")) ?? [];
   const budget_list = document.querySelector("#budgetList");
-  const thisMonth = selectedDate.getFullYear() + "-" + (selectedDate.getMonth() + 1);
-
+  const thisMonth =
+    selectedDate.getFullYear() + "-" + (selectedDate.getMonth() + 1);
 
   //initialize
   budget_list.innerHTML = "";
@@ -310,12 +315,11 @@ function renderBudgetManagement() {
     const div = document.createElement("div");
     div.innerHTML = `<div>no Budget</div>`;
     budget_list.appendChild(div);
-  }else if (!budgets[thisMonth] || budgets[thisMonth].length === 0) {
+  } else if (!budgets[thisMonth] || budgets[thisMonth].length === 0) {
     const div = document.createElement("div");
     div.innerHTML = `<div>No Budget for ${thisMonth}</div>`;
     budget_list.appendChild(div);
-  }  
-  else {
+  } else {
     budgets[thisMonth].forEach((budget) => {
       const div = document.createElement("div");
       const currentExpense = report_summary[budget.category]
@@ -366,4 +370,3 @@ function renderBudgetManagement() {
 
   //create a budget click event
 }
-
