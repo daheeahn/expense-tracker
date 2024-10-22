@@ -41,7 +41,7 @@ const MONTH_STR = [
 let selectedDate = new Date();
 let isDropdownListenerRegistered = false;
 
-function renderExpenses() {
+function renderExpenseList() {
   // 가계부 리스트 렌더링
 
   // retrieve expenses from localStorage
@@ -97,6 +97,52 @@ function renderExpenses() {
       expensesList.appendChild(li);
     });
   }
+}
+
+function registerNavigationEvent() {
+  document.body.addEventListener("click", (e) => {
+    const target = e.target.closest("a");
+    if (!(target instanceof HTMLAnchorElement)) return;
+
+    e.preventDefault(); // prevent default page refresh
+    navigate(target.href); // change url without refresh = SPA(Single Page Application)
+    renderPageSection();
+  });
+
+  document.body.addEventListener("click", (e) => {
+    const item = e.target.closest(".expense-item");
+    if (item) {
+      const id = item.getAttribute("data-id");
+
+      const expenses = JSON.parse(localStorage.getItem("expenses")) ?? [];
+      const selectedExpense = expenses.find((item) => item.id == id);
+
+      if (selectedExpense) {
+        sessionStorage.setItem(
+          "selectedExpense",
+          JSON.stringify(selectedExpense)
+        );
+        const queryString = new URLSearchParams({ isEdit: true }).toString();
+        const url = `${window.location.origin}/add?${queryString}`;
+        navigate(url);
+        renderPageSection();
+      }
+    }
+  });
+}
+
+function registerSubmitEvent() {
+  // connect saveItem function to form submit event
+  const form = document.getElementById("expenseForm");
+  form.addEventListener("submit", saveItem);
+
+  // connect deleteItem function to delete button
+  const deleteButton = document.getElementById("deleteButton");
+  deleteButton.addEventListener("click", deleteItem);
+
+  // connect saveItem function to form submit event
+  const budgetForm = document.getElementById("addBudgetForm");
+  budgetForm.addEventListener("submit", saveBudget);
 }
 
 let total_month_amount = 0;
@@ -266,7 +312,8 @@ function generateMonthSelect(selectedMenu) {
       selectedDate.setMonth(monthIndex);
       document.querySelector(".month-label").innerHTML = MONTH_STR[monthIndex]; // show updated month
       selectedMenu.classList.add("hidden"); // close the menu
-      navigate(window.location.href); //redirect to current page
+      // navigate(window.location.href); //redirect to current page
+      renderExpenseList();
     });
   });
 
@@ -370,3 +417,74 @@ function renderBudgetManagement() {
 
   //create a budget click event
 }
+
+const renderPageSection = () => {
+  // hide all sections
+  document.querySelectorAll(".section").forEach((section) => {
+    section.style.display = "none";
+  });
+
+  // find page to show
+  const pageMatches = routes.map((route) => ({
+    route: route,
+    isMatch: window.location.pathname === route.path,
+  }));
+  const match = pageMatches.find((pageMatch) => pageMatch.isMatch);
+  if (match) {
+    document.getElementById(match.route.sectionId).style.display = "block";
+
+    // path="/add": fill form data
+    if (match.route.sectionId === "addSection") {
+      const params = new URLSearchParams(window.location.search);
+      const isEdit = params.get("isEdit") === "true";
+      if (isEdit) {
+        const selectedExpenseFS = sessionStorage.getItem("selectedExpense");
+        if (selectedExpenseFS) {
+          const selectedExpense = JSON.parse(selectedExpenseFS);
+          document.getElementById("amount").value = selectedExpense.amount;
+          document.getElementById("category").value = selectedExpense.category;
+          document.getElementById("description").value =
+            selectedExpense.description;
+          document.getElementById("date").value = selectedExpense.date;
+        }
+      } else {
+        sessionStorage.removeItem("selectedExpense");
+        document.getElementById("amount").value = null;
+        document.getElementById("category").value = null;
+        document.getElementById("description").value = null;
+        document.getElementById("date").value = null;
+      }
+
+      if (isEdit) {
+        document.getElementById("deleteButton").style.display = "block";
+      } else {
+        document.getElementById("deleteButton").style.display = "none";
+      }
+    }
+
+    if (match.route.sectionId === "reportSection") {
+      renderExpensesReport();
+    }
+
+    if (match.route.sectionId === "budgetSection") {
+      renderBudgetManagement();
+    }
+
+    if (match.route.sectionId === "addBudgetSection") {
+      const params = new URLSearchParams(window.location.search);
+      const isEdit = params.get("isEdit") === "true";
+      if (isEdit) {
+        const selectedBudgetFS = sessionStorage.getItem("selectedBudget");
+        if (selectedBudgetFS) {
+          const selectedBudget = JSON.parse(selectedBudgetFS);
+          document.getElementById("category").value = selectedBudget.category;
+          document.getElementById("budget").value = selectedBudget.budget;
+        }
+      } else {
+        sessionStorage.removeItem("selectedBudget");
+        document.getElementById("category").value = null;
+        document.getElementById("budget").value = null;
+      }
+    }
+  }
+};

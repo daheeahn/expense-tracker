@@ -11,10 +11,7 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
   </head>
   <body>
-    <script type="module" src="App.js"></script>
-    <div>
-      <header class="header"></header>
-
+    <main>
       <section id="mainSection" class="section">
         <div
           class="total-expenses flex flex-col w-full h-60 bg-yellow-yellow-20"
@@ -138,7 +135,7 @@
                 <option value="food">Food</option>
                 <option value="transport">Transport</option>
                 <option value="shopping">Shopping</option>
-                <option value="entertainment">Entertainment</option>
+                <option value="subscription">Subscription</option>
               </select>
 
               <input
@@ -199,6 +196,7 @@
           </button></a
         >
       </section>
+
       <section id="addBudgetSection" style="display: none" class="section px-4">
         <div class="flex justify-between p-4 items-center mb-4">
           <img
@@ -222,7 +220,7 @@
             <option value="food">Food</option>
             <option value="transport">Transport</option>
             <option value="shopping">Shopping</option>
-            <option value="entertainment">Entertainment</option>
+            <option value="subscription">Subscription</option>
           </select>
           <input
             type="text"
@@ -239,10 +237,13 @@
           </button>
         </form>
       </section>
-    </div>
+    </main>
+
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="functions.js"></script>
-    <script src="script.js"></script>
+
+    <script src="./scripts/App.js"></script>
+    <script src="./scripts/functions.js"></script>
+    <script src="./scripts/render-scripts.js"></script>
   </body>
 </html>
