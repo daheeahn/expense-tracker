@@ -29,9 +29,9 @@
     },
     {
         "id": 5,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 150.96,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-28"
     },
     {
@@ -50,9 +50,9 @@
     },
     {
         "id": 8,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 8.1,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-12"
     },
     {
@@ -85,16 +85,16 @@
     },
     {
         "id": 13,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 176.82,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-16"
     },
     {
         "id": 14,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 283.98,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-16"
     },
     {
@@ -106,9 +106,9 @@
     },
     {
         "id": 16,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 487.58,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-28"
     },
     {
@@ -127,9 +127,9 @@
     },
     {
         "id": 19,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 65.58,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-02"
     },
     {
@@ -148,9 +148,9 @@
     },
     {
         "id": 22,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 61.38,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-23"
     },
     {
@@ -218,9 +218,9 @@
     },
     {
         "id": 32,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 65.03,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-01"
     },
     {
@@ -253,9 +253,9 @@
     },
     {
         "id": 37,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 253.85,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-22"
     },
     {
@@ -281,9 +281,9 @@
     },
     {
         "id": 41,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 427.61,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-10-30"
     },
     {
@@ -316,9 +316,9 @@
     },
     {
         "id": 46,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 188.49,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-21"
     },
     {
@@ -344,16 +344,16 @@
     },
     {
         "id": 50,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 482.52,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-07"
     },
     {
         "id": 51,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 476.59,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-01"
     },
     {
@@ -372,9 +372,9 @@
     },
     {
         "id": 54,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 490.71,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-10-14"
     },
     {
@@ -393,9 +393,9 @@
     },
     {
         "id": 57,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 134.07,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-23"
     },
     {
@@ -407,9 +407,9 @@
     },
     {
         "id": 59,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 261.17,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-28"
     },
     {
@@ -484,9 +484,9 @@
     },
     {
         "id": 70,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 383.9,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-15"
     },
     {
@@ -519,9 +519,9 @@
     },
     {
         "id": 75,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 139.09,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-09"
     },
     {
@@ -533,16 +533,16 @@
     },
     {
         "id": 77,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 55.88,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-10-18"
     },
     {
         "id": 78,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 154.43,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-15"
     },
     {
@@ -568,9 +568,9 @@
     },
     {
         "id": 82,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 435.48,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-21"
     },
     {
@@ -617,9 +617,9 @@
     },
     {
         "id": 89,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 248.03,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-15"
     },
     {
@@ -638,9 +638,9 @@
     },
     {
         "id": 92,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 50.11,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-10-26"
     },
     {
@@ -673,16 +673,16 @@
     },
     {
         "id": 97,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 117.4,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-14"
     },
     {
         "id": 98,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 355.36,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-28"
     },
     {
@@ -834,9 +834,9 @@
     },
     {
         "id": 120,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 103.84,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-15"
     },
     {
@@ -897,9 +897,9 @@
     },
     {
         "id": 129,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 274.66,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-10-22"
     },
     {
@@ -918,9 +918,9 @@
     },
     {
         "id": 132,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 415.59,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-17"
     },
     {
@@ -932,9 +932,9 @@
     },
     {
         "id": 134,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 103.06,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-09"
     },
     {
@@ -953,9 +953,9 @@
     },
     {
         "id": 137,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 133.46,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-02"
     },
     {
@@ -967,16 +967,16 @@
     },
     {
         "id": 139,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 388.42,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-30"
     },
     {
         "id": 140,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 246.5,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-01"
     },
     {
@@ -995,23 +995,23 @@
     },
     {
         "id": 143,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 401.0,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-28"
     },
     {
         "id": 144,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 453.39,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-03"
     },
     {
         "id": 145,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 405.5,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-09"
     },
     {
@@ -1023,9 +1023,9 @@
     },
     {
         "id": 147,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 195.39,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-31"
     },
     {
@@ -1065,9 +1065,9 @@
     },
     {
         "id": 153,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 499.98,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-18"
     },
     {
@@ -1086,9 +1086,9 @@
     },
     {
         "id": 156,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 317.95,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-06"
     },
     {
@@ -1107,58 +1107,58 @@
     },
     {
         "id": 159,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 132.32,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-10-30"
     },
     {
         "id": 160,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 113.86,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-12"
     },
     {
         "id": 161,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 218.38,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-06"
     },
     {
         "id": 162,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 150.88,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-21"
     },
     {
         "id": 163,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 65.29,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-06"
     },
     {
         "id": 164,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 5.2,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-07"
     },
     {
         "id": 165,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 472.33,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-06"
     },
     {
         "id": 166,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 269.97,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-26"
     },
     {
@@ -1184,9 +1184,9 @@
     },
     {
         "id": 170,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 484.07,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-22"
     },
     {
@@ -1205,9 +1205,9 @@
     },
     {
         "id": 173,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 320.64,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-09"
     },
     {
@@ -1233,9 +1233,9 @@
     },
     {
         "id": 177,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 248.9,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-11"
     },
     {
@@ -1254,9 +1254,9 @@
     },
     {
         "id": 180,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 260.36,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-26"
     },
     {
@@ -1296,23 +1296,23 @@
     },
     {
         "id": 186,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 58.39,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-29"
     },
     {
         "id": 187,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 240.63,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-28"
     },
     {
         "id": 188,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 8.55,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-15"
     },
     {
@@ -1324,9 +1324,9 @@
     },
     {
         "id": 190,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 413.02,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-16"
     },
     {
@@ -1345,9 +1345,9 @@
     },
     {
         "id": 193,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 258.63,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-04"
     },
     {
@@ -1387,9 +1387,9 @@
     },
     {
         "id": 199,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 307.06,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-08"
     },
     {
@@ -1429,9 +1429,9 @@
     },
     {
         "id": 205,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 29.56,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-26"
     },
     {
@@ -1471,9 +1471,9 @@
     },
     {
         "id": 211,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 39.27,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-11"
     },
     {
@@ -1499,9 +1499,9 @@
     },
     {
         "id": 215,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 37.62,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-05"
     },
     {
@@ -1513,9 +1513,9 @@
     },
     {
         "id": 217,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 106.71,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-10-16"
     },
     {
@@ -1541,30 +1541,30 @@
     },
     {
         "id": 221,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 442.63,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-25"
     },
     {
         "id": 222,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 352.12,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-22"
     },
     {
         "id": 223,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 282.08,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-27"
     },
     {
         "id": 224,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 279.22,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-21"
     },
     {
@@ -1597,9 +1597,9 @@
     },
     {
         "id": 229,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 453.9,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-13"
     },
     {
@@ -1674,9 +1674,9 @@
     },
     {
         "id": 240,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 71.17,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-10-24"
     },
     {
@@ -1737,9 +1737,9 @@
     },
     {
         "id": 249,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 279.52,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-04"
     },
     {
@@ -1765,9 +1765,9 @@
     },
     {
         "id": 253,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 373.81,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-11"
     },
     {
@@ -1786,9 +1786,9 @@
     },
     {
         "id": 256,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 379.65,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-23"
     },
     {
@@ -1807,9 +1807,9 @@
     },
     {
         "id": 259,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 418.09,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-04"
     },
     {
@@ -1835,9 +1835,9 @@
     },
     {
         "id": 263,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 444.74,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-19"
     },
     {
@@ -1898,9 +1898,9 @@
     },
     {
         "id": 272,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 444.79,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-23"
     },
     {
@@ -1933,9 +1933,9 @@
     },
     {
         "id": 277,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 412.89,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-16"
     },
     {
@@ -1947,9 +1947,9 @@
     },
     {
         "id": 279,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 444.51,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-25"
     },
     {
@@ -1961,9 +1961,9 @@
     },
     {
         "id": 281,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 50.52,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-13"
     },
     {
@@ -1982,9 +1982,9 @@
     },
     {
         "id": 284,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 101.54,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-17"
     },
     {
@@ -2010,9 +2010,9 @@
     },
     {
         "id": 288,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 226.4,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-24"
     },
     {
@@ -2045,9 +2045,9 @@
     },
     {
         "id": 293,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 0.95,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-10"
     },
     {
@@ -2150,9 +2150,9 @@
     },
     {
         "id": 308,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 19.49,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-11"
     },
     {
@@ -2178,9 +2178,9 @@
     },
     {
         "id": 312,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 484.25,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-09-20"
     },
     {
@@ -2227,9 +2227,9 @@
     },
     {
         "id": 319,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 108.74,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-18"
     },
     {
@@ -2262,9 +2262,9 @@
     },
     {
         "id": 324,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 342.95,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-24"
     },
     {
@@ -2332,9 +2332,9 @@
     },
     {
         "id": 334,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 238.58,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-09"
     },
     {
@@ -2353,9 +2353,9 @@
     },
     {
         "id": 337,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 151.44,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-08"
     },
     {
@@ -2395,16 +2395,16 @@
     },
     {
         "id": 343,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 82.66,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-06"
     },
     {
         "id": 344,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 290.24,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-14"
     },
     {
@@ -2437,9 +2437,9 @@
     },
     {
         "id": 349,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 334.12,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-09"
     },
     {
@@ -2451,9 +2451,9 @@
     },
     {
         "id": 351,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 106.93,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-16"
     },
     {
@@ -2472,9 +2472,9 @@
     },
     {
         "id": 354,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 31.99,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-24"
     },
     {
@@ -2486,9 +2486,9 @@
     },
     {
         "id": 356,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 405.68,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-09-26"
     },
     {
@@ -2500,9 +2500,9 @@
     },
     {
         "id": 358,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 405.52,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-10-26"
     },
     {
@@ -2514,9 +2514,9 @@
     },
     {
         "id": 360,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 196.92,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-26"
     },
     {
@@ -2570,9 +2570,9 @@
     },
     {
         "id": 368,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 337.74,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-06"
     },
     {
@@ -2584,9 +2584,9 @@
     },
     {
         "id": 370,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 154.78,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-18"
     },
     {
@@ -2598,9 +2598,9 @@
     },
     {
         "id": 372,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 64.87,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-09-14"
     },
     {
@@ -2668,9 +2668,9 @@
     },
     {
         "id": 382,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 392.03,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-10-08"
     },
     {
@@ -2682,9 +2682,9 @@
     },
     {
         "id": 384,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 2.34,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-29"
     },
     {
@@ -2696,9 +2696,9 @@
     },
     {
         "id": 386,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 277.04,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-19"
     },
     {
@@ -2710,16 +2710,16 @@
     },
     {
         "id": 388,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 490.5,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-10"
     },
     {
         "id": 389,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 252.62,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-10-30"
     },
     {
@@ -2745,9 +2745,9 @@
     },
     {
         "id": 393,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 435.92,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-15"
     },
     {
@@ -2759,23 +2759,23 @@
     },
     {
         "id": 395,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 457.64,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-06"
     },
     {
         "id": 396,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 414.23,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-17"
     },
     {
         "id": 397,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 138.08,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-12"
     },
     {
@@ -2801,9 +2801,9 @@
     },
     {
         "id": 401,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 331.37,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-18"
     },
     {
@@ -2822,9 +2822,9 @@
     },
     {
         "id": 404,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 4.73,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-02"
     },
     {
@@ -2843,23 +2843,23 @@
     },
     {
         "id": 407,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 156.06,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-10-30"
     },
     {
         "id": 408,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 488.05,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-09"
     },
     {
         "id": 409,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 190.99,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-15"
     },
     {
@@ -2878,16 +2878,16 @@
     },
     {
         "id": 412,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 105.03,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-19"
     },
     {
         "id": 413,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 119.99,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-09-13"
     },
     {
@@ -2913,9 +2913,9 @@
     },
     {
         "id": 417,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 206.85,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-19"
     },
     {
@@ -2927,9 +2927,9 @@
     },
     {
         "id": 419,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 344.15,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-21"
     },
     {
@@ -2962,9 +2962,9 @@
     },
     {
         "id": 424,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 225.12,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-21"
     },
     {
@@ -3046,23 +3046,23 @@
     },
     {
         "id": 436,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 470.03,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-09-09"
     },
     {
         "id": 437,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 284.58,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-18"
     },
     {
         "id": 438,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 324.21,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-02"
     },
     {
@@ -3074,9 +3074,9 @@
     },
     {
         "id": 440,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 287.44,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-25"
     },
     {
@@ -3088,9 +3088,9 @@
     },
     {
         "id": 442,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 325.0,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-10-24"
     },
     {
@@ -3144,16 +3144,16 @@
     },
     {
         "id": 450,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 429.32,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-09-19"
     },
     {
         "id": 451,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 456.79,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-21"
     },
     {
@@ -3165,9 +3165,9 @@
     },
     {
         "id": 453,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 201.72,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-15"
     },
     {
@@ -3200,9 +3200,9 @@
     },
     {
         "id": 458,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 189.88,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-16"
     },
     {
@@ -3242,9 +3242,9 @@
     },
     {
         "id": 464,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 473.3,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-29"
     },
     {
@@ -3256,23 +3256,23 @@
     },
     {
         "id": 466,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 29.38,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-18"
     },
     {
         "id": 467,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 157.93,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-23"
     },
     {
         "id": 468,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 246.09,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-10-26"
     },
     {
@@ -3284,9 +3284,9 @@
     },
     {
         "id": 470,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 257.98,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-17"
     },
     {
@@ -3340,16 +3340,16 @@
     },
     {
         "id": 478,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 359.06,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-19"
     },
     {
         "id": 479,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 109.14,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-04"
     },
     {
@@ -3375,9 +3375,9 @@
     },
     {
         "id": 483,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 312.33,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-19"
     },
     {
@@ -3403,9 +3403,9 @@
     },
     {
         "id": 487,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 291.91,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-29"
     },
     {
@@ -3431,9 +3431,9 @@
     },
     {
         "id": 491,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 385.72,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-10"
     },
     {
@@ -3466,9 +3466,9 @@
     },
     {
         "id": 496,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 152.02,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-10"
     },
     {
@@ -3494,9 +3494,9 @@
     },
     {
         "id": 500,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 94.62,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-02"
     },
     {
@@ -3522,16 +3522,16 @@
     },
     {
         "id": 504,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 476.55,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-18"
     },
     {
         "id": 505,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 194.62,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-25"
     },
     {
@@ -3571,9 +3571,9 @@
     },
     {
         "id": 511,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 11.84,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-23"
     },
     {
@@ -3697,9 +3697,9 @@
     },
     {
         "id": 529,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 253.02,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-17"
     },
     {
@@ -3809,9 +3809,9 @@
     },
     {
         "id": 545,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 81.55,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-23"
     },
     {
@@ -3851,9 +3851,9 @@
     },
     {
         "id": 551,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 112.68,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-09"
     },
     {
@@ -3865,23 +3865,23 @@
     },
     {
         "id": 553,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 316.79,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-01"
     },
     {
         "id": 554,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 9.49,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-08"
     },
     {
         "id": 555,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 114.6,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-22"
     },
     {
@@ -3907,9 +3907,9 @@
     },
     {
         "id": 559,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 65.64,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-19"
     },
     {
@@ -3942,9 +3942,9 @@
     },
     {
         "id": 564,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 182.23,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-21"
     },
     {
@@ -3998,9 +3998,9 @@
     },
     {
         "id": 572,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 26.26,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-04"
     },
     {
@@ -4068,9 +4068,9 @@
     },
     {
         "id": 582,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 499.95,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-09"
     },
     {
@@ -4180,9 +4180,9 @@
     },
     {
         "id": 598,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 205.5,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-11"
     },
     {
@@ -4194,16 +4194,16 @@
     },
     {
         "id": 600,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 412.68,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-07"
     },
     {
         "id": 601,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 298.17,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-22"
     },
     {
@@ -4222,9 +4222,9 @@
     },
     {
         "id": 604,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 127.99,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-07"
     },
     {
@@ -4250,9 +4250,9 @@
     },
     {
         "id": 608,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 47.29,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-04"
     },
     {
@@ -4285,16 +4285,16 @@
     },
     {
         "id": 613,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 440.21,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-06"
     },
     {
         "id": 614,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 165.25,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-23"
     },
     {
@@ -4306,9 +4306,9 @@
     },
     {
         "id": 616,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 212.57,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-12"
     },
     {
@@ -4334,9 +4334,9 @@
     },
     {
         "id": 620,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 457.85,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-10-03"
     },
     {
@@ -4383,9 +4383,9 @@
     },
     {
         "id": 627,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 176.46,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-09-02"
     },
     {
@@ -4425,9 +4425,9 @@
     },
     {
         "id": 633,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 230.49,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-03"
     },
     {
@@ -4460,16 +4460,16 @@
     },
     {
         "id": 638,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 102.32,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-27"
     },
     {
         "id": 639,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 347.62,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-20"
     },
     {
@@ -4558,9 +4558,9 @@
     },
     {
         "id": 652,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 24.79,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-10-27"
     },
     {
@@ -4579,9 +4579,9 @@
     },
     {
         "id": 655,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 325.29,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-11"
     },
     {
@@ -4614,9 +4614,9 @@
     },
     {
         "id": 660,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 421.41,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-23"
     },
     {
@@ -4663,16 +4663,16 @@
     },
     {
         "id": 667,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 331.5,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-09-15"
     },
     {
         "id": 668,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 170.48,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-20"
     },
     {
@@ -4684,9 +4684,9 @@
     },
     {
         "id": 670,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 160.99,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-10-13"
     },
     {
@@ -4698,9 +4698,9 @@
     },
     {
         "id": 672,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 472.71,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-08"
     },
     {
@@ -4712,9 +4712,9 @@
     },
     {
         "id": 674,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 408.97,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-21"
     },
     {
@@ -4733,9 +4733,9 @@
     },
     {
         "id": 677,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 16.64,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-10-19"
     },
     {
@@ -4754,9 +4754,9 @@
     },
     {
         "id": 680,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 102.2,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-24"
     },
     {
@@ -4775,9 +4775,9 @@
     },
     {
         "id": 683,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 177.03,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-25"
     },
     {
@@ -4789,9 +4789,9 @@
     },
     {
         "id": 685,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 374.24,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-29"
     },
     {
@@ -4859,9 +4859,9 @@
     },
     {
         "id": 695,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 222.29,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-22"
     },
     {
@@ -4964,9 +4964,9 @@
     },
     {
         "id": 710,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 183.45,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-21"
     },
     {
@@ -4985,9 +4985,9 @@
     },
     {
         "id": 713,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 483.89,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-10-06"
     },
     {
@@ -5111,9 +5111,9 @@
     },
     {
         "id": 731,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 241.11,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-24"
     },
     {
@@ -5188,23 +5188,23 @@
     },
     {
         "id": 742,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 479.54,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-04"
     },
     {
         "id": 743,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 218.02,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-01"
     },
     {
         "id": 744,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 274.85,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-27"
     },
     {
@@ -5216,9 +5216,9 @@
     },
     {
         "id": 746,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 25.33,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-15"
     },
     {
@@ -5237,9 +5237,9 @@
     },
     {
         "id": 749,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 345.34,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-13"
     },
     {
@@ -5293,16 +5293,16 @@
     },
     {
         "id": 757,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 169.86,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-09"
     },
     {
         "id": 758,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 284.11,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-13"
     },
     {
@@ -5314,9 +5314,9 @@
     },
     {
         "id": 760,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 113.14,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-17"
     },
     {
@@ -5356,9 +5356,9 @@
     },
     {
         "id": 766,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 308.46,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-16"
     },
     {
@@ -5370,9 +5370,9 @@
     },
     {
         "id": 768,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 349.18,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-04"
     },
     {
@@ -5398,23 +5398,23 @@
     },
     {
         "id": 772,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 341.93,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-09-23"
     },
     {
         "id": 773,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 95.49,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-29"
     },
     {
         "id": 774,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 380.46,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-03"
     },
     {
@@ -5447,9 +5447,9 @@
     },
     {
         "id": 779,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 175.09,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-07"
     },
     {
@@ -5461,9 +5461,9 @@
     },
     {
         "id": 781,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 0.72,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-19"
     },
     {
@@ -5503,16 +5503,16 @@
     },
     {
         "id": 787,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 1.46,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-09-10"
     },
     {
         "id": 788,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 181.0,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-22"
     },
     {
@@ -5573,9 +5573,9 @@
     },
     {
         "id": 797,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 398.95,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-17"
     },
     {
@@ -5601,9 +5601,9 @@
     },
     {
         "id": 801,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 41.2,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-04"
     },
     {
@@ -5685,9 +5685,9 @@
     },
     {
         "id": 813,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 282.56,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-02"
     },
     {
@@ -5713,23 +5713,23 @@
     },
     {
         "id": 817,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 32.8,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-09-12"
     },
     {
         "id": 818,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 213.77,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-24"
     },
     {
         "id": 819,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 35.04,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-26"
     },
     {
@@ -5748,9 +5748,9 @@
     },
     {
         "id": 822,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 14.74,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-31"
     },
     {
@@ -5776,23 +5776,23 @@
     },
     {
         "id": 826,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 386.18,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-18"
     },
     {
         "id": 827,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 388.26,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-02"
     },
     {
         "id": 828,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 288.11,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-11"
     },
     {
@@ -5811,9 +5811,9 @@
     },
     {
         "id": 831,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 409.06,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-10"
     },
     {
@@ -5853,9 +5853,9 @@
     },
     {
         "id": 837,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 55.18,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-08"
     },
     {
@@ -5874,9 +5874,9 @@
     },
     {
         "id": 840,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 322.76,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-18"
     },
     {
@@ -5888,9 +5888,9 @@
     },
     {
         "id": 842,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 92.63,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-13"
     },
     {
@@ -5916,9 +5916,9 @@
     },
     {
         "id": 846,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 60.85,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-08"
     },
     {
@@ -5972,30 +5972,30 @@
     },
     {
         "id": 854,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 210.75,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-24"
     },
     {
         "id": 855,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 268.49,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-19"
     },
     {
         "id": 856,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 327.75,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-10-27"
     },
     {
         "id": 857,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 157.99,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-28"
     },
     {
@@ -6042,9 +6042,9 @@
     },
     {
         "id": 864,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 259.47,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-10-02"
     },
     {
@@ -6056,9 +6056,9 @@
     },
     {
         "id": 866,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 382.04,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-10-12"
     },
     {
@@ -6119,9 +6119,9 @@
     },
     {
         "id": 875,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 319.44,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-02"
     },
     {
@@ -6140,16 +6140,16 @@
     },
     {
         "id": 878,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 147.3,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-01"
     },
     {
         "id": 879,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 493.66,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-11"
     },
     {
@@ -6161,16 +6161,16 @@
     },
     {
         "id": 881,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 197.03,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-09"
     },
     {
         "id": 882,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 233.38,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-03"
     },
     {
@@ -6196,9 +6196,9 @@
     },
     {
         "id": 886,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 403.64,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-06"
     },
     {
@@ -6231,9 +6231,9 @@
     },
     {
         "id": 891,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 398.38,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-21"
     },
     {
@@ -6280,9 +6280,9 @@
     },
     {
         "id": 898,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 22.96,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-24"
     },
     {
@@ -6315,9 +6315,9 @@
     },
     {
         "id": 903,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 182.61,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-08"
     },
     {
@@ -6371,9 +6371,9 @@
     },
     {
         "id": 911,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 202.1,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-18"
     },
     {
@@ -6385,9 +6385,9 @@
     },
     {
         "id": 913,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 318.84,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-23"
     },
     {
@@ -6413,9 +6413,9 @@
     },
     {
         "id": 917,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 210.38,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-16"
     },
     {
@@ -6455,16 +6455,16 @@
     },
     {
         "id": 923,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 354.04,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-01"
     },
     {
         "id": 924,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 53.0,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-11-14"
     },
     {
@@ -6511,23 +6511,23 @@
     },
     {
         "id": 931,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 484.65,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-05"
     },
     {
         "id": 932,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 399.75,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-27"
     },
     {
         "id": 933,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 207.01,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-24"
     },
     {
@@ -6546,9 +6546,9 @@
     },
     {
         "id": 936,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 383.37,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-19"
     },
     {
@@ -6560,9 +6560,9 @@
     },
     {
         "id": 938,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 73.49,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-29"
     },
     {
@@ -6581,9 +6581,9 @@
     },
     {
         "id": 941,
-        "category": "entertainment",
-        "description": "Dinner at a restaurant",
-        "amount": 295.18,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-21"
     },
     {
@@ -6602,9 +6602,9 @@
     },
     {
         "id": 944,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 442.42,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-09-11"
     },
     {
@@ -6637,9 +6637,9 @@
     },
     {
         "id": 949,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 129.03,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-20"
     },
     {
@@ -6651,9 +6651,9 @@
     },
     {
         "id": 951,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 391.06,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-10-12"
     },
     {
@@ -6672,9 +6672,9 @@
     },
     {
         "id": 954,
-        "category": "entertainment",
-        "description": "Gift shopping",
-        "amount": 164.35,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-03-21"
     },
     {
@@ -6686,9 +6686,9 @@
     },
     {
         "id": 956,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 48.16,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-03"
     },
     {
@@ -6707,16 +6707,16 @@
     },
     {
         "id": 959,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 119.26,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-26"
     },
     {
         "id": 960,
-        "category": "entertainment",
-        "description": "Monthly subscription",
-        "amount": 154.82,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-16"
     },
     {
@@ -6784,9 +6784,9 @@
     },
     {
         "id": 970,
-        "category": "entertainment",
-        "description": "Clothing purchase",
-        "amount": 414.04,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-01-14"
     },
     {
@@ -6798,9 +6798,9 @@
     },
     {
         "id": 972,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 143.31,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-06-26"
     },
     {
@@ -6819,9 +6819,9 @@
     },
     {
         "id": 975,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 24.78,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-05-11"
     },
     {
@@ -6840,16 +6840,16 @@
     },
     {
         "id": 978,
-        "category": "entertainment",
-        "description": "Movie tickets",
-        "amount": 36.78,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-07-31"
     },
     {
         "id": 979,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 8.31,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-04-07"
     },
     {
@@ -6861,9 +6861,9 @@
     },
     {
         "id": 981,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 182.09,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-09"
     },
     {
@@ -6882,9 +6882,9 @@
     },
     {
         "id": 984,
-        "category": "entertainment",
-        "description": "Concert tickets",
-        "amount": 56.97,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-02-04"
     },
     {
@@ -6952,9 +6952,9 @@
     },
     {
         "id": 994,
-        "category": "entertainment",
-        "description": "Taxi fare",
-        "amount": 382.65,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-10-01"
     },
     {
@@ -6980,23 +6980,23 @@
     },
     {
         "id": 998,
-        "category": "entertainment",
-        "description": "Buy some grocery",
-        "amount": 149.2,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2023-12-02"
     },
     {
         "id": 999,
-        "category": "entertainment",
-        "description": "Electronics repair",
-        "amount": 253.12,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-09-30"
     },
     {
         "id": 1000,
-        "category": "entertainment",
-        "description": "Fuel for car",
-        "amount": 227.04,
+        "category": "subscription",
+        "description": "Subscription Service",
+        "amount": 15.99,
         "date": "2024-08-16"
     }
 ]
