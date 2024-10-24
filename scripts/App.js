@@ -27,6 +27,12 @@ window.goBack = () => {
   window.history.back();
 };
 
+window.clickBackButtonAtBudgetSection = () => {
+  navigate("/");
+  renderPageSection();
+  renderExpenseList();
+};
+
 // be global function by appending `window.`
 window.navigate = (url) => {
   window.history.pushState(null, null, url);
