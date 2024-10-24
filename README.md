@@ -11,16 +11,16 @@ The Expense Tracker is a web application that allows users to manage their perso
 ## Preview
 
 1. You can view the expense list, which is built using the browser's `local storage API` for data persistence.
-   <br><img src="./assets/preview/list.png" alt="Project Preview" width="200" height="330" style="object-fit: contain;">
+   <br><img src="./assets/preview/list.png" alt="Project Preview" width="200" height="300">
 
 2. You can add or edit an expense item with a category, description, and date.
-   <br><img src="./assets/preview/add.png" alt="Project Preview" width="200" height="240" style="object-fit: contain;">
+   <br><img src="./assets/preview/add.png" alt="Project Preview" width="200" height="260">
 
 3. You can view a report for the month, which is created using `Chart.js`.
-   <br><img src="./assets/preview/month-selector.png" alt="Project Preview" width="200" height="300" style="object-fit: contain;"> <img src="./assets/preview/report.png" alt="Project Preview" width="200" height="320" style="object-fit: contain;">
+   <br><img src="./assets/preview/month-selector.png" alt="Project Preview" width="220" height="300" > <img src="./assets/preview/report.png" alt="Project Preview" width="220" height="320" >
 
 4. You can create a budget by category for each month and view its status.
-   <br><img src="./assets/preview/create-budget.png" alt="Project Preview" width="200" height="320" style="object-fit: contain;"> <img src="./assets/preview/budget-list.png" alt="Project Preview" width="200" height="320" style="object-fit: contain;">
+   <br><img src="./assets/preview/create-budget.png" alt="Project Preview" width="220" height="130" > <img src="./assets/preview/budget-list.png" alt="Project Preview" width="220" height="200" >
 
 ## For Developer
 
