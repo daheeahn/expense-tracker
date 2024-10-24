@@ -2,7 +2,7 @@
 
 The Expense Tracker is a web application that allows users to manage their personal finances by tracking their expenses. The application will use the browser’s local storage API to store data, ensuring that users can access their expense records even without an internet connection.
 
-### Technical Requirements
+### Tech Stacks
 
 - Frontend: `HTML`, `CSS`, `JavaScript`
 - Data Storage: Browser’s `Local Storage API`
