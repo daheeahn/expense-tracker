@@ -31,16 +31,30 @@
                 class="absolute top-8 left-0 mt-2 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
               ></div>
             </div>
-            <div class="flex items-center border-2 border-[#F1F1FA] rounded-full bg-base-light-light-80 px-8 py-2 fixed left-[50%] translate-x-[-50%] bottom-1.5 shadow-lg">
-              <a href="/report" class="flex flex-col items-center text-sm text-[#7F3DFF] w-[45px]">
-                <img src="./assets/img/report-icon.svg" class="w-[30px] h-[30px]">
+            <div
+              class="flex items-center border-2 border-[#F1F1FA] rounded-full bg-base-light-light-80 px-8 py-2 fixed left-[50%] translate-x-[-50%] bottom-1.5 shadow-lg"
+            >
+              <a
+                href="/report"
+                class="flex flex-col items-center text-sm text-[#7F3DFF] w-[45px]"
+              >
+                <img
+                  src="./assets/img/report-icon.svg"
+                  class="w-[30px] h-[30px]"
+                />
                 Report
               </a>
               <a href="/add" class="mx-4">
                 <img class="add-button" src="./assets/img/add-button.png" />
               </a>
-              <a href="/budget" class="flex flex-col items-center text-sm text-[#7F3DFF] w-[45px]">
-                <img src="./assets/img/budget-icon.svg" class="w-[30px] h-[30px]">
+              <a
+                href="/budget"
+                class="flex flex-col items-center text-sm text-[#7F3DFF] w-[45px]"
+              >
+                <img
+                  src="./assets/img/budget-icon.svg"
+                  class="w-[30px] h-[30px]"
+                />
                 Buget
               </a>
             </div>
@@ -61,12 +75,16 @@
           </div>
         </div>
 
-        <div class="expenses-list px-3">
+        <div class="expenses-list px-3 mb-[100px]">
           <ul></ul>
         </div>
       </section>
 
-      <section id="reportSection" style="display: none" class="section px-3">
+      <section
+        id="reportSection"
+        style="display: none"
+        class="section px-3 pb-[30px]"
+      >
         <div class="flex justify-between p-4 items-center mb-4">
           <img
             onclick="goBack()"
@@ -180,7 +198,7 @@
       <section id="budgetSection" style="display: none" class="section px-3">
         <div class="flex justify-between p-4 items-center mb-4">
           <img
-            onclick="goBack()"
+            onclick="clickBackButtonAtBudgetSection()"
             id="bugetSection-backButon"
             src="./assets/img/arrow-left-black.svg"
             width="30"
