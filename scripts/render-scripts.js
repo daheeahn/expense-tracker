@@ -396,9 +396,9 @@ function renderBudgetManagement() {
                         </div>
                         <div class="flex w-full h-3 bg-[#F1F1FA] rounded-full my-0.5">
                           <div class="w-[${
-                            (remainAmount / currentExpense) * 100 < 0
+                            currentExpenseValue > budgetAmountValue
                               ? 100
-                              : (remainAmount / currentExpense) * 100
+                              : (currentExpenseValue / budgetAmountValue) * 100
                           }%] h-3 ${handleBudgetColor(
         remainAmount
       )} rounded-full">
