@@ -68,7 +68,7 @@ function handleBudgetColor(remainAmount) {
 // getMockData
 async function loadMockData() {
   try {
-    const response = await fetch("expenses_data_short.json");
+    const response = await fetch("./data/expenses_data_short.json");
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
