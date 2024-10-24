@@ -1,0 +1,184 @@
+[
+  {
+    "id": 1,
+    "category": "transport",
+    "description": "Clothing purchase",
+    "amount": 406,
+    "date": "2024-10-15"
+  },
+  {
+    "id": 2,
+    "category": "food",
+    "description": "Gift shopping",
+    "amount": 58,
+    "date": "2024-08-20"
+  },
+  {
+    "id": 3,
+    "category": "shopping",
+    "description": "Monthly subscription",
+    "amount": 31,
+    "date": "2024-02-14"
+  },
+  {
+    "id": 4,
+    "category": "transport",
+    "description": "Taxi fare",
+    "amount": 498,
+    "date": "2024-01-22"
+  },
+  {
+    "id": 5,
+    "category": "subscription",
+    "description": "Subscription Service",
+    "amount": 16,
+    "date": "2024-07-28"
+  },
+  {
+    "id": 6,
+    "category": "shopping",
+    "description": "Gift shopping",
+    "amount": 257,
+    "date": "2023-11-26"
+  },
+  {
+    "id": 7,
+    "category": "food",
+    "description": "Taxi fare",
+    "amount": 278,
+    "date": "2024-06-25"
+  },
+  {
+    "id": 8,
+    "category": "subscription",
+    "description": "Subscription Service",
+    "amount": 16,
+    "date": "2023-12-12"
+  },
+  {
+    "id": 9,
+    "category": "transport",
+    "description": "Concert tickets",
+    "amount": 238,
+    "date": "2024-09-24"
+  },
+  {
+    "id": 10,
+    "category": "transport",
+    "description": "Monthly subscription",
+    "amount": 172,
+    "date": "2024-04-06"
+  },
+  {
+    "id": 11,
+    "category": "shopping",
+    "description": "Taxi fare",
+    "amount": 97,
+    "date": "2024-02-22"
+  },
+  {
+    "id": 12,
+    "category": "transport",
+    "description": "Buy some grocery",
+    "amount": 93,
+    "date": "2023-11-09"
+  },
+  {
+    "id": 13,
+    "category": "subscription",
+    "description": "Subscription Service",
+    "amount": 16,
+    "date": "2024-08-16"
+  },
+  {
+    "id": 14,
+    "category": "subscription",
+    "description": "Subscription Service",
+    "amount": 16,
+    "date": "2023-12-16"
+  },
+  {
+    "id": 15,
+    "category": "food",
+    "description": "Concert tickets",
+    "amount": 371,
+    "date": "2024-07-01"
+  },
+  {
+    "id": 16,
+    "category": "subscription",
+    "description": "Subscription Service",
+    "amount": 16,
+    "date": "2024-04-28"
+  },
+  {
+    "id": 17,
+    "category": "food",
+    "description": "Fuel for car",
+    "amount": 307,
+    "date": "2024-03-09"
+  },
+  {
+    "id": 18,
+    "category": "subscription",
+    "description": "Subscription Service",
+    "amount": 16,
+    "date": "2024-06-23"
+  },
+  {
+    "id": 19,
+    "category": "shopping",
+    "description": "Movie tickets",
+    "amount": 323,
+    "date": "2024-01-22"
+  },
+  {
+    "id": 20,
+    "category": "subscription",
+    "description": "Subscription Service",
+    "amount": 16,
+    "date": "2024-03-01"
+  },
+  {
+    "id": 21,
+    "category": "transport",
+    "description": "Gift shopping",
+    "amount": 369,
+    "date": "2024-10-01"
+  },
+  {
+    "id": 22,
+    "category": "transport",
+    "description": "Dinner at a restaurant",
+    "amount": 328,
+    "date": "2024-09-29"
+  },
+  {
+    "id": 23,
+    "category": "subscription",
+    "description": "Subscription Service",
+    "amount": 16,
+    "date": "2023-10-30"
+  },
+  {
+    "id": 24,
+    "category": "transport",
+    "description": "Taxi fare",
+    "amount": 436,
+    "date": "2024-05-25"
+  },
+  {
+    "id": 25,
+    "category": "subscription",
+    "description": "Subscription Service",
+    "amount": 16,
+    "date": "2024-05-07"
+  },
+  {
+    "id": 26,
+    "category": "shopping",
+    "description": "Electronics repair",
+    "amount": 318,
+    "date": "2023-10-28"
+  }
+]
