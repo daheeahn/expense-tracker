@@ -20,7 +20,7 @@ The Expense Tracker is a web application that allows users to manage their perso
    <br><img src="./assets/preview/month-selector.png" alt="Project Preview" width="200" height="300" style="object-fit: contain;"> <img src="./assets/preview/report.png" alt="Project Preview" width="200" height="320" style="object-fit: contain;">
 
 4. You can create a budget by category for each month and view its status.
-   <img src="./assets/preview/create-budget.png" alt="Project Preview" width="200" height="320" style="object-fit: contain;"> <img src="./assets/preview/budget-list.png" alt="Project Preview" width="200" height="320" style="object-fit: contain;">
+   <br><img src="./assets/preview/create-budget.png" alt="Project Preview" width="200" height="320" style="object-fit: contain;"> <img src="./assets/preview/budget-list.png" alt="Project Preview" width="200" height="320" style="object-fit: contain;">
 
 ## For Developer
 
